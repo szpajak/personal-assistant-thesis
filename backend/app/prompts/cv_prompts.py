@@ -34,35 +34,39 @@ SELECTED PORTFOLIO PROJECTS (ONLY these projects may appear in "projects" - use 
 title EXACTLY as given, do not add any project not listed here):
 {selected_projects}
 
+The CV is typeset as a single page, so every line has to earn its place. Prefer short,
+specific phrasing over long paragraphs.
+
 INSTRUCTIONS:
 1. Analyze the job's required skills/description to identify what to emphasize.
 2. "headline": a short (3-6 word) professional title line for the CV header, based on the
    candidate's most recent/senior role, phrased to resonate with this job offer (e.g.
    "Senior Backend Engineer"). Never invent a seniority or specialty the candidate's real
    history does not support.
-3. "summary": a 2-4 sentence Professional Summary tailored to this specific role.
+3. "summary": exactly 2 sentences tailored to this specific role, together under 45 words.
 4. "skill_categories": group ONLY the SELECTED SKILLS above into 4-6 sensible categories (e.g.
    "Languages", "Frontend", "Backend", "Databases", "Cloud & DevOps", "Tools" - adapt category
    names to what was actually selected; omit categories that would be empty). Every skill listed
    in SELECTED SKILLS should appear in exactly one category; do not add skills not in that list.
 5. "experience": for EACH role in CANDIDATE WORK HISTORY, echo its "title", "company", and
-   "period" (start - end, or "start - Present") exactly as given, and produce 2-4 high-impact
-   bullet points (STAR method where possible) tailored to be relevant to this job offer. Every
-   bullet MUST start with a short **bold lead-in** action phrase, e.g.
+   "period" (start - end, or "start - Present") exactly as given, and produce exactly 2
+   high-impact bullet points (STAR method where possible) tailored to be relevant to this job
+   offer. Each bullet is a single line of about 12-22 words. Every bullet MUST start with a
+   short **bold lead-in** action phrase, e.g.
    "- **Architected and led development** of a microservices platform serving 2M+ users". Prefer
    bullets supported by EVIDENCE above; if a role has no specific evidence, write ONE general
    bullet grounded in that role's own description rather than fabricating specifics. Do not
    fabricate roles, employers, or metrics beyond what is supported by the data.
 6. "projects": for EACH entry in SELECTED PORTFOLIO PROJECTS (NEVER more than 4, NEVER any
-   project not in that list), echo its "title" exactly as given and produce 1-3 tailored
-   highlight bullets (same **bold lead-in** style as above), focused on what is most relevant to
-   this job offer.
+   project not in that list), echo its "title" exactly as given and produce exactly 1 tailored
+   highlight bullet (same **bold lead-in** style as above, one line), focused on what is most
+   relevant to this job offer.
 
 Return ONLY a single raw JSON object with this exact structure (no markdown fences, no
 extra commentary):
 {{
   "headline": "short professional title line",
-  "summary": "2-4 sentence professional summary",
+  "summary": "2 sentence professional summary",
   "skill_categories": {{"Category Name": ["skill1", "skill2"]}},
   "experience": [
     {{"title": "role title", "company": "company", "period": "start - end",

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from app.services.cv_service import format_cv_markdown
+from app.services.cv_service import apply_display_name, format_cv_markdown
 
 FULL_PROFILE = {
     "name": "Alex Chen",
@@ -85,8 +85,12 @@ def test_format_cv_markdown_all_fields_present() -> None:
     assert "[linkedin.com/in/alexchen](https://linkedin.com/in/alexchen)" in text
     assert "[github.com/alexchen](https://github.com/alexchen)" in text
     assert "[alexchen.dev](https://alexchen.dev)" in text
-    assert "San Francisco, CA" in text
+    assert "San Francisco, CA | alex.chen@email.com | (555) 123-4567" in text
     assert "## Professional Summary" in text
+    summary_at = text.index("## Professional Summary")
+    education_at = text.index("## Education")
+    skills_at = text.index("## Technical Skills")
+    assert summary_at < education_at < skills_at
     assert "## Technical Skills" in text
     assert "**Languages:** Python, TypeScript" in text
     assert "Empty Category" not in text
@@ -95,6 +99,8 @@ def test_format_cv_markdown_all_fields_present() -> None:
     assert "*June 2021 - Present*" in text
     assert "## Education" in text
     assert "### Bachelor of Science in Computer Science" in text
+    assert "*2013 - 2017*" in text
+    assert "2013-08-01" not in text
     assert "## Projects" in text
     assert "### DevMetrics Dashboard" in text
     assert "## Certifications & Awards" in text
@@ -150,3 +156,14 @@ def test_format_cv_markdown_never_empty() -> None:
 
     assert text.strip()
     assert text.startswith("# Candidate")
+
+
+def test_apply_display_name_replaces_only_the_candidate_fallback() -> None:
+    renamed = apply_display_name("# Candidate\n\n**Engineer**\n", "Jamie Doe")
+    assert renamed.startswith("# Jamie Doe\n")
+    assert "Candidate" not in renamed
+
+    kept = apply_display_name("# Alex Chen\n\n**Engineer**\n", "Jamie Doe")
+    assert kept.startswith("# Alex Chen\n")
+    assert apply_display_name("# Candidate\n", None) == "# Candidate\n"
+    assert apply_display_name("# Candidate\n", "  ") == "# Candidate\n"

@@ -17,6 +17,7 @@ from ..kg.graphrag import GraphRAG
 from ..kg.ingestion import KGIngestion
 from ..kg.repository import KGRepository
 from ..pipelines.cv_pipeline import CVPipeline
+from ..utils.cv_one_page import build_one_page_cv
 from ..utils.markdown_pdf import render_markdown_to_pdf
 from ..utils.profile_fingerprint import compute_cv_fingerprint
 
@@ -28,10 +29,31 @@ def _display_url(url: str) -> str:
     return re.sub(r"^https?://(www\.)?", "", url).rstrip("/")
 
 
-def _format_period(start: Any, end: Any) -> str:
-    if not start and not end:
+def _year_token(value: Any) -> str:
+    """Collapse an ISO date (or a free-form period token) to a CV year label."""
+    text = str(value or "").strip()
+    if not text:
         return ""
-    return f"{start or '?'} - {end or 'Present'}"
+    if text.lower() in {"present", "current", "now"}:
+        return "Present"
+    if len(text) >= 4 and text[:4].isdigit():
+        return text[:4]
+    return text
+
+
+def _format_period(start: Any, end: Any) -> str:
+    """Education dates as years, so a one-page CV does not spend a line on months."""
+    start_label = _year_token(start)
+    end_label = _year_token(end)
+    if not start_label and not end_label:
+        return ""
+    if not start_label:
+        return end_label
+    if not end_label:
+        end_label = "Present"
+    if start_label == end_label:
+        return start_label
+    return f"{start_label} - {end_label}"
 
 
 def _format_header(profile: dict[str, Any], headline: str) -> str:
@@ -42,27 +64,26 @@ def _format_header(profile: dict[str, Any], headline: str) -> str:
         lines.append(f"\n**{headline}**")
 
     contact_bits: list[str] = []
-    email = str(profile.get("email") or "").strip()
-    if email:
-        contact_bits.append(f"\U0001f4e7 {email}")
-    phone = str(profile.get("phone") or "").strip()
-    if phone:
-        contact_bits.append(f"\U0001f4f1 {phone}")
-    linkedin = str(profile.get("linkedin_url") or "").strip()
-    if linkedin:
-        contact_bits.append(f"\U0001f517 [{_display_url(linkedin)}]({linkedin})")
-    github = str(profile.get("github_url") or "").strip()
-    if github:
-        contact_bits.append(f"\U0001f4bb [{_display_url(github)}]({github})")
-    website = str(profile.get("website_url") or "").strip()
-    if website:
-        contact_bits.append(f"\U0001f310 [{_display_url(website)}]({website})")
-    if contact_bits:
-        lines.append("\n" + " | ".join(contact_bits))
-
     location = str(profile.get("location") or "").strip()
     if location:
-        lines.append("\n" + location)
+        contact_bits.append(location)
+    email = str(profile.get("email") or "").strip()
+    if email:
+        contact_bits.append(email)
+    phone = str(profile.get("phone") or "").strip()
+    if phone:
+        contact_bits.append(phone)
+    linkedin = str(profile.get("linkedin_url") or "").strip()
+    if linkedin:
+        contact_bits.append(f"[{_display_url(linkedin)}]({linkedin})")
+    github = str(profile.get("github_url") or "").strip()
+    if github:
+        contact_bits.append(f"[{_display_url(github)}]({github})")
+    website = str(profile.get("website_url") or "").strip()
+    if website:
+        contact_bits.append(f"[{_display_url(website)}]({website})")
+    if contact_bits:
+        lines.append("\n" + " | ".join(contact_bits))
 
     return "\n".join(lines)
 
@@ -185,6 +206,25 @@ def _format_additional_info(languages_spoken: str, interests: str) -> str:
     return "  \n".join(lines)
 
 
+def apply_display_name(cv_text: str, display_name: str | None) -> str:
+    """Use the account name when the CV header is still the empty-profile fallback.
+
+    Registration stores the name on the user account. The career-graph Person
+    node often has no ``name`` yet, so :func:`format_cv_markdown` writes
+    ``# Candidate``. Cached CVs keep that header until the next regeneration;
+    swapping it here fixes the copy the user actually sees.
+    """
+    given = str(display_name or "").strip()
+    if not given:
+        return cv_text
+    prefix = "# Candidate"
+    if cv_text.startswith(prefix) and (
+        len(cv_text) == len(prefix) or cv_text[len(prefix)] in "\r\n"
+    ):
+        return f"# {given}" + cv_text[len(prefix) :]
+    return cv_text
+
+
 def format_cv_markdown(
     profile: dict[str, Any],
     generated: dict[str, Any],
@@ -207,6 +247,10 @@ def format_cv_markdown(
     if summary:
         sections.append(f"## Professional Summary\n\n{summary}")
 
+    education_block = _format_education_section(education_rows)
+    if education_block:
+        sections.append(f"## Education\n\n{education_block}")
+
     skills_block = _format_skill_categories(generated.get("skill_categories") or {})
     if skills_block:
         sections.append(f"## Technical Skills\n\n{skills_block}")
@@ -214,10 +258,6 @@ def format_cv_markdown(
     experience_block = _format_experience_section(generated.get("experience") or [])
     if experience_block:
         sections.append(f"## Professional Experience\n\n{experience_block}")
-
-    education_block = _format_education_section(education_rows)
-    if education_block:
-        sections.append(f"## Education\n\n{education_block}")
 
     projects_block = _format_projects_section(
         project_rows, generated.get("projects") or []
@@ -271,6 +311,7 @@ class CVService:
         person_id: str,
         *,
         force: bool = False,
+        display_name: str | None = None,
     ) -> dict[str, Any]:
         """Generate a personalized CV for a job application.
 
@@ -280,6 +321,7 @@ class CVService:
         """
         try:
             await self._promote_job(job_id=job_id, person_id=person_id)
+            await self._remember_display_name(person_id, display_name)
             fingerprint = await compute_cv_fingerprint(self.kg_repository, person_id)
 
             if not force and self.generation_cache_repository is not None:
@@ -291,7 +333,12 @@ class CVService:
                 )
                 if cached and cached.payload_text:
                     logger.info("Returning cached CV for job %s", job_id)
-                    return {"cv_content": cached.payload_text, "cached": True}
+                    return {
+                        "cv_content": apply_display_name(
+                            cached.payload_text, display_name
+                        ),
+                        "cached": True,
+                    }
 
             pipeline_result: dict[str, Any] = await self.cv_pipeline.run(
                 user_id=person_id, job_offer_id=job_id
@@ -315,7 +362,10 @@ class CVService:
                 )
 
             logger.info(f"Generated CV for job {job_id} using pipeline")
-            return {"cv_content": cv_text, "cached": False}
+            return {
+                "cv_content": apply_display_name(cv_text, display_name),
+                "cached": False,
+            }
 
         except Exception as e:
             logger.error(f"Failed to generate CV: {e}")
@@ -323,36 +373,68 @@ class CVService:
 
     async def export_cv_to_pdf(self, cv_content: str, filename: str) -> str:
         """Export CV Markdown content (see :func:`format_cv_markdown`) to a
-        PDF file, using :func:`app.utils.markdown_pdf.render_markdown_to_pdf`
-        to interpret headers, bold/italic text, bullets, and links.
+        one-page PDF.
+
+        The layout is a compact skeleton: a full-width header and summary,
+        skill categories in two columns, experience with the date aligned to
+        the right of the role, education full width under the summary, projects
+        in two columns, and certifications beside additional information. Type
+        size scales down until the document fits a single A4 page.
 
         fpdf2 has a known bug class (upstream issues #1250/#1582) where its
-        line-wrapping can spuriously raise on LLM-generated text even though
-        ``render_markdown_to_pdf`` already passes ``wrapmode="CHAR"``
-        everywhere to avoid it. As a last line of defense against any
-        variant that fix doesn't cover, retry once in ``safe_mode`` (plain
-        text, no inline-bold fragmentation) rather than surfacing a 500 to
-        the user for what is ultimately a formatting-library quirk.
+        line-wrapping can spuriously raise on LLM-generated text. Retry once
+        in ``safe_mode`` (plain text, no inline-bold fragmentation), then
+        fall back to the linear renderer, rather than surfacing a 500.
         """
         tmp_dir = tempfile.gettempdir()
         file_path = f"{tmp_dir}/{filename}"
         try:
-            pdf = FPDF()
-            pdf.add_page()
-            render_markdown_to_pdf(pdf, cv_content)
+            pdf = build_one_page_cv(cv_content)
             pdf.output(file_path)
             return file_path
         except Exception as e:
             logger.warning(f"CV PDF render failed, retrying in safe mode: {e}")
             try:
-                pdf = FPDF()
-                pdf.add_page()
-                render_markdown_to_pdf(pdf, cv_content, safe_mode=True)
+                pdf = build_one_page_cv(cv_content, safe_mode=True)
                 pdf.output(file_path)
                 return file_path
             except Exception as retry_exc:
-                logger.error(f"Failed to export CV to PDF (safe mode too): {retry_exc}")
-                raise
+                logger.warning(
+                    f"One-page CV render failed, using the linear layout: {retry_exc}"
+                )
+                try:
+                    pdf = FPDF()
+                    pdf.add_page()
+                    render_markdown_to_pdf(pdf, cv_content, safe_mode=True)
+                    pdf.output(file_path)
+                    return file_path
+                except Exception as linear_exc:
+                    logger.error(f"Failed to export CV to PDF: {linear_exc}")
+                    raise
+
+    async def _remember_display_name(
+        self, person_id: str, display_name: str | None
+    ) -> None:
+        """Copy the account name onto the Person node when that node has none.
+
+        The CV header reads ``Person.name``. Signup only stores ``full_name``
+        on the user account, so without this the header stays "Candidate".
+        """
+        given = str(display_name or "").strip()
+        if not given:
+            return
+        try:
+            person = await self.kg_repository.get_node("Person", person_id) or {}
+            current = str(person.get("name") or "").strip()
+            if current and current.lower() != "candidate":
+                return
+            await self.kg_repository.upsert_node(
+                "Person", {"id": person_id, "name": given}
+            )
+        except Exception as exc:
+            logger.warning(
+                "Could not store display name on Person %s: %s", person_id, exc
+            )
 
     async def _promote_job(self, job_id: str, person_id: str) -> None:
         """Promote a scraped (Postgres) listing into the career graph, if not
