@@ -19,15 +19,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e "backend/[dev]"
       - name: Run ruff
-        run: ruff check backend
+        working-directory: backend
+        run: python -m ruff check .
       - name: Run mypy
-        run: mypy backend
+        working-directory: backend
+        run: python -m mypy app
       - name: Start test services
-        run: docker-compose -f infra/docker-compose.test.yml up -d
+        run: docker compose -f docker-compose.test.yml up -d
       - name: Run backend tests
-        run: cd backend && pytest --cov --cov-fail-under=80
+        working-directory: backend
+        run: python -m pytest --cov=app --cov-fail-under=80
       - name: Stop test services
-        run: docker-compose -f infra/docker-compose.test.yml down
+        if: always()
+        run: docker compose -f docker-compose.test.yml down
 
   frontend:
     runs-on: ubuntu-latest
