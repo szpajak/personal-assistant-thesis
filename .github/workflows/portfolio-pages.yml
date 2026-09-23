@@ -1,18 +1,22 @@
 name: Publish Portfolio Site
 
 # Regenerates the static public portfolio (backend/scripts/generate_portfolio_site.py)
-# from the live KG export API and publishes it to GitHub Pages. Runs on a
-# daily schedule (picks up newly ingested projects/certificates), on manual
-# dispatch, and whenever the generator script itself changes.
+# from the live KG export API and publishes it to GitHub Pages.
+#
+# Paused until the public portfolio export is actually deployed. Automatic
+# triggers are commented out so this does not fail on a schedule or on push.
+# Restore the schedule and push blocks below when PORTFOLIO_API_BASE_URL
+# points at a live backend. workflow_dispatch stays so the file is still a
+# valid workflow and can be tried by hand.
 on:
-  schedule:
-    - cron: "0 6 * * *" # daily at 06:00 UTC
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - "backend/scripts/generate_portfolio_site.py"
-      - ".github/workflows/portfolio-pages.yml"
+  # schedule:
+  #   - cron: "0 6 * * *" # daily at 06:00 UTC
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - "backend/scripts/generate_portfolio_site.py"
+  #     - ".github/workflows/portfolio-pages.yml"
 
 permissions:
   contents: read
