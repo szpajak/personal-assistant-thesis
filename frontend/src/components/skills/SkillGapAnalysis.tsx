@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import React from "react"
-import { SkillAnalysis } from "@/types/skills"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { AlertTriangle, Check, Plus } from "lucide-react"
+import React from "react";
+import { SkillAnalysis } from "@/types/skills";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { AlertTriangle, Check, Plus } from "lucide-react";
 
 interface SkillGapAnalysisProps {
-  analysis?: SkillAnalysis
-  isLoading?: boolean
-  selectedSkills: string[]
-  onAddSkill: (skill: string) => void
+  analysis?: SkillAnalysis;
+  isLoading?: boolean;
+  selectedSkills: string[];
+  onAddSkill: (skill: string) => void;
 }
 
 export const SkillGapAnalysis: React.FC<SkillGapAnalysisProps> = ({
@@ -20,16 +20,18 @@ export const SkillGapAnalysis: React.FC<SkillGapAnalysisProps> = ({
   selectedSkills,
   onAddSkill,
 }) => {
-  const skillGaps = analysis?.skill_gaps ?? []
-  const coreStrengths = analysis?.core_strengths ?? []
+  const skillGaps = analysis?.skill_gaps ?? [];
+  const coreStrengths = analysis?.core_strengths ?? [];
   const selectedKeys = React.useMemo(
     () => new Set(selectedSkills.map((s) => s.toLowerCase())),
-    [selectedSkills]
-  )
+    [selectedSkills],
+  );
 
   const waitingOnSample =
-    !!analysis && !analysis.target_role_ready && analysis.sample_status !== "error"
-  const sampleFailed = !!analysis && analysis.sample_status === "error"
+    !!analysis &&
+    !analysis.target_role_ready &&
+    analysis.sample_status !== "error";
+  const sampleFailed = !!analysis && analysis.sample_status === "error";
 
   return (
     <Card className="w-full">
@@ -46,16 +48,17 @@ export const SkillGapAnalysis: React.FC<SkillGapAnalysisProps> = ({
 
         {sampleFailed && (
           <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            The market sample for &quot;{analysis?.target_role_title}&quot; failed to refresh.
-            Try refreshing it again from the Target roles panel above.
+            The market sample for &quot;{analysis?.target_role_title}&quot;
+            failed to refresh. Try refreshing it again from the Target roles
+            panel above.
           </div>
         )}
 
         {waitingOnSample && !sampleFailed && (
           <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
             Sampling market offers for &quot;{analysis?.target_role_title}&quot;
-            {analysis?.sample_status ? ` (${analysis.sample_status})` : ""}… gaps will
-            appear automatically once the sample is ready.
+            {analysis?.sample_status ? ` (${analysis.sample_status})` : ""}…
+            gaps will appear automatically once the sample is ready.
           </div>
         )}
 
@@ -71,7 +74,11 @@ export const SkillGapAnalysis: React.FC<SkillGapAnalysisProps> = ({
                 </h3>
                 <div className="flex flex-wrap gap-1.5">
                   {coreStrengths.map((skill) => (
-                    <Badge key={skill} variant="secondary" className="text-[11px]">
+                    <Badge
+                      key={skill}
+                      variant="secondary"
+                      className="text-[11px]"
+                    >
                       {skill}
                     </Badge>
                   ))}
@@ -84,13 +91,14 @@ export const SkillGapAnalysis: React.FC<SkillGapAnalysisProps> = ({
               {skillGaps.length === 0 ? (
                 !waitingOnSample && (
                   <p className="text-sm text-muted-foreground italic">
-                    No major gaps identified — you already cover the tracked demand skills.
+                    No major gaps identified — you already cover the tracked
+                    demand skills.
                   </p>
                 )
               ) : (
                 <div className="grid max-h-96 gap-2 overflow-y-auto pr-1">
                   {skillGaps.map((gap, index) => {
-                    const added = selectedKeys.has(gap.skill.toLowerCase())
+                    const added = selectedKeys.has(gap.skill.toLowerCase());
                     return (
                       <div
                         key={`${gap.skill}-${index}`}
@@ -98,7 +106,9 @@ export const SkillGapAnalysis: React.FC<SkillGapAnalysisProps> = ({
                       >
                         <div className="flex-1 space-y-1">
                           <div className="flex items-center gap-2">
-                            <span className="font-medium text-sm">{gap.skill}</span>
+                            <span className="font-medium text-sm">
+                              {gap.skill}
+                            </span>
                             <Badge
                               variant={
                                 gap.priority === "high"
@@ -111,11 +121,18 @@ export const SkillGapAnalysis: React.FC<SkillGapAnalysisProps> = ({
                             >
                               {gap.priority}
                             </Badge>
-                            <Badge variant="outline" className="text-[10px] px-1 py-0 h-4 capitalize">
-                              {gap.kind === "underleveled" ? "Underleveled" : "Missing"}
+                            <Badge
+                              variant="outline"
+                              className="text-[10px] px-1 py-0 h-4 capitalize"
+                            >
+                              {gap.kind === "underleveled"
+                                ? "Underleveled"
+                                : "Missing"}
                             </Badge>
                           </div>
-                          <p className="text-xs text-muted-foreground">{gap.gap_reason}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {gap.gap_reason}
+                          </p>
                         </div>
                         <Button
                           type="button"
@@ -136,7 +153,7 @@ export const SkillGapAnalysis: React.FC<SkillGapAnalysisProps> = ({
                           )}
                         </Button>
                       </div>
-                    )
+                    );
                   })}
                 </div>
               )}
@@ -145,5 +162,5 @@ export const SkillGapAnalysis: React.FC<SkillGapAnalysisProps> = ({
         )}
       </CardContent>
     </Card>
-  )
-}
+  );
+};

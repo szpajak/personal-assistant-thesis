@@ -25,7 +25,9 @@ def compute_skill_match(
     if not job_skills:
         return SkillMatchResult(match_score=0, matching_skills=[], missing_skills=[])
 
-    user_keys = {skill.strip().lower() for skill in user_skills if skill and skill.strip()}
+    user_keys = {
+        skill.strip().lower() for skill in user_skills if skill and skill.strip()
+    }
     matching: list[str] = []
     missing: list[str] = []
 

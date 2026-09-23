@@ -4,12 +4,11 @@ from __future__ import annotations
 
 from typing import Any
 
-from eval.dataset_a import EMAILS, PERSON_A
-from eval.metrics import confusion
-
 from app.kg.repository import KGRepository
 from app.pipelines.email_pipeline import EmailPipeline
 from app.utils.email_heuristics import heuristic_email_analysis
+from eval.dataset_a import EMAILS, PERSON_A
+from eval.metrics import confusion
 
 
 def _norm_class(value: str) -> str:

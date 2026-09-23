@@ -1,32 +1,42 @@
-"use client"
+"use client";
 
-import React from "react"
-import { LearningRoadmap } from "@/types/skills"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Clock, Laptop, ListChecks, Loader2, Plus } from "lucide-react"
-import { useCreateProjectFromPlan } from "@/hooks/usePortfolio"
-import { useToast } from "@/components/ui/use-toast"
+import React from "react";
+import { LearningRoadmap } from "@/types/skills";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Clock, Laptop, ListChecks, Loader2, Plus } from "lucide-react";
+import { useCreateProjectFromPlan } from "@/hooks/usePortfolio";
+import { useToast } from "@/components/ui/use-toast";
 
 interface LearningRoadmapCardProps {
-  roadmap: LearningRoadmap
+  roadmap: LearningRoadmap;
 }
 
-export const LearningRoadmapCard: React.FC<LearningRoadmapCardProps> = ({ roadmap }) => {
-  const { toast } = useToast()
-  const startMutation = useCreateProjectFromPlan()
-  const [pendingIndex, setPendingIndex] = React.useState<number | null>(null)
+export const LearningRoadmapCard: React.FC<LearningRoadmapCardProps> = ({
+  roadmap,
+}) => {
+  const { toast } = useToast();
+  const startMutation = useCreateProjectFromPlan();
+  const [pendingIndex, setPendingIndex] = React.useState<number | null>(null);
 
-  if (!roadmap || !roadmap.phases || roadmap.phases.length === 0) return null
+  if (!roadmap || !roadmap.phases || roadmap.phases.length === 0) return null;
 
   const startPhase = (index: number) => {
-    const phase = roadmap.phases[index]
-    setPendingIndex(index)
+    const phase = roadmap.phases[index];
+    setPendingIndex(index);
     startMutation.mutate(
       {
         title: phase.title,
-        description: [phase.goal, ...(phase.concepts || [])].filter(Boolean).join("\n"),
+        description: [phase.goal, ...(phase.concepts || [])]
+          .filter(Boolean)
+          .join("\n"),
         skill_name: phase.concepts?.[0] || "",
       },
       {
@@ -34,20 +44,24 @@ export const LearningRoadmapCard: React.FC<LearningRoadmapCardProps> = ({ roadma
           toast({
             title: "Project started!",
             description: "Added to your portfolio as an in-progress project.",
-          })
+          });
         },
         onSettled: () => setPendingIndex(null),
-      }
-    )
-  }
+      },
+    );
+  };
 
   return (
     <Card className="w-full border-primary/20 bg-primary/5">
       <CardHeader>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <CardTitle className="text-2xl font-bold">Personalized Learning Roadmap</CardTitle>
-            {roadmap.overview && <CardDescription>{roadmap.overview}</CardDescription>}
+            <CardTitle className="text-2xl font-bold">
+              Personalized Learning Roadmap
+            </CardTitle>
+            {roadmap.overview && (
+              <CardDescription>{roadmap.overview}</CardDescription>
+            )}
           </div>
           {roadmap.overall_duration && (
             <div className="flex items-center gap-1.5 text-sm font-medium bg-background px-3 py-1 rounded-full border shadow-sm shrink-0">
@@ -74,13 +88,19 @@ export const LearningRoadmapCard: React.FC<LearningRoadmapCardProps> = ({ roadma
                   )}
                 </div>
                 {phase.goal && (
-                  <p className="text-sm text-muted-foreground mt-1">{phase.goal}</p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {phase.goal}
+                  </p>
                 )}
 
                 {phase.concepts && phase.concepts.length > 0 && (
                   <div className="mt-3 flex flex-wrap gap-1.5">
                     {phase.concepts.map((concept) => (
-                      <Badge key={concept} variant="secondary" className="text-[10px]">
+                      <Badge
+                        key={concept}
+                        variant="secondary"
+                        className="text-[10px]"
+                      >
                         {concept}
                       </Badge>
                     ))}
@@ -103,7 +123,8 @@ export const LearningRoadmapCard: React.FC<LearningRoadmapCardProps> = ({ roadma
                 {phase.project_title && (
                   <div className="mt-3 flex items-center gap-1.5 text-xs text-emerald-700">
                     <Laptop className="h-3.5 w-3.5" />
-                    Includes project: <span className="font-medium">{phase.project_title}</span>
+                    Includes project:{" "}
+                    <span className="font-medium">{phase.project_title}</span>
                   </div>
                 )}
 
@@ -127,5 +148,5 @@ export const LearningRoadmapCard: React.FC<LearningRoadmapCardProps> = ({ roadma
         </ol>
       </CardContent>
     </Card>
-  )
-}
+  );
+};

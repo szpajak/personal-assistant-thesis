@@ -4,12 +4,11 @@ from __future__ import annotations
 
 from typing import Any
 
-from eval.dataset_a import MUST_NOT_HAS_SKILL, PERSON_A, PERSON_B
-
 from app.kg.embeddings import KGEmbeddings
 from app.kg.ingestion import KGIngestion
 from app.kg.repository import KGRepository
 from app.utils.skill_ids import resolve_canonical_skill_name
+from eval.dataset_a import MUST_NOT_HAS_SKILL, PERSON_A, PERSON_B
 
 
 def _check(name: str, passed: bool, detail: str) -> dict[str, Any]:
@@ -26,8 +25,7 @@ async def run_scenarios(
     jobs: dict[str, str] = id_map["jobs"]
 
     produced = await repo.query(
-        "MATCH (p:Person {id: $pid})-[:PRODUCED]->(pr:Project) "
-        "RETURN count(pr) AS c",
+        "MATCH (p:Person {id: $pid})-[:PRODUCED]->(pr:Project) RETURN count(pr) AS c",
         {"pid": person},
     )
     rows.append(
@@ -65,7 +63,11 @@ async def run_scenarios(
     )
 
     python = next(
-        (s for s in skills if resolve_canonical_skill_name(str(s.get("name"))) == "Python"),
+        (
+            s
+            for s in skills
+            if resolve_canonical_skill_name(str(s.get("name"))) == "Python"
+        ),
         {},
     )
     rows.append(
@@ -87,9 +89,7 @@ async def run_scenarios(
         )
     )
 
-    dual = await repo.query(
-        "MATCH (j:JobOffer) RETURN count(j) AS c"
-    )
+    dual = await repo.query("MATCH (j:JobOffer) RETURN count(j) AS c")
     rows.append(
         _check(
             "UC-02 jobs in graph",

@@ -131,7 +131,10 @@ def _render_projects(projects: list[dict[str, Any]]) -> str:
 
     cards = []
     for project in projects:
-        tech_tags = "".join(f'<span class="tag">{_esc(t)}</span>' for t in project.get("tech_stack") or [])
+        tech_tags = "".join(
+            f'<span class="tag">{_esc(t)}</span>'
+            for t in project.get("tech_stack") or []
+        )
         achievements = project.get("achievements") or []
         achievements_html = ""
         if achievements:
@@ -148,7 +151,7 @@ def _render_projects(projects: list[dict[str, Any]]) -> str:
             f"""
             <article class="project">
               <h3>{_esc(project.get("title", ""))}</h3>
-              <div class="meta">{_esc(period)}{' · ' + _esc(project['seniority']) if project.get('seniority') else ''}</div>
+              <div class="meta">{_esc(period)}{" · " + _esc(project["seniority"]) if project.get("seniority") else ""}</div>
               <p class="desc">{_esc(project.get("description", ""))}</p>
               <div class="tags">{tech_tags}</div>
               {achievements_html}
@@ -169,7 +172,8 @@ def _render_skills(skills: list[dict[str, Any]]) -> str:
     groups = []
     for category, category_skills in sorted(grouped.items()):
         pills = "".join(
-            f'<span class="skill-pill">{_esc(s.get("name", ""))}</span>' for s in category_skills
+            f'<span class="skill-pill">{_esc(s.get("name", ""))}</span>'
+            for s in category_skills
         )
         groups.append(
             f'<div class="skill-group"><h4>{_esc(category)}</h4><div class="skill-pills">{pills}</div></div>'
@@ -207,7 +211,7 @@ def render_html(export: dict[str, Any]) -> str:
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>{_esc(name)} — Portfolio</title>
-<meta name="description" content="{_esc(bio) or f'{_esc(name)} — professional portfolio'}" />
+<meta name="description" content="{_esc(bio) or f"{_esc(name)} — professional portfolio"}" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
 <style>{_STYLE}</style>

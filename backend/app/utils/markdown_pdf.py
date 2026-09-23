@@ -38,7 +38,9 @@ def _sanitize(text: str) -> str:
     LLM-produced Unicode punctuation (curly quotes, em dashes, ...)."""
     for icon, label in _ICON_LABELS.items():
         text = text.replace(icon, label)
-    return text.encode(_CORE_FONT_ENCODING, errors="replace").decode(_CORE_FONT_ENCODING)
+    return text.encode(_CORE_FONT_ENCODING, errors="replace").decode(
+        _CORE_FONT_ENCODING
+    )
 
 
 def _multi_cell(
@@ -80,7 +82,12 @@ def _multi_cell(
 
 
 def _write_line_with_links(
-    pdf: FPDF, text: str, *, size: float = 11, height: float = 6.0, safe_mode: bool = False
+    pdf: FPDF,
+    text: str,
+    *,
+    size: float = 11,
+    height: float = 6.0,
+    safe_mode: bool = False,
 ) -> None:
     """Write a single paragraph line containing ``[label](url)`` links (used
     only for the header contact line, which has no bold/italic runs)."""
@@ -97,7 +104,9 @@ def _write_line_with_links(
         if match.start() > pos:
             pdf.write(height, _sanitize(text[pos : match.start()]), wrapmode="CHAR")
         pdf.set_text_color(37, 99, 235)
-        pdf.write(height, _sanitize(match.group(1)), link=match.group(2), wrapmode="CHAR")
+        pdf.write(
+            height, _sanitize(match.group(1)), link=match.group(2), wrapmode="CHAR"
+        )
         pdf.set_text_color(0, 0, 0)
         pos = match.end()
     if pos < len(text):
@@ -105,7 +114,9 @@ def _write_line_with_links(
     pdf.ln(height)
 
 
-def render_markdown_to_pdf(pdf: FPDF, markdown_text: str, *, safe_mode: bool = False) -> None:
+def render_markdown_to_pdf(
+    pdf: FPDF, markdown_text: str, *, safe_mode: bool = False
+) -> None:
     """Render ``markdown_text`` into ``pdf`` (a page must already be added).
 
     Recognizes exactly the constructs produced by

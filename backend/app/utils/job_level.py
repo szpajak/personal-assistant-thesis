@@ -26,7 +26,9 @@ _YEARS_PLUS_PATTERN = re.compile(r"(\d{1,2})\s*\+\s*years?", re.IGNORECASE)
 _YEARS_MIN_PATTERN = re.compile(
     r"(?:at least|minimum of|min\.?)\s*(\d{1,2})\s*years?", re.IGNORECASE
 )
-_YEARS_SIMPLE_PATTERN = re.compile(r"(\d{1,2})\s*\+?\s*years?(?:\s*of)?\s*experience", re.IGNORECASE)
+_YEARS_SIMPLE_PATTERN = re.compile(
+    r"(\d{1,2})\s*\+?\s*years?(?:\s*of)?\s*experience", re.IGNORECASE
+)
 
 SeniorityLevel = str
 

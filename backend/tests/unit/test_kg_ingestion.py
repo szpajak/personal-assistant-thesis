@@ -86,7 +86,9 @@ async def test_upsert_skill_never_downgrades_level() -> None:
 
 
 @pytest.mark.anyio
-async def test_upsert_skill_category_still_preserved_from_first_classification() -> None:
+async def test_upsert_skill_category_still_preserved_from_first_classification() -> (
+    None
+):
     """Category, unlike level, is set once and never overwritten."""
     ingestion, mock_repo = _make_ingestion()
     mock_repo.get_node.return_value = {
@@ -116,14 +118,19 @@ async def test_upsert_skill_equal_level_keeps_existing() -> None:
     }
 
     await ingestion._upsert_skill_preserving_existing(
-        skill_id="skill_python", name="Python", category="language", level="intermediate"
+        skill_id="skill_python",
+        name="Python",
+        category="language",
+        level="intermediate",
     )
 
     assert mock_repo.upsert_node.call_args[0][1]["level"] == "intermediate"
 
 
 @pytest.mark.anyio
-async def test_link_required_skills_does_not_pass_requires_level_to_skill_upsert() -> None:
+async def test_link_required_skills_does_not_pass_requires_level_to_skill_upsert() -> (
+    None
+):
     """Regression test: a job's REQUIRES-level ('expert') must never be
     forwarded as the Skill node's own `level` - that would conflate what the
     JOB expects with what the PERSON has demonstrated.
@@ -141,7 +148,10 @@ async def test_link_required_skills_does_not_pass_requires_level_to_skill_upsert
     assert skill_call.args[1]["level"] == "intermediate"
 
     rel_call = mock_repo.upsert_relationship.call_args_list[0]
-    assert rel_call.kwargs["properties"] == {"level": "expert", "importance": "required"}
+    assert rel_call.kwargs["properties"] == {
+        "level": "expert",
+        "importance": "required",
+    }
 
 
 @pytest.mark.anyio
@@ -157,7 +167,9 @@ async def test_link_required_skills_accepts_plain_string_list_back_compat() -> N
 
 
 @pytest.mark.anyio
-async def test_promote_job_llm_analysis_sets_offer_fields_and_requires_properties() -> None:
+async def test_promote_job_llm_analysis_sets_offer_fields_and_requires_properties() -> (
+    None
+):
     """The promote-time LLM analysis call enriches the JobOffer node with
     seniority/experience years and writes per-skill level/importance onto
     REQUIRES - without ever bumping the Skill node's own level.
@@ -188,18 +200,24 @@ async def test_promote_job_llm_analysis_sets_offer_fields_and_requires_propertie
     )
 
     with (
-        patch("app.kg.ingestion.create_company_enrichment_chain") as mock_company_factory,
+        patch(
+            "app.kg.ingestion.create_company_enrichment_chain"
+        ) as mock_company_factory,
         patch("app.kg.ingestion.create_job_analysis_chain") as mock_analysis_factory,
     ):
         mock_company_chain = AsyncMock()
-        mock_company_chain.ainvoke.return_value = _llm_response('{"industry": "", "website": ""}')
+        mock_company_chain.ainvoke.return_value = _llm_response(
+            '{"industry": "", "website": ""}'
+        )
         mock_company_factory.return_value = mock_company_chain
 
         mock_analysis_chain = AsyncMock()
         mock_analysis_chain.ainvoke.return_value = _llm_response(analysis_json)
         mock_analysis_factory.return_value = mock_analysis_chain
 
-        ingestion = KGIngestion(kg_repository=repo, embeddings=embeddings, scrape_ttl_days=7)
+        ingestion = KGIngestion(
+            kg_repository=repo, embeddings=embeddings, scrape_ttl_days=7
+        )
         props, newly = await ingestion.promote_job(job_id="job-2", listing=listing)
 
     assert newly is True
@@ -213,9 +231,14 @@ async def test_promote_job_llm_analysis_sets_offer_fields_and_requires_propertie
         for call in repo.upsert_relationship.await_args_list
         if call.kwargs.get("relationship_type") == "REQUIRES"
     ]
-    by_skill = {call.kwargs["to_id"]: call.kwargs["properties"] for call in requires_calls}
+    by_skill = {
+        call.kwargs["to_id"]: call.kwargs["properties"] for call in requires_calls
+    }
     assert by_skill["skill_python"] == {"level": "advanced", "importance": "required"}
-    assert by_skill["skill_kubernetes"] == {"level": "intermediate", "importance": "preferred"}
+    assert by_skill["skill_kubernetes"] == {
+        "level": "intermediate",
+        "importance": "preferred",
+    }
 
     skill_upserts = [
         call for call in repo.upsert_node.await_args_list if call.args[0] == "Skill"
@@ -226,7 +249,9 @@ async def test_promote_job_llm_analysis_sets_offer_fields_and_requires_propertie
 
 
 @pytest.mark.anyio
-async def test_promote_job_falls_back_to_heuristic_seed_when_llm_analysis_fails() -> None:
+async def test_promote_job_falls_back_to_heuristic_seed_when_llm_analysis_fails() -> (
+    None
+):
     repo = MagicMock()
     repo.get_node = AsyncMock(side_effect=[None, None, None])
     repo.upsert_node = AsyncMock()
@@ -247,19 +272,25 @@ async def test_promote_job_falls_back_to_heuristic_seed_when_llm_analysis_fails(
     }
 
     with (
-        patch("app.kg.ingestion.create_company_enrichment_chain") as mock_company_factory,
+        patch(
+            "app.kg.ingestion.create_company_enrichment_chain"
+        ) as mock_company_factory,
         patch("app.kg.ingestion.create_job_analysis_chain") as mock_analysis_factory,
         patch("app.kg.ingestion.asyncio.sleep", new=AsyncMock()),
     ):
         mock_company_chain = AsyncMock()
-        mock_company_chain.ainvoke.return_value = _llm_response('{"industry": "", "website": ""}')
+        mock_company_chain.ainvoke.return_value = _llm_response(
+            '{"industry": "", "website": ""}'
+        )
         mock_company_factory.return_value = mock_company_chain
 
         mock_analysis_chain = AsyncMock()
         mock_analysis_chain.ainvoke.side_effect = RuntimeError("llm down")
         mock_analysis_factory.return_value = mock_analysis_chain
 
-        ingestion = KGIngestion(kg_repository=repo, embeddings=embeddings, scrape_ttl_days=7)
+        ingestion = KGIngestion(
+            kg_repository=repo, embeddings=embeddings, scrape_ttl_days=7
+        )
         props, newly = await ingestion.promote_job(job_id="job-3", listing=listing)
 
     assert mock_analysis_chain.ainvoke.await_count == 3

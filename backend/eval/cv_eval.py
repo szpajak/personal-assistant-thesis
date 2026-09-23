@@ -4,11 +4,10 @@ from __future__ import annotations
 
 from typing import Any
 
-from eval.dataset_a import PERSON_A, PROJECTS
-
 from app.kg.graphrag import GraphRAG
 from app.kg.repository import KGRepository
-from app.pipelines.cv_pipeline import CVPipeline, _CV_RETRIEVAL_LABELS
+from app.pipelines.cv_pipeline import _CV_RETRIEVAL_LABELS, CVPipeline
+from eval.dataset_a import PERSON_A, PROJECTS
 
 
 def _titles(items: list[dict[str, Any]]) -> set[str]:

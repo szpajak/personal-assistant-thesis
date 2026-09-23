@@ -1,10 +1,16 @@
-import React from 'react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { JobMatch } from '@/types/jobs';
-import { getDisplayScore } from '@/lib/jobMatch';
-import { Briefcase, Bookmark, Calendar, Loader2, Sparkles } from 'lucide-react';
+import React from "react";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { JobMatch } from "@/types/jobs";
+import { getDisplayScore } from "@/lib/jobMatch";
+import { Briefcase, Bookmark, Calendar, Loader2, Sparkles } from "lucide-react";
 
 interface JobCardProps {
   match: JobMatch;
@@ -36,15 +42,15 @@ export const JobCard: React.FC<JobCardProps> = ({
   const quickPercent = Math.round((match.quick_score ?? score) * 100);
   const displayPercent = Math.round(getDisplayScore(match) * 100);
   const matching = new Set(
-    (match.matching_skills || []).map((s) => s.toLowerCase())
+    (match.matching_skills || []).map((s) => s.toLowerCase()),
   );
-  const isCareer = job.tier === 'career';
-  const hasLlm = match.source === 'llm';
+  const isCareer = job.tier === "career";
+  const hasLlm = match.source === "llm";
 
   const getMatchColor = (percent: number) => {
-    if (percent >= 80) return 'bg-green-100 text-green-800 border-green-200';
-    if (percent >= 60) return 'bg-amber-100 text-amber-800 border-amber-200';
-    return 'bg-red-100 text-red-800 border-red-200';
+    if (percent >= 80) return "bg-green-100 text-green-800 border-green-200";
+    if (percent >= 60) return "bg-amber-100 text-amber-800 border-amber-200";
+    return "bg-red-100 text-red-800 border-red-200";
   };
 
   return (
@@ -78,11 +84,11 @@ export const JobCard: React.FC<JobCardProps> = ({
               variant="secondary"
               className={
                 isCareer
-                  ? 'bg-indigo-50 text-indigo-700 border-indigo-100'
-                  : 'bg-slate-100 text-slate-600'
+                  ? "bg-indigo-50 text-indigo-700 border-indigo-100"
+                  : "bg-slate-100 text-slate-600"
               }
             >
-              {isCareer ? 'Saved' : 'Discovered'}
+              {isCareer ? "Saved" : "Discovered"}
             </Badge>
           </div>
           <span className="text-xs text-muted-foreground flex items-center shrink-0">
@@ -114,8 +120,8 @@ export const JobCard: React.FC<JobCardProps> = ({
                 variant="secondary"
                 className={`text-[10px] px-2 py-0 ${
                   isMatch
-                    ? 'bg-green-100 text-green-800 border-green-200'
-                    : 'bg-slate-100 text-slate-600'
+                    ? "bg-green-100 text-green-800 border-green-200"
+                    : "bg-slate-100 text-slate-600"
                 }`}
               >
                 {skill}
@@ -176,7 +182,7 @@ export const JobCard: React.FC<JobCardProps> = ({
           onClick={() => onApply?.(job.id)}
           disabled={isApplying || !onApply}
         >
-          {isApplying ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Apply'}
+          {isApplying ? <Loader2 className="h-3 w-3 animate-spin" /> : "Apply"}
         </Button>
       </CardFooter>
     </Card>

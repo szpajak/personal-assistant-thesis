@@ -55,7 +55,9 @@ class JobSearchFilters:
         )
 
 
-def _scrape_jobs_sync(site: str, search_term: str, filters: JobSearchFilters) -> pd.DataFrame:
+def _scrape_jobs_sync(
+    site: str, search_term: str, filters: JobSearchFilters
+) -> pd.DataFrame:
     """Blocking scrape call executed in a worker thread.
 
     Fetches ``results_wanted`` results in batches of
@@ -205,7 +207,9 @@ def _map_row_to_scraped_job(
 
     posted_at = row.get("date_posted")
     posted_at_str = None
-    if posted_at is not None and not (isinstance(posted_at, float) and pd.isna(posted_at)):
+    if posted_at is not None and not (
+        isinstance(posted_at, float) and pd.isna(posted_at)
+    ):
         posted_at_str = str(posted_at)
 
     return ScrapedJob(

@@ -2,10 +2,23 @@
 
 import React from "react";
 import { SuggestedProject } from "@/types/skills";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Laptop, Loader2, Plus, ChevronDown, ChevronUp, Check } from "lucide-react";
+import {
+  Laptop,
+  Loader2,
+  Plus,
+  ChevronDown,
+  ChevronUp,
+  Check,
+} from "lucide-react";
 import { useCreateProjectFromSuggestion } from "@/hooks/usePortfolio";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -39,7 +52,8 @@ function ProjectBrief({ project }: { project: SuggestedProject }) {
               </>
             ) : (
               <>
-                <ChevronDown className="mr-1 h-3 w-3" /> View steps & deliverables
+                <ChevronDown className="mr-1 h-3 w-3" /> View steps &
+                deliverables
               </>
             )}
           </Button>
@@ -81,7 +95,10 @@ export function ProjectSuggestionsCard({
   const { toast } = useToast();
   const startMutation = useCreateProjectFromSuggestion();
   const [pendingTitle, setPendingTitle] = React.useState<string | null>(null);
-  const includedSet = React.useMemo(() => new Set(includedTitles), [includedTitles]);
+  const includedSet = React.useMemo(
+    () => new Set(includedTitles),
+    [includedTitles],
+  );
 
   if (!projects || projects.length === 0) return null;
 
@@ -93,7 +110,8 @@ export function ProjectSuggestionsCard({
           Suggested Projects
         </CardTitle>
         <CardDescription>
-          Portfolio briefs with steps and deliverables that batch related skill gaps.
+          Portfolio briefs with steps and deliverables that batch related skill
+          gaps.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -108,17 +126,25 @@ export function ProjectSuggestionsCard({
                 <ProjectBrief project={project} />
               </div>
               <div className="flex flex-wrap gap-1 mb-4">
-                {(project.skills_covered || project.tech_stack || []).map((skill) => (
-                  <Badge key={skill} variant="secondary" className="text-[10px]">
-                    {skill}
-                  </Badge>
-                ))}
+                {(project.skills_covered || project.tech_stack || []).map(
+                  (skill) => (
+                    <Badge
+                      key={skill}
+                      variant="secondary"
+                      className="text-[10px]"
+                    >
+                      {skill}
+                    </Badge>
+                  ),
+                )}
               </div>
               <div className="mt-auto flex items-center gap-2">
                 {onToggleInclude && (
                   <Button
                     size="sm"
-                    variant={includedSet.has(project.title) ? "secondary" : "outline"}
+                    variant={
+                      includedSet.has(project.title) ? "secondary" : "outline"
+                    }
                     className="gap-1"
                     onClick={() => onToggleInclude(project.title)}
                   >
@@ -135,7 +161,9 @@ export function ProjectSuggestionsCard({
                   size="sm"
                   variant="ghost"
                   className="gap-1"
-                  disabled={startMutation.isPending && pendingTitle === project.title}
+                  disabled={
+                    startMutation.isPending && pendingTitle === project.title
+                  }
                   onClick={() => {
                     setPendingTitle(project.title);
                     startMutation.mutate(project, {

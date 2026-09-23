@@ -227,9 +227,7 @@ def normalize_skill_analysis(result: dict[str, Any]) -> dict[str, Any]:
     for project in result.get("suggested_projects", []):
         if not isinstance(project, dict):
             continue
-        skills_covered = [
-            str(s) for s in (project.get("skills_covered") or []) if s
-        ]
+        skills_covered = [str(s) for s in (project.get("skills_covered") or []) if s]
         tech_stack = [str(t) for t in (project.get("tech_stack") or []) if t]
         key_steps = [
             str(s).strip() for s in (project.get("key_steps") or []) if str(s).strip()
@@ -361,7 +359,7 @@ class SkillAnalysisPipeline:
         return await self._fetch_global_market_data()
 
     async def _fetch_global_market_data(self) -> dict[str, Any]:
-        """"Whole market" mode: pure Cypher aggregate, no GraphRAG - "most
+        """ "Whole market" mode: pure Cypher aggregate, no GraphRAG - "most
         required skills across every career JobOffer" is a plain COUNT,
         not a retrieval problem.
         """

@@ -73,7 +73,8 @@ export default function CareerPage() {
   const { data: employment, isLoading: empLoading } = useEmployment();
   const { data: education, isLoading: eduLoading } = useEducation();
   const { data: roles, isLoading: rolesLoading } = useTargetRoles();
-  const { data: profileDetails, isLoading: profileLoading } = useProfileDetails();
+  const { data: profileDetails, isLoading: profileLoading } =
+    useProfileDetails();
 
   const createEmp = useCreateEmployment();
   const updateEmp = useUpdateEmployment();
@@ -165,7 +166,8 @@ export default function CareerPage() {
 
   const submitEmployment = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!empForm.title.trim() || !empForm.company.trim() || !empForm.start_date) return;
+    if (!empForm.title.trim() || !empForm.company.trim() || !empForm.start_date)
+      return;
     const payload = {
       title: empForm.title.trim(),
       company: empForm.company.trim(),
@@ -188,7 +190,12 @@ export default function CareerPage() {
 
   const submitEducation = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!eduForm.institution.trim() || !eduForm.degree.trim() || !eduForm.start_date) return;
+    if (
+      !eduForm.institution.trim() ||
+      !eduForm.degree.trim() ||
+      !eduForm.start_date
+    )
+      return;
     const payload = {
       institution: eduForm.institution.trim(),
       degree: eduForm.degree.trim(),
@@ -228,9 +235,12 @@ export default function CareerPage() {
     <div className="space-y-8 pb-12">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Career Experience</h1>
+          <h1 className="text-2xl font-bold tracking-tight">
+            Career Experience
+          </h1>
           <p className="text-sm text-gray-500">
-            Track employment, education, and target roles — stored in your knowledge graph.
+            Track employment, education, and target roles — stored in your
+            knowledge graph.
           </p>
         </div>
         <div>
@@ -258,25 +268,39 @@ export default function CareerPage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardContent className="pt-6">
-              <p className="text-xs uppercase tracking-wider text-muted-foreground">Years of experience</p>
-              <p className="text-3xl font-bold mt-1">{summary?.total_years_experience ?? 0}</p>
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                Years of experience
+              </p>
+              <p className="text-3xl font-bold mt-1">
+                {summary?.total_years_experience ?? 0}
+              </p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="pt-6">
-              <p className="text-xs uppercase tracking-wider text-muted-foreground">Roles</p>
-              <p className="text-3xl font-bold mt-1">{summary?.employment_count ?? 0}</p>
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                Roles
+              </p>
+              <p className="text-3xl font-bold mt-1">
+                {summary?.employment_count ?? 0}
+              </p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="pt-6">
-              <p className="text-xs uppercase tracking-wider text-muted-foreground">Education</p>
-              <p className="text-3xl font-bold mt-1">{summary?.education_count ?? 0}</p>
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                Education
+              </p>
+              <p className="text-3xl font-bold mt-1">
+                {summary?.education_count ?? 0}
+              </p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="pt-6">
-              <p className="text-xs uppercase tracking-wider text-muted-foreground">Current</p>
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                Current
+              </p>
               <p className="text-sm font-semibold mt-2 line-clamp-2">
                 {summary?.current_title
                   ? `${summary.current_title} @ ${summary.current_company}`
@@ -294,8 +318,8 @@ export default function CareerPage() {
             Contact &amp; Profile Details
           </CardTitle>
           <p className="text-sm text-gray-500">
-            Shown on your generated CV header, Certifications &amp; Awards, and Additional
-            Information sections.
+            Shown on your generated CV header, Certifications &amp; Awards, and
+            Additional Information sections.
           </p>
         </CardHeader>
         <CardContent>
@@ -308,7 +332,9 @@ export default function CareerPage() {
                   <Label>Phone</Label>
                   <Input
                     value={profileForm.phone}
-                    onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })}
+                    onChange={(e) =>
+                      setProfileForm({ ...profileForm, phone: e.target.value })
+                    }
                     placeholder="(555) 123-4567"
                   />
                 </div>
@@ -316,7 +342,12 @@ export default function CareerPage() {
                   <Label>Location</Label>
                   <Input
                     value={profileForm.location}
-                    onChange={(e) => setProfileForm({ ...profileForm, location: e.target.value })}
+                    onChange={(e) =>
+                      setProfileForm({
+                        ...profileForm,
+                        location: e.target.value,
+                      })
+                    }
                     placeholder="San Francisco, CA"
                   />
                 </div>
@@ -325,7 +356,10 @@ export default function CareerPage() {
                   <Input
                     value={profileForm.linkedin_url}
                     onChange={(e) =>
-                      setProfileForm({ ...profileForm, linkedin_url: e.target.value })
+                      setProfileForm({
+                        ...profileForm,
+                        linkedin_url: e.target.value,
+                      })
                     }
                     placeholder="https://linkedin.com/in/..."
                   />
@@ -335,7 +369,10 @@ export default function CareerPage() {
                   <Input
                     value={profileForm.github_url}
                     onChange={(e) =>
-                      setProfileForm({ ...profileForm, github_url: e.target.value })
+                      setProfileForm({
+                        ...profileForm,
+                        github_url: e.target.value,
+                      })
                     }
                     placeholder="https://github.com/..."
                   />
@@ -345,7 +382,10 @@ export default function CareerPage() {
                   <Input
                     value={profileForm.website_url}
                     onChange={(e) =>
-                      setProfileForm({ ...profileForm, website_url: e.target.value })
+                      setProfileForm({
+                        ...profileForm,
+                        website_url: e.target.value,
+                      })
                     }
                     placeholder="https://..."
                   />
@@ -355,7 +395,10 @@ export default function CareerPage() {
                   <Input
                     value={profileForm.languages_spoken}
                     onChange={(e) =>
-                      setProfileForm({ ...profileForm, languages_spoken: e.target.value })
+                      setProfileForm({
+                        ...profileForm,
+                        languages_spoken: e.target.value,
+                      })
                     }
                     placeholder="English (Native), Mandarin (Conversational)"
                   />
@@ -365,7 +408,12 @@ export default function CareerPage() {
                 <Label>Interests</Label>
                 <Input
                   value={profileForm.interests}
-                  onChange={(e) => setProfileForm({ ...profileForm, interests: e.target.value })}
+                  onChange={(e) =>
+                    setProfileForm({
+                      ...profileForm,
+                      interests: e.target.value,
+                    })
+                  }
                   placeholder="Contributing to open source, technical writing, ..."
                 />
               </div>
@@ -373,7 +421,9 @@ export default function CareerPage() {
                 <Label>Bio</Label>
                 <Textarea
                   value={profileForm.bio}
-                  onChange={(e) => setProfileForm({ ...profileForm, bio: e.target.value })}
+                  onChange={(e) =>
+                    setProfileForm({ ...profileForm, bio: e.target.value })
+                  }
                   rows={2}
                 />
               </div>
@@ -381,9 +431,13 @@ export default function CareerPage() {
                 <Label>Awards (one per line)</Label>
                 <Textarea
                   value={profileForm.awards}
-                  onChange={(e) => setProfileForm({ ...profileForm, awards: e.target.value })}
+                  onChange={(e) =>
+                    setProfileForm({ ...profileForm, awards: e.target.value })
+                  }
                   rows={3}
-                  placeholder={"AWS Certified Solutions Architect - Associate (2023)\nEmployee of the Quarter (Q3 2022)"}
+                  placeholder={
+                    "AWS Certified Solutions Architect - Associate (2023)\nEmployee of the Quarter (Q3 2022)"
+                  }
                 />
               </div>
               <Button type="submit" disabled={updateProfileDetails.isPending}>
@@ -409,7 +463,9 @@ export default function CareerPage() {
                   <Label>Title</Label>
                   <Input
                     value={empForm.title}
-                    onChange={(e) => setEmpForm({ ...empForm, title: e.target.value })}
+                    onChange={(e) =>
+                      setEmpForm({ ...empForm, title: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -417,7 +473,9 @@ export default function CareerPage() {
                   <Label>Company</Label>
                   <Input
                     value={empForm.company}
-                    onChange={(e) => setEmpForm({ ...empForm, company: e.target.value })}
+                    onChange={(e) =>
+                      setEmpForm({ ...empForm, company: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -428,7 +486,9 @@ export default function CareerPage() {
                   <Input
                     type="date"
                     value={empForm.start_date}
-                    onChange={(e) => setEmpForm({ ...empForm, start_date: e.target.value })}
+                    onChange={(e) =>
+                      setEmpForm({ ...empForm, start_date: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -437,7 +497,9 @@ export default function CareerPage() {
                   <Input
                     type="date"
                     value={empForm.end_date}
-                    onChange={(e) => setEmpForm({ ...empForm, end_date: e.target.value })}
+                    onChange={(e) =>
+                      setEmpForm({ ...empForm, end_date: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -445,7 +507,9 @@ export default function CareerPage() {
                 <Label>Description</Label>
                 <Textarea
                   value={empForm.description}
-                  onChange={(e) => setEmpForm({ ...empForm, description: e.target.value })}
+                  onChange={(e) =>
+                    setEmpForm({ ...empForm, description: e.target.value })
+                  }
                   rows={3}
                 />
               </div>
@@ -453,11 +517,16 @@ export default function CareerPage() {
                 <Label>Skills (comma-separated)</Label>
                 <Input
                   value={empForm.skills}
-                  onChange={(e) => setEmpForm({ ...empForm, skills: e.target.value })}
+                  onChange={(e) =>
+                    setEmpForm({ ...empForm, skills: e.target.value })
+                  }
                 />
               </div>
               <div className="flex gap-2">
-                <Button type="submit" disabled={createEmp.isPending || updateEmp.isPending}>
+                <Button
+                  type="submit"
+                  disabled={createEmp.isPending || updateEmp.isPending}
+                >
                   <Plus className="mr-2 h-4 w-4" />
                   {editingEmpId ? "Update" : "Add"}
                 </Button>
@@ -491,7 +560,9 @@ export default function CareerPage() {
                 <Label>Institution</Label>
                 <Input
                   value={eduForm.institution}
-                  onChange={(e) => setEduForm({ ...eduForm, institution: e.target.value })}
+                  onChange={(e) =>
+                    setEduForm({ ...eduForm, institution: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -500,7 +571,9 @@ export default function CareerPage() {
                   <Label>Degree</Label>
                   <Input
                     value={eduForm.degree}
-                    onChange={(e) => setEduForm({ ...eduForm, degree: e.target.value })}
+                    onChange={(e) =>
+                      setEduForm({ ...eduForm, degree: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -508,7 +581,9 @@ export default function CareerPage() {
                   <Label>Field</Label>
                   <Input
                     value={eduForm.field_of_study}
-                    onChange={(e) => setEduForm({ ...eduForm, field_of_study: e.target.value })}
+                    onChange={(e) =>
+                      setEduForm({ ...eduForm, field_of_study: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -518,7 +593,9 @@ export default function CareerPage() {
                   <Input
                     type="date"
                     value={eduForm.start_date}
-                    onChange={(e) => setEduForm({ ...eduForm, start_date: e.target.value })}
+                    onChange={(e) =>
+                      setEduForm({ ...eduForm, start_date: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -527,12 +604,17 @@ export default function CareerPage() {
                   <Input
                     type="date"
                     value={eduForm.end_date}
-                    onChange={(e) => setEduForm({ ...eduForm, end_date: e.target.value })}
+                    onChange={(e) =>
+                      setEduForm({ ...eduForm, end_date: e.target.value })
+                    }
                   />
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button type="submit" disabled={createEdu.isPending || updateEdu.isPending}>
+                <Button
+                  type="submit"
+                  disabled={createEdu.isPending || updateEdu.isPending}
+                >
                   <Plus className="mr-2 h-4 w-4" />
                   {editingEduId ? "Update" : "Add"}
                 </Button>
@@ -567,16 +649,24 @@ export default function CareerPage() {
                 <CardContent className="pt-4 flex justify-between gap-4">
                   <div>
                     <p className="font-semibold">{item.title}</p>
-                    <p className="text-sm text-muted-foreground">{item.company}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {item.company}
+                    </p>
                     <p className="text-xs text-muted-foreground mt-1">
                       {item.start_date} – {item.end_date || "Present"}
                     </p>
                     {item.description && (
-                      <p className="text-sm mt-2 line-clamp-2">{item.description}</p>
+                      <p className="text-sm mt-2 line-clamp-2">
+                        {item.description}
+                      </p>
                     )}
                   </div>
                   <div className="flex gap-1 shrink-0">
-                    <Button variant="ghost" size="icon" onClick={() => startEditEmployment(item)}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => startEditEmployment(item)}
+                    >
                       <Pencil className="h-4 w-4" />
                     </Button>
                     <Button
@@ -593,7 +683,9 @@ export default function CareerPage() {
             ))}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground">No employment entries yet.</p>
+          <p className="text-sm text-muted-foreground">
+            No employment entries yet.
+          </p>
         )}
       </section>
 
@@ -619,7 +711,11 @@ export default function CareerPage() {
                     </p>
                   </div>
                   <div className="flex gap-1 shrink-0">
-                    <Button variant="ghost" size="icon" onClick={() => startEditEducation(item)}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => startEditEducation(item)}
+                    >
                       <Pencil className="h-4 w-4" />
                     </Button>
                     <Button
@@ -636,7 +732,9 @@ export default function CareerPage() {
             ))}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground">No education entries yet.</p>
+          <p className="text-sm text-muted-foreground">
+            No education entries yet.
+          </p>
         )}
       </section>
 
@@ -653,8 +751,9 @@ export default function CareerPage() {
           </Button>
         </div>
         <p className="text-sm text-muted-foreground">
-          Read-only here — required skills are derived from real job postings sampled for
-          each role. Add, refresh, or remove roles from the Skills page.
+          Read-only here — required skills are derived from real job postings
+          sampled for each role. Add, refresh, or remove roles from the Skills
+          page.
         </p>
         {rolesLoading ? (
           <Skeleton className="h-20 w-full" />
@@ -682,7 +781,11 @@ export default function CareerPage() {
                   </p>
                   <div className="flex flex-wrap gap-1">
                     {(role.required_skills || []).slice(0, 12).map((s) => (
-                      <Badge key={s} variant="secondary" className="text-[10px]">
+                      <Badge
+                        key={s}
+                        variant="secondary"
+                        className="text-[10px]"
+                      >
                         {s}
                       </Badge>
                     ))}

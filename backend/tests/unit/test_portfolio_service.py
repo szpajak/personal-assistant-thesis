@@ -118,7 +118,11 @@ async def test_create_project_enrichment_never_overrides_user_level() -> None:
         description="Used CI/CD pipelines to deploy the service automatically.",
         tech_stack=["Python"],
         start_date=date(2023, 1, 1),
-        skills=[SkillDraft(name="Python", category="technical", level="expert", confidence=1.0)],
+        skills=[
+            SkillDraft(
+                name="Python", category="technical", level="expert", confidence=1.0
+            )
+        ],
     )
 
     # The LLM (mis)behaves and returns a different level for the user-listed
@@ -171,7 +175,11 @@ async def test_create_project_skip_enrichment_uses_confirmed_draft() -> None:
         seniority="lead",
         skills=[
             SkillDraft(
-                name="Rust", canonical_name="Rust", category="language", level="expert", confidence=0.9
+                name="Rust",
+                canonical_name="Rust",
+                category="language",
+                level="expert",
+                confidence=0.9,
             )
         ],
         skip_enrichment=True,

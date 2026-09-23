@@ -9,7 +9,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-  SheetFooter
+  SheetFooter,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,16 +30,33 @@ import { PortfolioService } from "@/lib/api";
 import { apiFetch } from "@/lib/apiFetch";
 import { useUser } from "@/hooks/useAuth";
 import { normalizeSkillDraft } from "@/hooks/usePortfolio";
-import type { Project, ProjectDraft, ProjectStatus, SkillDraft, SkillLevel } from "@/types/portfolio";
+import type {
+  Project,
+  ProjectDraft,
+  ProjectStatus,
+  SkillDraft,
+  SkillLevel,
+} from "@/types/portfolio";
 
-const SKILL_LEVEL_OPTIONS: SkillLevel[] = ["beginner", "intermediate", "advanced", "expert"];
+const SKILL_LEVEL_OPTIONS: SkillLevel[] = [
+  "beginner",
+  "intermediate",
+  "advanced",
+  "expert",
+];
 
 function capitalize(value: string): string {
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
 function emptySkillDraft(name: string, level: SkillLevel): SkillDraft {
-  return { name, canonical_name: null, category: "technical", level, confidence: 1.0 };
+  return {
+    name,
+    canonical_name: null,
+    category: "technical",
+    level,
+    confidence: 1.0,
+  };
 }
 
 /**
@@ -87,7 +104,11 @@ interface AddProjectSheetProps {
   project?: Project | null;
 }
 
-export function AddProjectSheet({ open, onOpenChange, project = null }: AddProjectSheetProps) {
+export function AddProjectSheet({
+  open,
+  onOpenChange,
+  project = null,
+}: AddProjectSheetProps) {
   const queryClient = useQueryClient();
   const { data: user } = useUser();
   const [file, setFile] = useState<File | null>(null);
@@ -99,14 +120,15 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
   // Category and project seniority are still filled in automatically on save.
   const [formSkills, setFormSkills] = useState<SkillDraft[]>([]);
   const [newSkillName, setNewSkillName] = useState("");
-  const [newSkillLevel, setNewSkillLevel] = useState<SkillLevel>("intermediate");
+  const [newSkillLevel, setNewSkillLevel] =
+    useState<SkillLevel>("intermediate");
 
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
       title: "",
       description: "",
-      start_date: new Date().toISOString().split('T')[0],
+      start_date: new Date().toISOString().split("T")[0],
       end_date: "",
       status: "in_progress",
     },
@@ -123,9 +145,11 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
         status: project.status || "in_progress",
       });
       setFormSkills(
-        (project.skills && project.skills.length > 0
+        project.skills && project.skills.length > 0
           ? project.skills
-          : (project.tech_stack || []).map((name) => emptySkillDraft(name, "intermediate")))
+          : (project.tech_stack || []).map((name) =>
+              emptySkillDraft(name, "intermediate"),
+            ),
       );
     } else {
       form.reset({
@@ -188,7 +212,7 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
   const extractMutation = useMutation({
     mutationFn: (file: File) => {
       return PortfolioService.uploadProjectDocumentApiV1PortfolioUploadPost({
-        file: file as any
+        file: file as any,
       });
     },
     onSuccess: (response) => {
@@ -205,7 +229,7 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
         title: draft.title,
         description: draft.description,
         tech_stack: draft.skills.map((s) => s.canonical_name || s.name),
-        start_date: draft.start_date || new Date().toISOString().split('T')[0],
+        start_date: draft.start_date || new Date().toISOString().split("T")[0],
         end_date: draft.end_date || null,
         media_urls: draft.media_urls,
         seniority: draft.seniority,
@@ -252,11 +276,15 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
   };
 
   const updateFormSkillLevel = (index: number, level: SkillLevel) => {
-    setFormSkills((prev) => prev.map((s, i) => (i === index ? { ...s, level } : s)));
+    setFormSkills((prev) =>
+      prev.map((s, i) => (i === index ? { ...s, level } : s)),
+    );
   };
 
   const updateDraft = (index: number, patch: Partial<ProjectDraft>) => {
-    setDrafts((prev) => prev.map((d, i) => (i === index ? { ...d, ...patch } : d)));
+    setDrafts((prev) =>
+      prev.map((d, i) => (i === index ? { ...d, ...patch } : d)),
+    );
   };
 
   const removeDraftSkill = (index: number, skillIndex: number) => {
@@ -264,21 +292,27 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
       prev.map((d, i) =>
         i === index
           ? { ...d, skills: d.skills.filter((_, si) => si !== skillIndex) }
-          : d
-      )
+          : d,
+      ),
     );
   };
 
-  const updateDraftSkillLevel = (index: number, skillIndex: number, level: SkillLevel) => {
+  const updateDraftSkillLevel = (
+    index: number,
+    skillIndex: number,
+    level: SkillLevel,
+  ) => {
     setDrafts((prev) =>
       prev.map((d, i) =>
         i === index
           ? {
               ...d,
-              skills: d.skills.map((s, si) => (si === skillIndex ? { ...s, level } : s)),
+              skills: d.skills.map((s, si) =>
+                si === skillIndex ? { ...s, level } : s,
+              ),
             }
-          : d
-      )
+          : d,
+      ),
     );
   };
 
@@ -325,8 +359,8 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
                 </Button>
               </div>
               <p className="text-[10px] text-gray-500">
-                Supported: PDF, DOCX, TXT. A CV may yield several projects &mdash; review and
-                confirm each one below before it is saved.
+                Supported: PDF, DOCX, TXT. A CV may yield several projects
+                &mdash; review and confirm each one below before it is saved.
               </p>
             </div>
           )}
@@ -354,7 +388,9 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
                     <Label>Title</Label>
                     <Input
                       value={draft.title}
-                      onChange={(e) => updateDraft(index, { title: e.target.value })}
+                      onChange={(e) =>
+                        updateDraft(index, { title: e.target.value })
+                      }
                     />
                   </div>
 
@@ -362,55 +398,70 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
                     <Label>Description</Label>
                     <Textarea
                       value={draft.description}
-                      onChange={(e) => updateDraft(index, { description: e.target.value })}
+                      onChange={(e) =>
+                        updateDraft(index, { description: e.target.value })
+                      }
                     />
                   </div>
 
                   <div className="space-y-2">
                     <Label>Skills</Label>
                     <p className="text-[10px] text-gray-500">
-                      Levels are assessed automatically &mdash; adjust any that don&apos;t look right.
+                      Levels are assessed automatically &mdash; adjust any that
+                      don&apos;t look right.
                     </p>
                     <div className="space-y-1.5">
                       {draft.skills.length === 0 && (
-                        <span className="text-xs text-gray-500">No skills detected.</span>
+                        <span className="text-xs text-gray-500">
+                          No skills detected.
+                        </span>
                       )}
-                      {draft.skills.map((skill: SkillDraft, skillIndex: number) => (
-                        <div
-                          key={skillIndex}
-                          className="flex items-center gap-2 rounded-md border px-2 py-1.5"
-                        >
-                          <div className="min-w-0 flex-1">
-                            <span className="block truncate text-sm font-medium">
-                              {skill.canonical_name || skill.name}
-                            </span>
-                            <span className="text-[10px] text-gray-500">{skill.category}</span>
+                      {draft.skills.map(
+                        (skill: SkillDraft, skillIndex: number) => (
+                          <div
+                            key={skillIndex}
+                            className="flex items-center gap-2 rounded-md border px-2 py-1.5"
+                          >
+                            <div className="min-w-0 flex-1">
+                              <span className="block truncate text-sm font-medium">
+                                {skill.canonical_name || skill.name}
+                              </span>
+                              <span className="text-[10px] text-gray-500">
+                                {skill.category}
+                              </span>
+                            </div>
+                            <Select
+                              value={skill.level}
+                              onValueChange={(value) =>
+                                updateDraftSkillLevel(
+                                  index,
+                                  skillIndex,
+                                  value as SkillLevel,
+                                )
+                              }
+                            >
+                              <SelectTrigger className="h-8 w-[125px] shrink-0">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {SKILL_LEVEL_OPTIONS.map((level) => (
+                                  <SelectItem key={level} value={level}>
+                                    {capitalize(level)}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                removeDraftSkill(index, skillIndex)
+                              }
+                            >
+                              <X className="h-3.5 w-3.5" />
+                            </button>
                           </div>
-                          <Select
-                            value={skill.level}
-                            onValueChange={(value) =>
-                              updateDraftSkillLevel(index, skillIndex, value as SkillLevel)
-                            }
-                          >
-                            <SelectTrigger className="h-8 w-[125px] shrink-0">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {SKILL_LEVEL_OPTIONS.map((level) => (
-                                <SelectItem key={level} value={level}>
-                                  {capitalize(level)}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <button
-                            type="button"
-                            onClick={() => removeDraftSkill(index, skillIndex)}
-                          >
-                            <X className="h-3.5 w-3.5" />
-                          </button>
-                        </div>
-                      ))}
+                        ),
+                      )}
                     </div>
                   </div>
 
@@ -420,7 +471,11 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
                       <Input
                         type="date"
                         value={draft.start_date ?? ""}
-                        onChange={(e) => updateDraft(index, { start_date: e.target.value || null })}
+                        onChange={(e) =>
+                          updateDraft(index, {
+                            start_date: e.target.value || null,
+                          })
+                        }
                       />
                     </div>
                     <div className="space-y-2">
@@ -428,7 +483,11 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
                       <Input
                         type="date"
                         value={draft.end_date ?? ""}
-                        onChange={(e) => updateDraft(index, { end_date: e.target.value || null })}
+                        onChange={(e) =>
+                          updateDraft(index, {
+                            end_date: e.target.value || null,
+                          })
+                        }
                       />
                     </div>
                   </div>
@@ -438,7 +497,9 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
                     <Select
                       value={draft.seniority ?? "none"}
                       onValueChange={(value) =>
-                        updateDraft(index, { seniority: value === "none" ? null : value })
+                        updateDraft(index, {
+                          seniority: value === "none" ? null : value,
+                        })
                       }
                     >
                       <SelectTrigger>
@@ -490,21 +551,39 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white px-2 text-gray-500">Or Manual Entry</span>
+              <span className="bg-white px-2 text-gray-500">
+                Or Manual Entry
+              </span>
             </div>
           </div>
 
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="title">Project Title</Label>
-              <Input id="title" {...form.register("title")} placeholder="e.g. Personal Portfolio" />
-              {form.formState.errors.title && <p className="text-xs text-red-500">{form.formState.errors.title.message}</p>}
+              <Input
+                id="title"
+                {...form.register("title")}
+                placeholder="e.g. Personal Portfolio"
+              />
+              {form.formState.errors.title && (
+                <p className="text-xs text-red-500">
+                  {form.formState.errors.title.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="description">Description</Label>
-              <Textarea id="description" {...form.register("description")} placeholder="Describe what you built..." />
-              {form.formState.errors.description && <p className="text-xs text-red-500">{form.formState.errors.description.message}</p>}
+              <Textarea
+                id="description"
+                {...form.register("description")}
+                placeholder="Describe what you built..."
+              />
+              {form.formState.errors.description && (
+                <p className="text-xs text-red-500">
+                  {form.formState.errors.description.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -512,15 +591,23 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
               <div className="space-y-1.5">
                 {formSkills.length === 0 && (
                   <p className="text-xs text-gray-500">
-                    Add each skill you used and rate your own proficiency with it.
+                    Add each skill you used and rate your own proficiency with
+                    it.
                   </p>
                 )}
                 {formSkills.map((skill, index) => (
-                  <div key={index} className="flex items-center gap-2 rounded-md border px-2 py-1.5">
-                    <span className="min-w-0 flex-1 truncate text-sm font-medium">{skill.name}</span>
+                  <div
+                    key={index}
+                    className="flex items-center gap-2 rounded-md border px-2 py-1.5"
+                  >
+                    <span className="min-w-0 flex-1 truncate text-sm font-medium">
+                      {skill.name}
+                    </span>
                     <Select
                       value={skill.level}
-                      onValueChange={(value) => updateFormSkillLevel(index, value as SkillLevel)}
+                      onValueChange={(value) =>
+                        updateFormSkillLevel(index, value as SkillLevel)
+                      }
                     >
                       <SelectTrigger className="h-8 w-[125px] shrink-0">
                         <SelectValue />
@@ -533,7 +620,10 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
                         ))}
                       </SelectContent>
                     </Select>
-                    <button type="button" onClick={() => removeFormSkill(index)}>
+                    <button
+                      type="button"
+                      onClick={() => removeFormSkill(index)}
+                    >
                       <X className="h-3.5 w-3.5" />
                     </button>
                   </div>
@@ -553,7 +643,12 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
                   }}
                   className="flex-1"
                 />
-                <Select value={newSkillLevel} onValueChange={(value) => setNewSkillLevel(value as SkillLevel)}>
+                <Select
+                  value={newSkillLevel}
+                  onValueChange={(value) =>
+                    setNewSkillLevel(value as SkillLevel)
+                  }
+                >
                   <SelectTrigger className="h-9 w-[125px] shrink-0">
                     <SelectValue />
                   </SelectTrigger>
@@ -565,12 +660,18 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
                     ))}
                   </SelectContent>
                 </Select>
-                <Button type="button" size="sm" variant="outline" onClick={addFormSkill}>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={addFormSkill}
+                >
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
               <p className="text-[10px] text-gray-500">
-                Skill categories and project seniority are assessed automatically on save.
+                Skill categories and project seniority are assessed
+                automatically on save.
               </p>
             </div>
 
@@ -578,7 +679,9 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
               <Label htmlFor="status">Status</Label>
               <Select
                 value={form.watch("status")}
-                onValueChange={(v) => form.setValue("status", v as ProjectStatus)}
+                onValueChange={(v) =>
+                  form.setValue("status", v as ProjectStatus)
+                }
               >
                 <SelectTrigger id="status">
                   <SelectValue />
@@ -592,24 +695,35 @@ export function AddProjectSheet({ open, onOpenChange, project = null }: AddProje
                 </SelectContent>
               </Select>
               <p className="text-[10px] text-gray-500">
-                Skills from Planned / In Progress projects are not added to your verified skillset until Finished.
+                Skills from Planned / In Progress projects are not added to your
+                verified skillset until Finished.
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="start_date">Start Date</Label>
-                <Input id="start_date" type="date" {...form.register("start_date")} />
+                <Input
+                  id="start_date"
+                  type="date"
+                  {...form.register("start_date")}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="end_date">End Date (Optional)</Label>
-                <Input id="end_date" type="date" {...form.register("end_date")} />
+                <Input
+                  id="end_date"
+                  type="date"
+                  {...form.register("end_date")}
+                />
               </div>
             </div>
 
             <SheetFooter className="pt-4">
               <Button type="submit" disabled={isPending} className="w-full">
-                {createMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {createMutation.isPending && (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
                 Save Project
               </Button>
             </SheetFooter>

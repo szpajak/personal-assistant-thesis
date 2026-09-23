@@ -205,9 +205,7 @@ def text_mentions_org(text: str, org: str) -> bool:
     needle = normalize_org(org)
     if len(needle) < 4:
         return False
-    return bool(
-        re.search(rf"(?:^| ){re.escape(needle)}(?: |$)", normalize_org(text))
-    )
+    return bool(re.search(rf"(?:^| ){re.escape(needle)}(?: |$)", normalize_org(text)))
 
 
 def text_mentions_title(text: str, title: str) -> bool:
@@ -247,9 +245,7 @@ _ORG_STOP = {
 }
 
 
-def _company_supported(
-    company: str, *, entity_name: str, message: str
-) -> bool:
+def _company_supported(company: str, *, entity_name: str, message: str) -> bool:
     """True when this company is the one the message is about.
 
     A name extracted by the model has to match. A different company that
@@ -312,9 +308,7 @@ def choose_application(
 
     # The subject names a different application. Leave this message
     # unattached rather than filing it on the company that happened to match.
-    outside = [
-        application for application in applications if application not in pool
-    ]
+    outside = [application for application in applications if application not in pool]
     if _longest_title_match(outside, subject) is not None:
         return None
 
@@ -429,7 +423,9 @@ def repair_email_link(
     return None
 
 
-def heuristic_email_analysis(subject: str, body: str, sender: str = "") -> dict[str, Any] | None:
+def heuristic_email_analysis(
+    subject: str, body: str, sender: str = ""
+) -> dict[str, Any] | None:
     """Return a classification dict when LLM can be skipped; else None."""
     subj = (subject or "").strip()
     bod = (body or "").strip()

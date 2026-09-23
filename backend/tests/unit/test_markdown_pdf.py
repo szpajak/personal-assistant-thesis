@@ -69,9 +69,7 @@ def test_render_markdown_safe_mode_strips_inline_bold_fragmentation() -> None:
     pdf = FPDF()
     pdf.set_compression(False)
     pdf.add_page()
-    render_markdown_to_pdf(
-        pdf, "- **Bold lead-in** rest of the bullet", safe_mode=True
-    )
+    render_markdown_to_pdf(pdf, "- **Bold lead-in** rest of the bullet", safe_mode=True)
     out = BytesIO()
     pdf.output(out)
     pdf_bytes = out.getvalue()

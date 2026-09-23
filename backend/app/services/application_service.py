@@ -65,7 +65,9 @@ class ApplicationService:
     ) -> ApplicationRead:
         """Create a new job application, promoting the scraped listing first if needed."""
         try:
-            listing_row = await self.job_listing_repository.get_by_id(payload.job_offer_id)
+            listing_row = await self.job_listing_repository.get_by_id(
+                payload.job_offer_id
+            )
             listing = listing_to_dict(listing_row) if listing_row else {}
 
             job_props, _ = await self.kg_ingestion.promote_job(

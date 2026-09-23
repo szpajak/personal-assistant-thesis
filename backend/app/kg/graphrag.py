@@ -124,7 +124,9 @@ class GraphRAG:
 
         """
         embedding = await self.embeddings.embed_text(query)
-        weights = LABEL_WEIGHT_PRESETS.get(label_preset, LABEL_WEIGHT_PRESETS["default"])
+        weights = LABEL_WEIGHT_PRESETS.get(
+            label_preset, LABEL_WEIGHT_PRESETS["default"]
+        )
 
         if labels is not None:
             labels_to_search = list(labels)
@@ -150,8 +152,16 @@ class GraphRAG:
                 )
             if person_scope is not None and label in _PERSONAL_LABELS:
                 allowed_ids = person_scope.get(label, set())
-                v_results = [r for r in v_results if (r.get("node") or {}).get("id") in allowed_ids]
-                f_results = [r for r in f_results if (r.get("node") or {}).get("id") in allowed_ids]
+                v_results = [
+                    r
+                    for r in v_results
+                    if (r.get("node") or {}).get("id") in allowed_ids
+                ]
+                f_results = [
+                    r
+                    for r in f_results
+                    if (r.get("node") or {}).get("id") in allowed_ids
+                ]
             vector_results.extend(v_results)
             fulltext_results.extend(f_results)
 
@@ -161,7 +171,9 @@ class GraphRAG:
             else _rrf_fuse(vector_results)
         )
         for item in fused:
-            item["weighted_score"] = item["rrf_score"] * weights.get(item.get("label", ""), 1.0)
+            item["weighted_score"] = item["rrf_score"] * weights.get(
+                item.get("label", ""), 1.0
+            )
         fused.sort(key=lambda x: x["weighted_score"], reverse=True)
         top_results = fused[:top_k]
 
@@ -296,9 +308,11 @@ class GraphRAG:
                 rel_props = rel.get("relationship_props") or {}
                 props_suffix = ""
                 if rel_props:
-                    props_suffix = " (" + ", ".join(
-                        f"{k}: {v}" for k, v in rel_props.items()
-                    ) + ")"
+                    props_suffix = (
+                        " ("
+                        + ", ".join(f"{k}: {v}" for k, v in rel_props.items())
+                        + ")"
+                    )
                 context_parts.append(
                     f"   Connected via {rel_type}{props_suffix}: {rel_name}"
                 )
@@ -348,7 +362,8 @@ class GraphRAG:
         parts = [f"Evidence chain for skill '{skill_name}':"]
         if projects:
             proj_str = "; ".join(
-                f"{p['title']} (confidence: {p.get('confidence', 'n/a')})" for p in projects
+                f"{p['title']} (confidence: {p.get('confidence', 'n/a')})"
+                for p in projects
             )
             parts.append(f"  Demonstrated in projects: {proj_str}")
         if roles:

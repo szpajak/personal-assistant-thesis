@@ -178,9 +178,12 @@ export function useRefreshTargetRole() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) =>
-      apiFetch<TargetRoleRefreshResponse>(`/api/v1/profile/target-roles/${id}/refresh`, {
-        method: "POST",
-      }),
+      apiFetch<TargetRoleRefreshResponse>(
+        `/api/v1/profile/target-roles/${id}/refresh`,
+        {
+          method: "POST",
+        },
+      ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["target-roles"] });
     },
@@ -191,7 +194,9 @@ export function useDeleteTargetRole() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) =>
-      apiFetch<void>(`/api/v1/profile/target-roles/${id}`, { method: "DELETE" }),
+      apiFetch<void>(`/api/v1/profile/target-roles/${id}`, {
+        method: "DELETE",
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["target-roles"] });
       queryClient.invalidateQueries({ queryKey: ["profile-summary"] });

@@ -33,7 +33,10 @@ export function ScrapedJobFilters({
     <div className="bg-card border rounded-lg p-4">
       <div className="flex flex-col md:flex-row gap-4">
         <div className="w-full md:flex-1 space-y-2">
-          <Label htmlFor="scraped-search" className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          <Label
+            htmlFor="scraped-search"
+            className="text-xs font-medium uppercase tracking-wider text-muted-foreground"
+          >
             Search
           </Label>
           <Input
@@ -49,7 +52,9 @@ export function ScrapedJobFilters({
           </Label>
           <Select
             value={seniority || "any"}
-            onValueChange={(v) => setSeniority(v === "any" ? "" : (v as SeniorityFilter))}
+            onValueChange={(v) =>
+              setSeniority(v === "any" ? "" : (v as SeniorityFilter))
+            }
           >
             <SelectTrigger>
               <SelectValue placeholder="Any level" />

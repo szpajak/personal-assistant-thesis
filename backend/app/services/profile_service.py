@@ -148,7 +148,9 @@ class ProfileService:
 
         try:
             chain = create_profile_extraction_chain()
-            response = await chain.ainvoke({"text": truncate_document_text(parsed_doc["text"])})
+            response = await chain.ainvoke(
+                {"text": truncate_document_text(parsed_doc["text"])}
+            )
             data = extract_json_from_llm_output(str(response.content))
         except Exception as exc:
             logger.warning("Profile chronology extraction failed: %s", exc)
@@ -250,7 +252,9 @@ class ProfileService:
             logger.error(f"Failed to list target roles: {e}")
             return []
 
-    async def get_target_role(self, person_id: str, role_id: str) -> TargetRoleRead | None:
+    async def get_target_role(
+        self, person_id: str, role_id: str
+    ) -> TargetRoleRead | None:
         owned = await self.list_target_roles(person_id)
         return next((r for r in owned if r.id == role_id), None)
 

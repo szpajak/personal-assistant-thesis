@@ -4,10 +4,17 @@ from __future__ import annotations
 
 from typing import Any
 
-from eval.dataset_a import PERSON_A, RETRIEVAL_QUERIES
-from eval.metrics import mean, mrr, ndcg_at_k, paired_wilcoxon_p, precision_at_k, recall_at_k, stdev
-
 from app.kg.graphrag import GraphRAG
+from eval.dataset_a import PERSON_A, RETRIEVAL_QUERIES
+from eval.metrics import (
+    mean,
+    mrr,
+    ndcg_at_k,
+    paired_wilcoxon_p,
+    precision_at_k,
+    recall_at_k,
+    stdev,
+)
 
 TOP_K = 8
 LABELS = ["Project", "Skill", "Certificate"]

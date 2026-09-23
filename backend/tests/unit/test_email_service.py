@@ -161,11 +161,7 @@ async def test_poll_inbox_skips_complete_email_and_marks_seen() -> None:
         client_instance = MockIMAP.return_value
         client_instance.search.return_value = [1]
         client_instance.fetch.return_value = {
-            1: {
-                b"BODY[]": _build_rfc822(
-                    message_id="<already@mail.gmail.com>"
-                )
-            }
+            1: {b"BODY[]": _build_rfc822(message_id="<already@mail.gmail.com>")}
         }
 
         result = await service.poll_inbox(person_id="user_1")
@@ -193,11 +189,7 @@ async def test_poll_inbox_reprocesses_email_owned_by_wrong_person() -> None:
         client_instance = MockIMAP.return_value
         client_instance.search.return_value = [1]
         client_instance.fetch.return_value = {
-            1: {
-                b"BODY[]": _build_rfc822(
-                    message_id="<stuck@mail.gmail.com>"
-                )
-            }
+            1: {b"BODY[]": _build_rfc822(message_id="<stuck@mail.gmail.com>")}
         }
 
         result = await service.poll_inbox(person_id="user_1")

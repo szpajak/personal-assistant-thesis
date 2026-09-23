@@ -1,7 +1,13 @@
 "use client";
 
 import { Calendar, Pencil, Trash2 } from "lucide-react";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Project, ProjectStatus } from "@/types/portfolio";
@@ -25,7 +31,12 @@ interface ProjectCardProps {
   isDeleting?: boolean;
 }
 
-export function ProjectCard({ project, onEdit, onDelete, isDeleting }: ProjectCardProps) {
+export function ProjectCard({
+  project,
+  onEdit,
+  onDelete,
+  isDeleting,
+}: ProjectCardProps) {
   const status: ProjectStatus = project.status || "in_progress";
 
   const formatDate = (dateString: string) => {
@@ -39,8 +50,12 @@ export function ProjectCard({ project, onEdit, onDelete, isDeleting }: ProjectCa
     <Card className="flex flex-col h-full overflow-hidden transition-all hover:shadow-md">
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between gap-2">
-          <CardTitle className="text-xl font-bold line-clamp-1">{project.title}</CardTitle>
-          <Badge className={STATUS_STYLES[status]}>{STATUS_LABELS[status]}</Badge>
+          <CardTitle className="text-xl font-bold line-clamp-1">
+            {project.title}
+          </CardTitle>
+          <Badge className={STATUS_STYLES[status]}>
+            {STATUS_LABELS[status]}
+          </Badge>
         </div>
       </CardHeader>
       <CardContent className="flex-1 pb-2">
@@ -49,7 +64,11 @@ export function ProjectCard({ project, onEdit, onDelete, isDeleting }: ProjectCa
         </p>
         <div className="flex flex-wrap gap-1 mb-4">
           {project.tech_stack.slice(0, 5).map((tech) => (
-            <Badge key={tech} variant="secondary" className="text-[10px] px-1.5 py-0">
+            <Badge
+              key={tech}
+              variant="secondary"
+              className="text-[10px] px-1.5 py-0"
+            >
               {tech}
             </Badge>
           ))}
@@ -70,7 +89,12 @@ export function ProjectCard({ project, onEdit, onDelete, isDeleting }: ProjectCa
         </div>
         <div className="flex gap-1">
           {onEdit && (
-            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => onEdit(project)}>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => onEdit(project)}
+            >
               <Pencil className="h-3.5 w-3.5" />
             </Button>
           )}

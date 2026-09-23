@@ -7,7 +7,9 @@ from collections import Counter
 from typing import Hashable, Iterable, Mapping, Sequence
 
 
-def precision_at_k(retrieved: Sequence[Hashable], relevant: set[Hashable], k: int) -> float:
+def precision_at_k(
+    retrieved: Sequence[Hashable], relevant: set[Hashable], k: int
+) -> float:
     if k <= 0:
         return 0.0
     top = list(retrieved)[:k]
@@ -17,7 +19,9 @@ def precision_at_k(retrieved: Sequence[Hashable], relevant: set[Hashable], k: in
     return hits / len(top)
 
 
-def recall_at_k(retrieved: Sequence[Hashable], relevant: set[Hashable], k: int) -> float:
+def recall_at_k(
+    retrieved: Sequence[Hashable], relevant: set[Hashable], k: int
+) -> float:
     if not relevant:
         return 0.0
     top = set(list(retrieved)[:k])

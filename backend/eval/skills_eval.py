@@ -4,13 +4,12 @@ from __future__ import annotations
 
 from typing import Any
 
-from eval.dataset_a import GAP_GOLD, GAP_MUST_EXCLUDE, PERSON_A, TARGET_ROLE
-from eval.metrics import set_prf
-
 from app.kg.graphrag import GraphRAG
 from app.kg.repository import KGRepository
 from app.pipelines.skill_analysis_pipeline import SkillAnalysisPipeline
 from app.utils.skill_ids import resolve_canonical_skill_name
+from eval.dataset_a import GAP_GOLD, GAP_MUST_EXCLUDE, PERSON_A, TARGET_ROLE
+from eval.metrics import set_prf
 
 
 def _canon(name: str) -> str:
@@ -48,9 +47,7 @@ async def evaluate_skill_gaps(
     pred_missing = {n for n, k in predicted_norm.items() if k == "missing"}
     pred_under = {n for n, k in predicted_norm.items() if k == "underleveled"}
 
-    excluded_hit = sorted(
-        n for n in GAP_MUST_EXCLUDE if _canon(n) in predicted_norm
-    )
+    excluded_hit = sorted(n for n in GAP_MUST_EXCLUDE if _canon(n) in predicted_norm)
 
     must_include_ok = all(
         predicted_norm.get(_canon(name)) == kind for name, kind in GAP_GOLD.items()

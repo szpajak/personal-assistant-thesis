@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from app.kg.repository import KGRepository
+from app.utils.skill_ids import canonical_skill_id, resolve_canonical_skill_name
 from eval.dataset_a import (
     ER_CLUSTERS,
     ER_MUST_STAY_APART,
@@ -17,36 +19,26 @@ from eval.dataset_a import (
 )
 from eval.metrics import set_prf
 
-from app.kg.repository import KGRepository
-from app.utils.skill_ids import canonical_skill_id, resolve_canonical_skill_name
-
 
 async def _label_counts(repo: KGRepository) -> dict[str, int]:
-    rows = await repo.query(
-        "MATCH (n) RETURN labels(n)[0] AS label, count(*) AS c"
-    )
+    rows = await repo.query("MATCH (n) RETURN labels(n)[0] AS label, count(*) AS c")
     return {str(r["label"]): int(r["c"]) for r in rows if r.get("label")}
 
 
 async def _rel_types(repo: KGRepository) -> set[str]:
-    rows = await repo.query(
-        "MATCH ()-[r]->() RETURN DISTINCT type(r) AS t"
-    )
+    rows = await repo.query("MATCH ()-[r]->() RETURN DISTINCT type(r) AS t")
     return {str(r["t"]) for r in rows if r.get("t")}
 
 
 async def run_constraint_queries(repo: KGRepository) -> dict[str, int]:
     checks = {
-        "orphan_skills": (
-            "MATCH (s:Skill) WHERE NOT (s)--() RETURN count(s) AS c"
-        ),
+        "orphan_skills": ("MATCH (s:Skill) WHERE NOT (s)--() RETURN count(s) AS c"),
         "unowned_projects": (
             "MATCH (p:Project) WHERE NOT (p)<-[:PRODUCED]-(:Person) "
             "RETURN count(p) AS c"
         ),
         "missing_uses": (
-            "MATCH (p:Project) WHERE NOT (p)-[:USES]->(:Skill) "
-            "RETURN count(p) AS c"
+            "MATCH (p:Project) WHERE NOT (p)-[:USES]->(:Skill) RETURN count(p) AS c"
         ),
         "duplicate_skill_ids": (
             "MATCH (s:Skill) WITH s.id AS id, count(*) AS c "
@@ -139,7 +131,11 @@ async def evaluate_kg_quality(
     leaked = sorted(held & MUST_NOT_HAS_SKILL)
 
     python_row = next(
-        (r for r in rows if resolve_canonical_skill_name(str(r.get("name"))) == "Python"),
+        (
+            r
+            for r in rows
+            if resolve_canonical_skill_name(str(r.get("name"))) == "Python"
+        ),
         {},
     )
     python_level = str(python_row.get("level") or "")

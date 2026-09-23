@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import React from "react"
-import { SkillDemand } from "@/types/skills"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Badge } from "@/components/ui/badge"
-import { Check, Plus, TrendingUp } from "lucide-react"
+import React from "react";
+import { SkillDemand } from "@/types/skills";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Badge } from "@/components/ui/badge";
+import { Check, Plus, TrendingUp } from "lucide-react";
 
 interface MarketDemandPanelProps {
-  demands: SkillDemand[]
-  subtitle?: string
-  selectedSkills?: string[]
-  onAddSkill?: (skill: string) => void
+  demands: SkillDemand[];
+  subtitle?: string;
+  selectedSkills?: string[];
+  onAddSkill?: (skill: string) => void;
 }
 
 export const MarketDemandPanel: React.FC<MarketDemandPanelProps> = ({
@@ -21,11 +21,11 @@ export const MarketDemandPanel: React.FC<MarketDemandPanelProps> = ({
   selectedSkills = [],
   onAddSkill,
 }) => {
-  const maxDemand = Math.max(...demands.map((d) => d.demand), 1)
+  const maxDemand = Math.max(...demands.map((d) => d.demand), 1);
   const selectedKeys = React.useMemo(
     () => new Set(selectedSkills.map((s) => s.toLowerCase())),
-    [selectedSkills]
-  )
+    [selectedSkills],
+  );
 
   return (
     <Card className="w-full">
@@ -40,8 +40,8 @@ export const MarketDemandPanel: React.FC<MarketDemandPanelProps> = ({
         <ScrollArea className="h-[min(360px,50vh)] pr-3">
           <div className="space-y-4">
             {demands.map((item) => {
-              const alreadySelected = selectedKeys.has(item.name.toLowerCase())
-              const canAdd = !item.is_owned && !!onAddSkill
+              const alreadySelected = selectedKeys.has(item.name.toLowerCase());
+              const canAdd = !item.is_owned && !!onAddSkill;
               return (
                 <div key={item.name} className="space-y-1.5">
                   <div className="flex items-center justify-between gap-2 text-sm">
@@ -65,7 +65,11 @@ export const MarketDemandPanel: React.FC<MarketDemandPanelProps> = ({
                           type="button"
                           onClick={() => onAddSkill?.(item.name)}
                           disabled={alreadySelected}
-                          title={alreadySelected ? "Already in your skills to learn" : "Add to skills to learn"}
+                          title={
+                            alreadySelected
+                              ? "Already in your skills to learn"
+                              : "Add to skills to learn"
+                          }
                           className={`flex h-5 w-5 items-center justify-center rounded border transition-colors ${
                             alreadySelected
                               ? "border-primary bg-primary/10 text-primary"
@@ -86,7 +90,7 @@ export const MarketDemandPanel: React.FC<MarketDemandPanelProps> = ({
                     className={`h-2 ${item.is_owned ? "opacity-50" : ""}`}
                   />
                 </div>
-              )
+              );
             })}
             {demands.length === 0 && (
               <p className="text-muted-foreground text-center py-4">
@@ -97,5 +101,5 @@ export const MarketDemandPanel: React.FC<MarketDemandPanelProps> = ({
         </ScrollArea>
       </CardContent>
     </Card>
-  )
-}
+  );
+};

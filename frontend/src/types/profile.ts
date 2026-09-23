@@ -38,7 +38,12 @@ export interface EducationCreateInput {
   description?: string;
 }
 
-export type TargetRoleSampleStatus = "idle" | "scraping" | "ingesting" | "ready" | "error";
+export type TargetRoleSampleStatus =
+  | "idle"
+  | "scraping"
+  | "ingesting"
+  | "ready"
+  | "error";
 
 export interface TargetRole {
   id: string;

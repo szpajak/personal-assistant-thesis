@@ -1,32 +1,32 @@
 "use client";
 
 import React from "react";
-import { 
-  Sheet, 
-  SheetContent, 
-  SheetHeader, 
-  SheetTitle, 
-  SheetFooter
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetFooter,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ApplicationWithJob } from "./ApplicationCard";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { 
-  Building2, 
-  Clock, 
-  FileText, 
-  Mail, 
+import {
+  Building2,
+  Clock,
+  FileText,
+  Mail,
   Loader2,
-  ExternalLink
+  ExternalLink,
 } from "lucide-react";
 
 import { ApplicationsService } from "@/lib/api";
@@ -39,7 +39,13 @@ interface ApplicationDetailSheetProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const statusOptions = ["Applied", "Responded", "Interview", "Offer", "Rejected"];
+const statusOptions = [
+  "Applied",
+  "Responded",
+  "Interview",
+  "Offer",
+  "Rejected",
+];
 
 function formatEmailDate(value: string | null | undefined): string {
   if (!value) return "Unknown date";
@@ -57,7 +63,7 @@ function formatEmailDate(value: string | null | undefined): string {
 export function ApplicationDetailSheet({
   application,
   open,
-  onOpenChange
+  onOpenChange,
 }: ApplicationDetailSheetProps) {
   const queryClient = useQueryClient();
 
@@ -73,7 +79,7 @@ export function ApplicationDetailSheet({
       if (!application) throw new Error("No application selected");
       return ApplicationsService.updateApplicationApiV1ApplicationsIdPatch(
         application.id,
-        { status: newStatus }
+        { status: newStatus },
       );
     },
     onSuccess: () => {
@@ -91,7 +97,9 @@ export function ApplicationDetailSheet({
         <SheetHeader>
           <div className="flex justify-between items-start">
             <div className="space-y-1">
-              <SheetTitle className="text-xl font-bold">{job?.title || "Application Details"}</SheetTitle>
+              <SheetTitle className="text-xl font-bold">
+                {job?.title || "Application Details"}
+              </SheetTitle>
               <div className="flex items-center text-sm text-muted-foreground">
                 <Building2 className="mr-1 h-4 w-4" />
                 {job?.company || "Unknown Company"}
@@ -111,8 +119,8 @@ export function ApplicationDetailSheet({
             </h4>
             <div className="flex items-center gap-4">
               <div className="flex-1">
-                <Select 
-                  value={application.status} 
+                <Select
+                  value={application.status}
                   onValueChange={(val) => updateMutation.mutate(val)}
                   disabled={updateMutation.isPending}
                 >
@@ -121,12 +129,16 @@ export function ApplicationDetailSheet({
                   </SelectTrigger>
                   <SelectContent>
                     {statusOptions.map((opt) => (
-                      <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                      <SelectItem key={opt} value={opt}>
+                        {opt}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
-              {updateMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+              {updateMutation.isPending && (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              )}
             </div>
           </div>
 
@@ -143,7 +155,8 @@ export function ApplicationDetailSheet({
             {job?.url && (
               <Button variant="link" size="sm" className="px-0" asChild>
                 <a href={job.url} target="_blank" rel="noopener noreferrer">
-                  View original posting <ExternalLink className="ml-1 h-3 w-3" />
+                  View original posting{" "}
+                  <ExternalLink className="ml-1 h-3 w-3" />
                 </a>
               </Button>
             )}
@@ -165,7 +178,8 @@ export function ApplicationDetailSheet({
               </div>
             ) : emails.length === 0 ? (
               <div className="rounded-md border bg-slate-50 p-6 text-center italic text-gray-400 text-sm">
-                No recent emails detected. Sync your inbox to see communication history.
+                No recent emails detected. Sync your inbox to see communication
+                history.
               </div>
             ) : (
               <ScrollArea className="h-48 rounded-md border">
@@ -177,13 +191,17 @@ export function ApplicationDetailSheet({
                           {email.subject || "(no subject)"}
                         </p>
                         {email.classification && (
-                          <Badge variant="secondary" className="text-[10px] shrink-0">
+                          <Badge
+                            variant="secondary"
+                            className="text-[10px] shrink-0"
+                          >
                             {email.classification}
                           </Badge>
                         )}
                       </div>
                       <p className="text-xs text-muted-foreground">
-                        {email.sender || "Unknown sender"} · {formatEmailDate(email.received_at)}
+                        {email.sender || "Unknown sender"} ·{" "}
+                        {formatEmailDate(email.received_at)}
                       </p>
                       {email.summary && (
                         <p className="text-sm text-gray-700">{email.summary}</p>
@@ -197,7 +215,11 @@ export function ApplicationDetailSheet({
         </div>
 
         <SheetFooter className="mt-auto">
-          <Button variant="outline" onClick={() => onOpenChange(false)} className="w-full">
+          <Button
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            className="w-full"
+          >
             Close
           </Button>
         </SheetFooter>

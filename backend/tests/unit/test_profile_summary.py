@@ -43,7 +43,9 @@ async def test_get_summary_merges_overlapping_employment() -> None:
         ]
     )
     service.list_target_roles = AsyncMock(
-        return_value=[TargetRoleRead(id="t1", title="Staff Engineer", required_skills=[])]
+        return_value=[
+            TargetRoleRead(id="t1", title="Staff Engineer", required_skills=[])
+        ]
     )
 
     summary = await service.get_summary("user_1")

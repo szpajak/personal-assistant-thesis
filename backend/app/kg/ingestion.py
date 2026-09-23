@@ -17,9 +17,14 @@ from ..kg.chains import (
 from ..kg.repository import KGRepository
 from ..schemas.job_scraping import UpsertAction
 from ..utils.job_level import infer_experience_years, infer_seniority
-from ..utils.llm_json import extract_json_array_from_llm_output, extract_json_from_llm_output
+from ..utils.llm_json import (
+    extract_json_array_from_llm_output,
+    extract_json_from_llm_output,
+)
 from ..utils.skill_ids import (
     SKILL_LEVEL_RANK as _SKILL_LEVEL_RANK,
+)
+from ..utils.skill_ids import (
     canonical_skill_id,
     canonicalize_skill_list,
     company_id,
@@ -113,7 +118,9 @@ def _canonicalize_skill_entries(entries: list[Any]) -> list[dict[str, str]]:
         importance = str(entry.get("importance") or "").strip().lower()
         if importance not in _VALID_IMPORTANCE:
             importance = ""
-        result.append({"name": canonical_name, "level": level, "importance": importance})
+        result.append(
+            {"name": canonical_name, "level": level, "importance": importance}
+        )
     return result
 
 
@@ -216,16 +223,20 @@ class KGIngestion:
             project_text = f"{title} {description}"
             embedding = await self.embeddings.embed_text(project_text)
 
-            resolved_skills = list(skills) if skills else [
-                {
-                    "name": tech,
-                    "canonical_name": tech,
-                    "category": "technical",
-                    "level": "intermediate",
-                    "confidence": 1.0,
-                }
-                for tech in tech_stack
-            ]
+            resolved_skills = (
+                list(skills)
+                if skills
+                else [
+                    {
+                        "name": tech,
+                        "canonical_name": tech,
+                        "category": "technical",
+                        "level": "intermediate",
+                        "confidence": 1.0,
+                    }
+                    for tech in tech_stack
+                ]
+            )
 
             display_tech_stack = tech_stack or [
                 str(skill.get("canonical_name") or skill.get("name", ""))
@@ -331,7 +342,9 @@ class KGIngestion:
         }
         if existing:
             existing_aliases = {
-                str(a).strip() for a in (existing.get("aliases") or []) if str(a).strip()
+                str(a).strip()
+                for a in (existing.get("aliases") or [])
+                if str(a).strip()
             }
             merged_aliases = sorted(existing_aliases | incoming_aliases)
             skill_properties = {
@@ -405,7 +418,9 @@ class KGIngestion:
         full LLM analysis below instead of creating a duplicate node.
         """
         offer = await self.kg_repository.get_node("JobOffer", job_id)
-        is_sample = bool(offer) and str(offer.get("purpose") or "career") == "market_sample"
+        is_sample = (
+            bool(offer) and str(offer.get("purpose") or "career") == "market_sample"
+        )
         if offer and not is_sample:
             if person_id:
                 await self._link_person_saved(person_id=person_id, job_id=job_id)
@@ -424,9 +439,9 @@ class KGIngestion:
         description = str(source_data.get("description") or "")
 
         seed_skills = await self._seed_required_skills(source_data, extract_skills)
-        seed_seniority = _normalize_seniority(source_data.get("seniority")) or infer_seniority(
-            title, description
-        )
+        seed_seniority = _normalize_seniority(
+            source_data.get("seniority")
+        ) or infer_seniority(title, description)
         seed_min_years = _as_int_or_none(source_data.get("min_experience_years"))
         seed_max_years = _as_int_or_none(source_data.get("max_experience_years"))
         if seed_min_years is None and seed_max_years is None:
@@ -434,7 +449,9 @@ class KGIngestion:
 
         analysis = await self._analyze_job_with_llm(title, company, description)
         if analysis is not None:
-            seniority = _normalize_seniority(analysis.get("seniority")) or seed_seniority
+            seniority = (
+                _normalize_seniority(analysis.get("seniority")) or seed_seniority
+            )
             min_years = _as_int_or_none(analysis.get("min_experience_years"))
             if min_years is None:
                 min_years = seed_min_years
@@ -443,14 +460,20 @@ class KGIngestion:
                 max_years = seed_max_years
             skill_entries = _canonicalize_skill_entries(analysis.get("skills") or [])
             if not skill_entries:
-                skill_entries = [{"name": s, "level": "", "importance": ""} for s in seed_skills]
+                skill_entries = [
+                    {"name": s, "level": "", "importance": ""} for s in seed_skills
+                ]
         else:
             # LLM call/parse failed - fall back entirely to the heuristic seed.
             seniority = seed_seniority
             min_years, max_years = seed_min_years, seed_max_years
-            skill_entries = [{"name": s, "level": "", "importance": ""} for s in seed_skills]
+            skill_entries = [
+                {"name": s, "level": "", "importance": ""} for s in seed_skills
+            ]
 
-        default_skill_level = _SENIORITY_DEFAULT_SKILL_LEVEL.get(seniority or "", "intermediate")
+        default_skill_level = _SENIORITY_DEFAULT_SKILL_LEVEL.get(
+            seniority or "", "intermediate"
+        )
         for entry in skill_entries:
             entry["level"] = entry["level"] or default_skill_level
             entry["importance"] = entry["importance"] or "required"
@@ -492,7 +515,9 @@ class KGIngestion:
         }
 
         await self.kg_repository.upsert_node("JobOffer", job_properties)
-        await self._link_company(job_id=job_id, company=company, description=description)
+        await self._link_company(
+            job_id=job_id, company=company, description=description
+        )
         await self._link_required_skills(job_id=job_id, skills=skill_entries)
         if person_id:
             await self._link_person_saved(person_id=person_id, job_id=job_id)
@@ -512,7 +537,11 @@ class KGIngestion:
         """
         description = str(listing.get("description") or "")
         known_names: list[str] = []
-        if extract_skills and description and not (listing.get("required_skills") or []):
+        if (
+            extract_skills
+            and description
+            and not (listing.get("required_skills") or [])
+        ):
             try:
                 known_names = await self.kg_repository.list_skill_names()
             except Exception:
@@ -644,7 +673,9 @@ class KGIngestion:
         }
 
         await self.kg_repository.upsert_node("JobOffer", job_properties)
-        await self._link_company(job_id=job_id, company=company, description=description)
+        await self._link_company(
+            job_id=job_id, company=company, description=description
+        )
 
         if existing and description_changed:
             await self.kg_repository.delete_outgoing_relationships(
@@ -908,8 +939,12 @@ class KGIngestion:
 
         return industry, website
 
-    async def _link_company(self, job_id: str, company: str, description: str = "") -> None:
-        comp_id = await self._upsert_company(company, description_for_inference=description)
+    async def _link_company(
+        self, job_id: str, company: str, description: str = ""
+    ) -> None:
+        comp_id = await self._upsert_company(
+            company, description_for_inference=description
+        )
         await self.kg_repository.upsert_relationship(
             from_label="JobOffer",
             from_id=job_id,
@@ -1137,7 +1172,9 @@ class KGIngestion:
             to_id=emp_id,
         )
 
-        comp_id = await self._upsert_company(company, description_for_inference=description)
+        comp_id = await self._upsert_company(
+            company, description_for_inference=description
+        )
         await self.kg_repository.upsert_relationship(
             from_label="Employment",
             from_id=emp_id,
@@ -1291,7 +1328,9 @@ class KGIngestion:
             except Exception as e:
                 logger.warning(f"Failed to link target role skill {name}: {e}")
 
-    async def replace_target_role_sample(self, role_id: str, job_ids: list[str]) -> None:
+    async def replace_target_role_sample(
+        self, role_id: str, job_ids: list[str]
+    ) -> None:
         """Point ``(TargetRole)-[:SAMPLED]->(JobOffer)`` at exactly
         ``job_ids`` - the ~50 postings a role refresh just scraped for this
         title/location. Never deletes the ``JobOffer`` nodes themselves

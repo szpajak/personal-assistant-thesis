@@ -46,18 +46,14 @@ async def test_cv_pipeline_run(
         patch.object(
             kg_repository, "get_node", new_callable=AsyncMock
         ) as mock_get_node,
-        patch.object(
-            kg_repository, "query", new_callable=AsyncMock
-        ) as mock_query,
+        patch.object(kg_repository, "query", new_callable=AsyncMock) as mock_query,
         patch.object(
             kg_repository, "find_related_nodes", new_callable=AsyncMock
         ) as mock_find_related,
         patch.object(
             kg_repository, "get_person_skills", new_callable=AsyncMock
         ) as mock_person_skills,
-        patch.object(
-            graph_rag, "retrieve", new_callable=AsyncMock
-        ) as mock_retrieve,
+        patch.object(graph_rag, "retrieve", new_callable=AsyncMock) as mock_retrieve,
         patch("langchain_deepseek.ChatDeepSeek.ainvoke", return_value=mock_response),
     ):
         # fetch_job_offer: JobOffer node, then fetch_static_profile: Person node.
@@ -68,7 +64,12 @@ async def test_cv_pipeline_run(
         # fetch_job_offer: REQUIRES query, then fetch_static_profile: certificates query.
         mock_query.side_effect = [
             [],
-            [{"cert": {"id": "c1", "title": "AWS SAA", "issuer": "AWS"}, "validated_skills": []}],
+            [
+                {
+                    "cert": {"id": "c1", "title": "AWS SAA", "issuer": "AWS"},
+                    "validated_skills": [],
+                }
+            ],
         ]
         # fetch_static_profile fetches employment, education, projects (in that order).
         mock_find_related.side_effect = [
@@ -76,7 +77,9 @@ async def test_cv_pipeline_run(
             [{"institution": "MIT", "degree": "BSc", "start_date": "2016-01-01"}],
             [_project("p1", "Side Project", ["Python"])],
         ]
-        mock_person_skills.return_value = [{"id": "skill_python", "name": "Python", "category": "language"}]
+        mock_person_skills.return_value = [
+            {"id": "skill_python", "name": "Python", "category": "language"}
+        ]
         mock_retrieve.return_value = []
 
         # Act
@@ -96,7 +99,11 @@ async def test_cv_pipeline_run(
         mock_retrieve.assert_called_once()
         assert mock_retrieve.call_args.kwargs["person_id"] == user_id
         assert mock_retrieve.call_args.kwargs["label_preset"] == "cv"
-        assert set(mock_retrieve.call_args.kwargs["labels"]) == {"Project", "Skill", "Certificate"}
+        assert set(mock_retrieve.call_args.kwargs["labels"]) == {
+            "Project",
+            "Skill",
+            "Certificate",
+        }
 
 
 @pytest.mark.asyncio
@@ -124,12 +131,16 @@ async def test_cv_pipeline_budgets_projects_and_skills_despite_large_portfolio(
     async def _fake_ainvoke(self, *args, **kwargs):  # noqa: ANN001, ARG001
         prompt_value = args[0] if args else None
         captured_prompt_text.append(
-            prompt_value.to_string() if hasattr(prompt_value, "to_string") else str(prompt_value)
+            prompt_value.to_string()
+            if hasattr(prompt_value, "to_string")
+            else str(prompt_value)
         )
         return mock_response
 
     with (
-        patch.object(kg_repository, "get_node", new_callable=AsyncMock) as mock_get_node,
+        patch.object(
+            kg_repository, "get_node", new_callable=AsyncMock
+        ) as mock_get_node,
         patch.object(kg_repository, "query", new_callable=AsyncMock) as mock_query,
         patch.object(
             kg_repository, "find_related_nodes", new_callable=AsyncMock
@@ -141,7 +152,11 @@ async def test_cv_pipeline_budgets_projects_and_skills_despite_large_portfolio(
         patch("langchain_deepseek.ChatDeepSeek.ainvoke", _fake_ainvoke),
     ):
         mock_get_node.side_effect = [
-            {"id": "j1", "title": "Backend Engineer", "description": "Build APIs with Python"},
+            {
+                "id": "j1",
+                "title": "Backend Engineer",
+                "description": "Build APIs with Python",
+            },
             {"id": "u1", "name": "John Doe"},
         ]
         mock_query.side_effect = [[], []]
@@ -151,9 +166,24 @@ async def test_cv_pipeline_budgets_projects_and_skills_despite_large_portfolio(
         ]
         # Only 3 of the 10 projects are ranked as relevant hits.
         mock_retrieve.return_value = [
-            {"label": "Project", "node": {"id": "p0"}, "weighted_score": 0.9, "related": []},
-            {"label": "Project", "node": {"id": "p1"}, "weighted_score": 0.8, "related": []},
-            {"label": "Project", "node": {"id": "p2"}, "weighted_score": 0.7, "related": []},
+            {
+                "label": "Project",
+                "node": {"id": "p0"},
+                "weighted_score": 0.9,
+                "related": [],
+            },
+            {
+                "label": "Project",
+                "node": {"id": "p1"},
+                "weighted_score": 0.8,
+                "related": [],
+            },
+            {
+                "label": "Project",
+                "node": {"id": "p2"},
+                "weighted_score": 0.7,
+                "related": [],
+            },
         ]
 
         result = await cv_pipeline.run(user_id, job_offer_id)

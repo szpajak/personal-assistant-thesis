@@ -22,9 +22,7 @@ class JobMatchRepository:
     def __init__(self, db: AsyncSession) -> None:
         self.db = db
 
-    async def get(
-        self, person_id: str, job_id: str
-    ) -> JobMatch | None:
+    async def get(self, person_id: str, job_id: str) -> JobMatch | None:
         result = await self.db.execute(
             select(JobMatch).where(
                 JobMatch.person_id == person_id,

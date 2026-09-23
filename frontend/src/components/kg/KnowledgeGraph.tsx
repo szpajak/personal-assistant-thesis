@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import ReactFlow, {
   Background,
   Controls,
@@ -10,8 +10,8 @@ import ReactFlow, {
   useEdgesState,
   useNodesState,
   useReactFlow,
-} from 'reactflow';
-import 'reactflow/dist/style.css';
+} from "reactflow";
+import "reactflow/dist/style.css";
 
 import type {
   GraphFilters,
@@ -19,10 +19,10 @@ import type {
   KGGraphPayload,
   NodeFamily,
   PredicateFamily,
-} from '@/types/kg';
-import { EvidenceMatrix } from './EvidenceMatrix';
-import { GraphLegend } from './GraphLegend';
-import { GraphToolbar } from './GraphToolbar';
+} from "@/types/kg";
+import { EvidenceMatrix } from "./EvidenceMatrix";
+import { GraphLegend } from "./GraphLegend";
+import { GraphToolbar } from "./GraphToolbar";
 import {
   applyVisibility,
   collapseCrowdedTypes,
@@ -32,10 +32,15 @@ import {
   FAMILY_THEME,
   neighborIdsOf,
   nodeMatchesSearch,
-} from './graphModel';
-import { getRadialLayout, getSubstrateLayout } from './layoutGraph';
-import { NodeDetailPanel } from './NodeDetailPanel';
-import { KgEntityNode, KgRegionNode, KgSectionNode, type KgEntityData } from './Nodes';
+} from "./graphModel";
+import { getRadialLayout, getSubstrateLayout } from "./layoutGraph";
+import { NodeDetailPanel } from "./NodeDetailPanel";
+import {
+  KgEntityNode,
+  KgRegionNode,
+  KgSectionNode,
+  type KgEntityData,
+} from "./Nodes";
 
 const nodeTypes = {
   kgEntity: KgEntityNode,
@@ -50,7 +55,7 @@ interface KnowledgeGraphProps {
 
 function withHighlight(
   nodes: Node[],
-  edges: ReturnType<typeof getSubstrateLayout>['edges'],
+  edges: ReturnType<typeof getSubstrateLayout>["edges"],
   selectedId: string | null,
   neighborIds: Set<string>,
   dimmedNodeIds: Set<string>,
@@ -58,8 +63,9 @@ function withHighlight(
   const selecting = Boolean(selectedId);
   return {
     nodes: nodes.map((node) => {
-      if (node.type === 'kgRegion' || node.type === 'kgSection') return node;
-      const dimmed = dimmedNodeIds.has(node.id) || (selecting && !neighborIds.has(node.id));
+      if (node.type === "kgRegion" || node.type === "kgSection") return node;
+      const dimmed =
+        dimmedNodeIds.has(node.id) || (selecting && !neighborIds.has(node.id));
       return {
         ...node,
         data: {
@@ -72,7 +78,8 @@ function withHighlight(
       };
     }),
     edges: edges.map((edge) => {
-      const related = !selecting || edge.source === selectedId || edge.target === selectedId;
+      const related =
+        !selecting || edge.source === selectedId || edge.target === selectedId;
       return {
         ...edge,
         style: {
@@ -85,12 +92,14 @@ function withHighlight(
 }
 
 function KnowledgeGraphCanvas({ data, isLoading }: KnowledgeGraphProps) {
-  const { nodes: enrichedNodes, edges: enrichedEdges, personName, personId } = useMemo(
-    () => enrichGraph(data),
-    [data],
-  );
+  const {
+    nodes: enrichedNodes,
+    edges: enrichedEdges,
+    personName,
+    personId,
+  } = useMemo(() => enrichGraph(data), [data]);
   const [filters, setFilters] = useState<GraphFilters>(defaultFilters);
-  const [view, setView] = useState<GraphView>('map');
+  const [view, setView] = useState<GraphView>("map");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [expandedTypes, setExpandedTypes] = useState<Set<string>>(new Set());
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -118,7 +127,8 @@ function KnowledgeGraphCanvas({ data, isLoading }: KnowledgeGraphProps) {
     );
   }, [sceneNodes, visibility.visibleEdges]);
 
-  const layoutMode = view === 'focus' || filters.showPerson ? 'radial' : 'substrate';
+  const layoutMode =
+    view === "focus" || filters.showPerson ? "radial" : "substrate";
   const radialFocusId =
     filters.focusId ??
     (filters.showPerson ? personId : null) ??
@@ -126,10 +136,13 @@ function KnowledgeGraphCanvas({ data, isLoading }: KnowledgeGraphProps) {
     null;
 
   const laid = useMemo(() => {
-    if (view === 'matrix' || sceneNodes.length === 0) {
-      return { nodes: [] as Node[], edges: [] as ReturnType<typeof getSubstrateLayout>['edges'] };
+    if (view === "matrix" || sceneNodes.length === 0) {
+      return {
+        nodes: [] as Node[],
+        edges: [] as ReturnType<typeof getSubstrateLayout>["edges"],
+      };
     }
-    if (layoutMode === 'radial' && radialFocusId) {
+    if (layoutMode === "radial" && radialFocusId) {
       return getRadialLayout(sceneNodes, sceneEdges, radialFocusId);
     }
     return getSubstrateLayout(sceneNodes, sceneEdges);
@@ -137,7 +150,13 @@ function KnowledgeGraphCanvas({ data, isLoading }: KnowledgeGraphProps) {
 
   const painted = useMemo(
     () =>
-      withHighlight(laid.nodes, laid.edges, selectedId, neighborIds, visibility.dimmedNodeIds),
+      withHighlight(
+        laid.nodes,
+        laid.edges,
+        selectedId,
+        neighborIds,
+        visibility.dimmedNodeIds,
+      ),
     [laid, selectedId, neighborIds, visibility.dimmedNodeIds],
   );
 
@@ -147,37 +166,45 @@ function KnowledgeGraphCanvas({ data, isLoading }: KnowledgeGraphProps) {
   }, [painted, setNodes, setEdges]);
 
   useEffect(() => {
-    if (view === 'matrix' || laid.nodes.length === 0) return;
+    if (view === "matrix" || laid.nodes.length === 0) return;
     window.requestAnimationFrame(() => {
       fitView({ padding: 0.18, duration: 280 });
     });
-  }, [view, layoutMode, radialFocusId, sceneNodes, sceneEdges, fitView, laid.nodes.length]);
+  }, [
+    view,
+    layoutMode,
+    radialFocusId,
+    sceneNodes,
+    sceneEdges,
+    fitView,
+    laid.nodes.length,
+  ]);
 
-  const selectedFlowNode = nodes.find((node) => node.id === selectedId && node.type === 'kgEntity') as
-    | Node<KgEntityData>
-    | undefined;
+  const selectedFlowNode = nodes.find(
+    (node) => node.id === selectedId && node.type === "kgEntity",
+  ) as Node<KgEntityData> | undefined;
   const selectedEnriched = enrichedNodes.find((node) => node.id === selectedId);
 
   const focusLabel = useMemo(() => {
     if (!filters.focusId) return null;
     const node = enrichedNodes.find((item) => item.id === filters.focusId);
-    return node ? displayName(node) : 'selection';
+    return node ? displayName(node) : "selection";
   }, [filters.focusId, enrichedNodes]);
 
   const enterFocus = useCallback((nodeId: string) => {
-    setView('focus');
+    setView("focus");
     setFilters((current) => ({ ...current, focusId: nodeId, hops: 1 }));
     setSelectedId(nodeId);
   }, []);
 
   const onNodeClick = useCallback((_event: React.MouseEvent, node: Node) => {
-    if (node.type === 'kgRegion' || node.type === 'kgSection') return;
+    if (node.type === "kgRegion" || node.type === "kgSection") return;
     setSelectedId(node.id);
   }, []);
 
   const onNodeDoubleClick = useCallback(
     (_event: React.MouseEvent, node: Node) => {
-      if (node.type === 'kgRegion' || node.type === 'kgSection') return;
+      if (node.type === "kgRegion" || node.type === "kgSection") return;
       enterFocus(node.id);
     },
     [enterFocus],
@@ -190,13 +217,17 @@ function KnowledgeGraphCanvas({ data, isLoading }: KnowledgeGraphProps) {
   const handleViewChange = useCallback(
     (next: GraphView) => {
       setView(next);
-      if (next === 'map') {
-        setFilters((current) => ({ ...current, focusId: null, showPerson: false }));
+      if (next === "map") {
+        setFilters((current) => ({
+          ...current,
+          focusId: null,
+          showPerson: false,
+        }));
       }
-      if (next === 'focus' && !filters.focusId) {
+      if (next === "focus" && !filters.focusId) {
         const fallback =
           selectedId ??
-          sceneNodes.find((node) => node.type === 'Skill')?.id ??
+          sceneNodes.find((node) => node.type === "Skill")?.id ??
           sceneNodes[0]?.id ??
           null;
         if (fallback) {
@@ -212,34 +243,42 @@ function KnowledgeGraphCanvas({ data, isLoading }: KnowledgeGraphProps) {
       setFilters((current) => {
         let hiddenPredicateFamilies = current.hiddenPredicateFamilies;
         if (value) {
-          hiddenPredicateFamilies = hiddenPredicateFamilies.filter((item) => item !== 'career');
-        } else if (!hiddenPredicateFamilies.includes('career')) {
-          hiddenPredicateFamilies = [...hiddenPredicateFamilies, 'career'];
+          hiddenPredicateFamilies = hiddenPredicateFamilies.filter(
+            (item) => item !== "career",
+          );
+        } else if (!hiddenPredicateFamilies.includes("career")) {
+          hiddenPredicateFamilies = [...hiddenPredicateFamilies, "career"];
         }
         return {
           ...current,
           showPerson: value,
           hiddenPredicateFamilies,
-          focusId: value ? personId : current.focusId === personId ? null : current.focusId,
+          focusId: value
+            ? personId
+            : current.focusId === personId
+              ? null
+              : current.focusId,
         };
       });
       if (value && personId) {
-        setView('focus');
+        setView("focus");
         setSelectedId(personId);
-      } else if (!value && view === 'focus' && filters.focusId === personId) {
-        setView('map');
+      } else if (!value && view === "focus" && filters.focusId === personId) {
+        setView("map");
       }
     },
     [personId, view, filters.focusId],
   );
 
   const handleSearchSubmit = useCallback(() => {
-    const matches = enrichedNodes.filter((node) => nodeMatchesSearch(node, filters.search));
+    const matches = enrichedNodes.filter((node) =>
+      nodeMatchesSearch(node, filters.search),
+    );
     if (matches.length === 1) {
       enterFocus(matches[0].id);
     } else if (matches.length > 1) {
       const preferred =
-        matches.find((node) => node.type === 'Skill') ?? matches[0];
+        matches.find((node) => node.type === "Skill") ?? matches[0];
       setSelectedId(preferred.id);
     }
   }, [enrichedNodes, filters.search, enterFocus]);
@@ -276,9 +315,12 @@ function KnowledgeGraphCanvas({ data, isLoading }: KnowledgeGraphProps) {
   if (!data || data.nodes.length === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center space-y-4 rounded-lg border border-dashed bg-white">
-        <div className="text-xl font-semibold">Your Knowledge Graph is empty</div>
+        <div className="text-xl font-semibold">
+          Your Knowledge Graph is empty
+        </div>
         <p className="max-w-md text-center text-muted-foreground">
-          Start by adding projects, skills, or applying for jobs to see your personal professional network grow.
+          Start by adding projects, skills, or applying for jobs to see your
+          personal professional network grow.
         </p>
       </div>
     );
@@ -290,7 +332,9 @@ function KnowledgeGraphCanvas({ data, isLoading }: KnowledgeGraphProps) {
         view={view}
         onViewChange={handleViewChange}
         search={filters.search}
-        onSearchChange={(search) => setFilters((current) => ({ ...current, search }))}
+        onSearchChange={(search) =>
+          setFilters((current) => ({ ...current, search }))
+        }
         onSearchSubmit={handleSearchSubmit}
         showPerson={filters.showPerson}
         onShowPersonChange={handleShowPerson}
@@ -300,13 +344,19 @@ function KnowledgeGraphCanvas({ data, isLoading }: KnowledgeGraphProps) {
         hiddenPredicateFamilies={filters.hiddenPredicateFamilies}
         onTogglePredicateFamily={togglePredicate}
         filterMode={filters.filterMode}
-        onFilterModeChange={(filterMode) => setFilters((current) => ({ ...current, filterMode }))}
+        onFilterModeChange={(filterMode) =>
+          setFilters((current) => ({ ...current, filterMode }))
+        }
         hops={filters.hops}
         onHopsChange={(hops) => setFilters((current) => ({ ...current, hops }))}
-        focusLabel={view === 'focus' ? focusLabel : null}
+        focusLabel={view === "focus" ? focusLabel : null}
         onClearFocus={() => {
-          setFilters((current) => ({ ...current, focusId: null, showPerson: false }));
-          setView('map');
+          setFilters((current) => ({
+            ...current,
+            focusId: null,
+            showPerson: false,
+          }));
+          setView("map");
         }}
         collapsed={collapsed}
         skillOwnership={filters.skillOwnership}
@@ -322,7 +372,7 @@ function KnowledgeGraphCanvas({ data, isLoading }: KnowledgeGraphProps) {
         }
       />
 
-      {view === 'matrix' ? (
+      {view === "matrix" ? (
         <div className="min-h-0 flex-1">
           <EvidenceMatrix
             nodes={visibility.visibleNodes}
@@ -336,11 +386,11 @@ function KnowledgeGraphCanvas({ data, isLoading }: KnowledgeGraphProps) {
         <div className="relative min-h-0 flex-1 overflow-hidden rounded-lg border bg-slate-50/40">
           {sceneNodes.length === 0 ? (
             <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-              {filters.skillOwnership === 'owned'
-                ? 'No owned skills match the current filters.'
-                : filters.skillOwnership === 'gap'
-                  ? 'No gap skills match the current filters.'
-                  : 'Nothing to show with the current filters. Enable a family or clear search.'}
+              {filters.skillOwnership === "owned"
+                ? "No owned skills match the current filters."
+                : filters.skillOwnership === "gap"
+                  ? "No gap skills match the current filters."
+                  : "Nothing to show with the current filters. Enable a family or clear search."}
             </div>
           ) : (
             <ReactFlow
@@ -362,9 +412,11 @@ function KnowledgeGraphCanvas({ data, isLoading }: KnowledgeGraphProps) {
               <Controls />
               <MiniMap
                 nodeColor={(node) => {
-                  if (node.type === 'kgRegion' || node.type === 'kgSection') return '#e2e8f0';
-                  const family = (node.data as KgEntityData | undefined)?.family;
-                  return family ? FAMILY_THEME[family].hex : '#94a3b8';
+                  if (node.type === "kgRegion" || node.type === "kgSection")
+                    return "#e2e8f0";
+                  const family = (node.data as KgEntityData | undefined)
+                    ?.family;
+                  return family ? FAMILY_THEME[family].hex : "#94a3b8";
                 }}
               />
             </ReactFlow>

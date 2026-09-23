@@ -55,7 +55,9 @@ function statusLabel(role: TargetRole): string {
   }
 }
 
-function statusVariant(role: TargetRole): "default" | "secondary" | "destructive" | "outline" {
+function statusVariant(
+  role: TargetRole,
+): "default" | "secondary" | "destructive" | "outline" {
   switch (role.sample_status) {
     case "ready":
       return "secondary";
@@ -74,7 +76,10 @@ interface TargetRoleManagerProps {
   onSelectRole: (roleId: string | null) => void;
 }
 
-export function TargetRoleManager({ selectedRoleId, onSelectRole }: TargetRoleManagerProps) {
+export function TargetRoleManager({
+  selectedRoleId,
+  onSelectRole,
+}: TargetRoleManagerProps) {
   const { data: roles, isLoading } = useTargetRoles();
   const createRole = useCreateTargetRole();
   const refreshRole = useRefreshTargetRole();
@@ -106,7 +111,8 @@ export function TargetRoleManager({ selectedRoleId, onSelectRole }: TargetRoleMa
     } catch (error) {
       toast({
         title: "Could not add role",
-        description: error instanceof Error ? error.message : "Please try again.",
+        description:
+          error instanceof Error ? error.message : "Please try again.",
         variant: "destructive",
       });
     }
@@ -115,11 +121,15 @@ export function TargetRoleManager({ selectedRoleId, onSelectRole }: TargetRoleMa
   const handleRefresh = async (role: TargetRole) => {
     try {
       await refreshRole.mutateAsync(role.id);
-      toast({ title: "Refreshing market sample", description: `Re-scraping offers for "${role.title}".` });
+      toast({
+        title: "Refreshing market sample",
+        description: `Re-scraping offers for "${role.title}".`,
+      });
     } catch (error) {
       toast({
         title: "Could not refresh",
-        description: error instanceof Error ? error.message : "Please try again.",
+        description:
+          error instanceof Error ? error.message : "Please try again.",
         variant: "destructive",
       });
     }
@@ -132,7 +142,8 @@ export function TargetRoleManager({ selectedRoleId, onSelectRole }: TargetRoleMa
     } catch (error) {
       toast({
         title: "Could not delete role",
-        description: error instanceof Error ? error.message : "Please try again.",
+        description:
+          error instanceof Error ? error.message : "Please try again.",
         variant: "destructive",
       });
     }
@@ -146,12 +157,15 @@ export function TargetRoleManager({ selectedRoleId, onSelectRole }: TargetRoleMa
           Target roles
         </CardTitle>
         <p className="text-xs text-muted-foreground">
-          Sample ~50 real job postings for a role/location to drive Market Demand and skill
-          gaps from actual data instead of a typed skill list.
+          Sample ~50 real job postings for a role/location to drive Market
+          Demand and skill gaps from actual data instead of a typed skill list.
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
-        <form onSubmit={handleCreate} className="flex flex-col sm:flex-row gap-2">
+        <form
+          onSubmit={handleCreate}
+          className="flex flex-col sm:flex-row gap-2"
+        >
           <Input
             placeholder="e.g. Senior DevOps Engineer"
             value={title}
@@ -177,7 +191,11 @@ export function TargetRoleManager({ selectedRoleId, onSelectRole }: TargetRoleMa
               ))}
             </SelectContent>
           </Select>
-          <Button type="submit" disabled={createRole.isPending || !title.trim()} className="gap-1">
+          <Button
+            type="submit"
+            disabled={createRole.isPending || !title.trim()}
+            className="gap-1"
+          >
             {createRole.isPending ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
@@ -193,7 +211,9 @@ export function TargetRoleManager({ selectedRoleId, onSelectRole }: TargetRoleMa
           <div className="flex flex-wrap gap-2">
             {roles.map((role) => {
               const active = selectedRoleId === role.id;
-              const sampling = role.sample_status === "scraping" || role.sample_status === "ingesting";
+              const sampling =
+                role.sample_status === "scraping" ||
+                role.sample_status === "ingesting";
               return (
                 <div
                   key={role.id}
@@ -209,10 +229,15 @@ export function TargetRoleManager({ selectedRoleId, onSelectRole }: TargetRoleMa
                     <div className="flex items-center gap-2">
                       <span className="font-medium">{role.title}</span>
                       {role.location && (
-                        <span className="text-xs text-muted-foreground">· {role.location}</span>
+                        <span className="text-xs text-muted-foreground">
+                          · {role.location}
+                        </span>
                       )}
                     </div>
-                    <Badge variant={statusVariant(role)} className="mt-1 text-[10px]">
+                    <Badge
+                      variant={statusVariant(role)}
+                      className="mt-1 text-[10px]"
+                    >
                       {statusLabel(role)}
                     </Badge>
                   </button>
@@ -245,7 +270,8 @@ export function TargetRoleManager({ selectedRoleId, onSelectRole }: TargetRoleMa
           </div>
         ) : (
           <p className="text-sm text-muted-foreground">
-            No target roles yet — add one above to benchmark against real postings.
+            No target roles yet — add one above to benchmark against real
+            postings.
           </p>
         )}
       </CardContent>

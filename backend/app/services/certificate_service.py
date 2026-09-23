@@ -65,7 +65,9 @@ class CertificateService:
                         issuer=c.get("issuer", ""),
                         issued_at=c.get("issued_at"),
                         document_url=c.get("document_url", ""),
-                        validated_skills=[s.get("name", "") for s in skills if s.get("name")],
+                        validated_skills=[
+                            s.get("name", "") for s in skills if s.get("name")
+                        ],
                     )
                 )
             return results
@@ -73,7 +75,9 @@ class CertificateService:
             logger.error(f"Failed to list certificates: {e}")
             return []
 
-    async def extract_certificate_drafts(self, file_path: str) -> list[CertificateDraft]:
+    async def extract_certificate_drafts(
+        self, file_path: str
+    ) -> list[CertificateDraft]:
         """Parse a certificate document (PDF/image-to-text) and extract a
         draft for user review. Nothing is written to the KG here.
         """

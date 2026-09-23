@@ -8,7 +8,9 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-_DEFAULT_RESULTS = Path(__file__).resolve().parents[2] / "docs" / "evaluation" / "results"
+_DEFAULT_RESULTS = (
+    Path(__file__).resolve().parents[2] / "docs" / "evaluation" / "results"
+)
 RESULTS_DIR = Path(os.environ.get("EVAL_RESULTS_DIR", str(_DEFAULT_RESULTS)))
 
 
@@ -82,7 +84,9 @@ def _to_markdown(payload: dict[str, Any]) -> str:
         "",
         "### Job matching (overlap)",
         "",
-        json.dumps((payload.get("jobs") or {}).get("overlap"), indent=2, default=str)[:4000],
+        json.dumps((payload.get("jobs") or {}).get("overlap"), indent=2, default=str)[
+            :4000
+        ],
         "",
         "### Skill gaps",
         "",

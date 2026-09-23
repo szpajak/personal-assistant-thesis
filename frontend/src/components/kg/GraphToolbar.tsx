@@ -1,12 +1,18 @@
-'use client';
+"use client";
 
-import { Search, UserRound } from 'lucide-react';
+import { Search, UserRound } from "lucide-react";
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import type { FilterMode, GraphView, NodeFamily, PredicateFamily, SkillOwnershipFilter } from '@/types/kg';
-import { FAMILY_THEME, PREDICATE_THEME, TYPE_LABELS } from './graphModel';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import type {
+  FilterMode,
+  GraphView,
+  NodeFamily,
+  PredicateFamily,
+  SkillOwnershipFilter,
+} from "@/types/kg";
+import { FAMILY_THEME, PREDICATE_THEME, TYPE_LABELS } from "./graphModel";
 
 interface GraphToolbarProps {
   view: GraphView;
@@ -33,8 +39,19 @@ interface GraphToolbarProps {
   onSkillOwnershipChange: (value: SkillOwnershipFilter) => void;
 }
 
-const FAMILY_ORDER: NodeFamily[] = ['evidence', 'competency', 'market', 'process', 'identity'];
-const PREDICATE_ORDER: PredicateFamily[] = ['evidence', 'market', 'career', 'process'];
+const FAMILY_ORDER: NodeFamily[] = [
+  "evidence",
+  "competency",
+  "market",
+  "process",
+  "identity",
+];
+const PREDICATE_ORDER: PredicateFamily[] = [
+  "evidence",
+  "market",
+  "career",
+  "process",
+];
 
 export function GraphToolbar({
   view,
@@ -66,15 +83,15 @@ export function GraphToolbar({
         <div className="flex rounded-md border bg-white p-0.5">
           {(
             [
-              ['map', 'Career map'],
-              ['focus', 'Focus'],
-              ['matrix', 'Evidence matrix'],
+              ["map", "Career map"],
+              ["focus", "Focus"],
+              ["matrix", "Evidence matrix"],
             ] as const
           ).map(([id, label]) => (
             <Button
               key={id}
               size="sm"
-              variant={view === id ? 'default' : 'ghost'}
+              variant={view === id ? "default" : "ghost"}
               className="h-8"
               onClick={() => onViewChange(id)}
             >
@@ -101,16 +118,18 @@ export function GraphToolbar({
 
         <Button
           size="sm"
-          variant={showPerson ? 'default' : 'outline'}
+          variant={showPerson ? "default" : "outline"}
           className="h-9"
           onClick={() => onShowPersonChange(!showPerson)}
         >
           <UserRound size={14} className="mr-1.5" />
-          {showPerson ? 'Showing you' : 'Show me'}
+          {showPerson ? "Showing you" : "Show me"}
         </Button>
 
         {personName && (
-          <span className="text-xs text-muted-foreground">Graph for {personName}</span>
+          <span className="text-xs text-muted-foreground">
+            Graph for {personName}
+          </span>
         )}
       </div>
 
@@ -118,25 +137,27 @@ export function GraphToolbar({
         <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
           Families
         </span>
-        {FAMILY_ORDER.filter((family) => family !== 'identity').map((family) => {
-          const active = !hiddenFamilies.includes(family);
-          return (
-            <button
-              key={family}
-              type="button"
-              onClick={() => onToggleFamily(family)}
-              className="rounded-full border px-2 py-0.5 text-[11px] font-medium"
-              style={{
-                borderColor: FAMILY_THEME[family].hex,
-                background: active ? FAMILY_THEME[family].hex : 'white',
-                color: active ? 'white' : FAMILY_THEME[family].hex,
-                opacity: active ? 1 : 0.55,
-              }}
-            >
-              {FAMILY_THEME[family].label}
-            </button>
-          );
-        })}
+        {FAMILY_ORDER.filter((family) => family !== "identity").map(
+          (family) => {
+            const active = !hiddenFamilies.includes(family);
+            return (
+              <button
+                key={family}
+                type="button"
+                onClick={() => onToggleFamily(family)}
+                className="rounded-full border px-2 py-0.5 text-[11px] font-medium"
+                style={{
+                  borderColor: FAMILY_THEME[family].hex,
+                  background: active ? FAMILY_THEME[family].hex : "white",
+                  color: active ? "white" : FAMILY_THEME[family].hex,
+                  opacity: active ? 1 : 0.55,
+                }}
+              >
+                {FAMILY_THEME[family].label}
+              </button>
+            );
+          },
+        )}
 
         <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
           Edges
@@ -151,7 +172,9 @@ export function GraphToolbar({
               className="rounded-full border px-2 py-0.5 text-[11px] font-medium"
               style={{
                 borderColor: PREDICATE_THEME[family].hex,
-                background: active ? `${PREDICATE_THEME[family].hex}18` : 'white',
+                background: active
+                  ? `${PREDICATE_THEME[family].hex}18`
+                  : "white",
                 color: PREDICATE_THEME[family].hex,
                 opacity: active ? 1 : 0.5,
               }}
@@ -166,9 +189,9 @@ export function GraphToolbar({
         </span>
         {(
           [
-            ['all', 'All'],
-            ['owned', 'I have'],
-            ['gap', "I don't have yet"],
+            ["all", "All"],
+            ["owned", "I have"],
+            ["gap", "I don't have yet"],
           ] as const
         ).map(([id, label]) => (
           <button
@@ -178,8 +201,10 @@ export function GraphToolbar({
             className="rounded-full border px-2 py-0.5 text-[11px] font-medium"
             style={{
               borderColor: FAMILY_THEME.competency.hex,
-              background: skillOwnership === id ? FAMILY_THEME.competency.hex : 'white',
-              color: skillOwnership === id ? 'white' : FAMILY_THEME.competency.hex,
+              background:
+                skillOwnership === id ? FAMILY_THEME.competency.hex : "white",
+              color:
+                skillOwnership === id ? "white" : FAMILY_THEME.competency.hex,
             }}
           >
             {label}
@@ -190,16 +215,18 @@ export function GraphToolbar({
           size="sm"
           variant="ghost"
           className="h-7 text-xs"
-          onClick={() => onFilterModeChange(filterMode === 'dismiss' ? 'dim' : 'dismiss')}
+          onClick={() =>
+            onFilterModeChange(filterMode === "dismiss" ? "dim" : "dismiss")
+          }
         >
-          Search: {filterMode === 'dismiss' ? 'hide others' : 'dim others'}
+          Search: {filterMode === "dismiss" ? "hide others" : "dim others"}
         </Button>
 
-        {view === 'focus' && (
+        {view === "focus" && (
           <>
             <Button
               size="sm"
-              variant={hops === 1 ? 'secondary' : 'ghost'}
+              variant={hops === 1 ? "secondary" : "ghost"}
               className="h-7 text-xs"
               onClick={() => onHopsChange(1)}
             >
@@ -207,7 +234,7 @@ export function GraphToolbar({
             </Button>
             <Button
               size="sm"
-              variant={hops === 2 ? 'secondary' : 'ghost'}
+              variant={hops === 2 ? "secondary" : "ghost"}
               className="h-7 text-xs"
               onClick={() => onHopsChange(2)}
             >
@@ -219,7 +246,11 @@ export function GraphToolbar({
         {focusLabel && (
           <Badge variant="secondary" className="gap-1 font-normal">
             Focus: {focusLabel}
-            <button type="button" className="ml-1 text-muted-foreground" onClick={onClearFocus}>
+            <button
+              type="button"
+              className="ml-1 text-muted-foreground"
+              onClick={onClearFocus}
+            >
               ×
             </button>
           </Badge>

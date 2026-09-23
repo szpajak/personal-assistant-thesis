@@ -71,11 +71,15 @@ class Settings(BaseSettings):
 
     @property
     def job_search_terms_list(self) -> list[str]:
-        return [term.strip() for term in self.job_search_terms.split(",") if term.strip()]
+        return [
+            term.strip() for term in self.job_search_terms.split(",") if term.strip()
+        ]
 
     @property
     def job_search_sites_list(self) -> list[str]:
-        return [site.strip() for site in self.job_search_sites.split(",") if site.strip()]
+        return [
+            site.strip() for site in self.job_search_sites.split(",") if site.strip()
+        ]
 
     @property
     def job_proxies_list(self) -> list[str]:

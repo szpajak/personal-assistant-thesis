@@ -130,10 +130,9 @@ class JobListingRepository:
         now = _utc_now_naive()
 
         if existing and self._is_fresh(existing.scraped_at, ttl_days):
-            if (
-                existing.description == description
-                and (existing.required_skills or []) == list(required_skills)
-            ):
+            if existing.description == description and (
+                existing.required_skills or []
+            ) == list(required_skills):
                 return UpsertAction.SKIPPED, str(existing.id)
 
         listing_id = str(existing.id) if existing else str(uuid.uuid4())
@@ -241,7 +240,9 @@ class JobListingRepository:
         return True
 
     async def delete_by_url(self, url: str) -> None:
-        await self.db.execute(delete(ScrapedJobListing).where(ScrapedJobListing.url == url))
+        await self.db.execute(
+            delete(ScrapedJobListing).where(ScrapedJobListing.url == url)
+        )
         await self.db.commit()
 
     async def expire_stale(

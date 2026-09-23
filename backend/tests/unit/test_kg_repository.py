@@ -168,7 +168,9 @@ async def test_get_person_career_brief_returns_categories(
 
     # Assert
     assert brief["projects"] == [{"title": "Shop API", "skills": ["Python"]}]
-    assert brief["employment"] == [{"title": "Backend Engineer", "skills": ["Python", "FastAPI"]}]
+    assert brief["employment"] == [
+        {"title": "Backend Engineer", "skills": ["Python", "FastAPI"]}
+    ]
     assert brief["certificates"] == [{"title": "CKA", "skills": ["Kubernetes"]}]
     assert brief["education"] == [{"degree": "BSc"}]
     mock_neo4j_session.run.assert_called_once()
@@ -190,7 +192,12 @@ async def test_get_person_career_brief_missing_person_returns_empty(
     brief = await kg_repository.get_person_career_brief("user_missing")
 
     # Assert
-    assert brief == {"projects": [], "employment": [], "certificates": [], "education": []}
+    assert brief == {
+        "projects": [],
+        "employment": [],
+        "certificates": [],
+        "education": [],
+    }
 
 
 @pytest.mark.asyncio

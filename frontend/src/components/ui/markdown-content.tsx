@@ -10,7 +10,11 @@ interface MarkdownContentProps {
 
 export function MarkdownContent({ content, className }: MarkdownContentProps) {
   if (!content?.trim()) {
-    return <p className="text-sm text-muted-foreground italic">No description provided.</p>;
+    return (
+      <p className="text-sm text-muted-foreground italic">
+        No description provided.
+      </p>
+    );
   }
 
   return (

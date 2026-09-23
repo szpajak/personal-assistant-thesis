@@ -11,7 +11,10 @@ from langchain_deepseek import ChatDeepSeek
 from ..config import settings
 from ..prompts.job_analysis_prompts import JOB_ANALYSIS_PROMPT
 from ..prompts.profile_prompts import PROFILE_EXTRACTION_PROMPT
-from ..prompts.project_prompts import PROJECT_ENRICHMENT_PROMPT, PROJECT_EXTRACTION_PROMPT
+from ..prompts.project_prompts import (
+    PROJECT_ENRICHMENT_PROMPT,
+    PROJECT_EXTRACTION_PROMPT,
+)
 
 # DeepSeek's V4 models default to "thinking" (reasoning) mode, which spends
 # extra output tokens on a hidden reasoning trace before the final answer.

@@ -15,9 +15,7 @@ _LUCENE_MAX_TERMS = 40
 _LUCENE_SPECIAL = re.compile(r'([+\-!(){}\[\]^"~*?:\\/])')
 
 
-def prepare_lucene_query(
-    query_text: str, max_terms: int = _LUCENE_MAX_TERMS
-) -> str:
+def prepare_lucene_query(query_text: str, max_terms: int = _LUCENE_MAX_TERMS) -> str:
     """Collapse a free-text string into a short, escaped Lucene query.
 
     Full job descriptions (thousands of tokens) must never be sent to
@@ -483,11 +481,7 @@ class KGRepository:
             "MATCH (s:Skill) RETURN s.name AS name LIMIT $limit",
             {"limit": limit},
         )
-        return [
-            str(row.get("name") or "").strip()
-            for row in rows
-            if row.get("name")
-        ]
+        return [str(row.get("name") or "").strip() for row in rows if row.get("name")]
 
     async def delete_node(
         self,
@@ -661,7 +655,12 @@ class KGRepository:
             result = await session.run(query, person_id=person_id)
             record = await result.single()
             if not record:
-                return {"projects": [], "employment": [], "certificates": [], "education": []}
+                return {
+                    "projects": [],
+                    "employment": [],
+                    "certificates": [],
+                    "education": [],
+                }
             return {
                 "projects": list(record.get("projects") or []),
                 "employment": list(record.get("employment") or []),
@@ -812,7 +811,9 @@ class KGRepository:
             record = await result.single()
             return record["props"] if record else None
 
-    async def get_job_or_listing(self, job_id: str) -> tuple[dict[str, Any] | None, str | None]:
+    async def get_job_or_listing(
+        self, job_id: str
+    ) -> tuple[dict[str, Any] | None, str | None]:
         """Return ``(props, "career")`` for a promoted JobOffer id, or
         ``(None, None)`` when it doesn't exist (or is only a market_sample
         stub - those aren't the user's own jobs; callers fall back to the

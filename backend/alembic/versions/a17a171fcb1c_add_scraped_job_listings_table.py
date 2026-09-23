@@ -45,10 +45,16 @@ def upgrade():
         op.f("ix_scraped_job_listings_id"), "scraped_job_listings", ["id"], unique=False
     )
     op.create_index(
-        op.f("ix_scraped_job_listings_url"), "scraped_job_listings", ["url"], unique=True
+        op.f("ix_scraped_job_listings_url"),
+        "scraped_job_listings",
+        ["url"],
+        unique=True,
     )
     op.create_index(
-        op.f("ix_scraped_job_listings_source"), "scraped_job_listings", ["source"], unique=False
+        op.f("ix_scraped_job_listings_source"),
+        "scraped_job_listings",
+        ["source"],
+        unique=False,
     )
     op.create_index(
         op.f("ix_scraped_job_listings_seniority"),
@@ -57,14 +63,25 @@ def upgrade():
         unique=False,
     )
     op.create_index(
-        op.f("ix_scraped_job_listings_status"), "scraped_job_listings", ["status"], unique=False
+        op.f("ix_scraped_job_listings_status"),
+        "scraped_job_listings",
+        ["status"],
+        unique=False,
     )
 
 
 def downgrade():
-    op.drop_index(op.f("ix_scraped_job_listings_status"), table_name="scraped_job_listings")
-    op.drop_index(op.f("ix_scraped_job_listings_seniority"), table_name="scraped_job_listings")
-    op.drop_index(op.f("ix_scraped_job_listings_source"), table_name="scraped_job_listings")
-    op.drop_index(op.f("ix_scraped_job_listings_url"), table_name="scraped_job_listings")
+    op.drop_index(
+        op.f("ix_scraped_job_listings_status"), table_name="scraped_job_listings"
+    )
+    op.drop_index(
+        op.f("ix_scraped_job_listings_seniority"), table_name="scraped_job_listings"
+    )
+    op.drop_index(
+        op.f("ix_scraped_job_listings_source"), table_name="scraped_job_listings"
+    )
+    op.drop_index(
+        op.f("ix_scraped_job_listings_url"), table_name="scraped_job_listings"
+    )
     op.drop_index(op.f("ix_scraped_job_listings_id"), table_name="scraped_job_listings")
     op.drop_table("scraped_job_listings")

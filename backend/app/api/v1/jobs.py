@@ -125,17 +125,15 @@ async def list_scraped_jobs(
     search: str | None = Query(default=None),
     source: str | None = Query(default=None),
     status: str | None = Query(default="active"),
-    seniority: str | None = Query(
-        default=None, description="junior | mid | senior"
-    ),
-    experience_bracket: str | None = Query(
-        default=None, description="0-2 | 2-5 | 5+"
-    ),
+    seniority: str | None = Query(default=None, description="junior | mid | senior"),
+    experience_bracket: str | None = Query(default=None, description="0-2 | 2-5 | 5+"),
     current_user: User = Depends(get_current_user),
     service: JobService = Depends(get_job_service),
 ) -> list[JobOfferRead]:
     """List scraped-but-not-promoted listings (Postgres) for the Scraped Offers tab."""
-    min_years, max_years = _EXPERIENCE_BRACKETS.get(experience_bracket or "", (None, None))
+    min_years, max_years = _EXPERIENCE_BRACKETS.get(
+        experience_bracket or "", (None, None)
+    )
     return await service.list_scraped(
         search=search,
         source=source,
@@ -155,7 +153,9 @@ async def delete_scraped_job(
     """Delete a scraped listing to reclaim storage / clean up unwanted entries."""
     deleted = await service.delete_scraped(listing_id)
     if not deleted:
-        raise HTTPException(status_code=404, detail=f"Scraped listing {listing_id} not found")
+        raise HTTPException(
+            status_code=404, detail=f"Scraped listing {listing_id} not found"
+        )
     return Response(status_code=204)
 
 

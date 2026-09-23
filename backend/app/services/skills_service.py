@@ -87,6 +87,7 @@ class SkillsService:
             "skills": [str(s) for s in skills if isinstance(s, str) and s.strip()],
             "cached": True,
         }
+
     async def create_skill(
         self,
         person_id: str,
@@ -99,7 +100,9 @@ class SkillsService:
 
             existing = await self.kg_repository.get_node("Skill", skill_id)
             existing_aliases = {
-                str(a).strip() for a in (existing or {}).get("aliases", []) if str(a).strip()
+                str(a).strip()
+                for a in (existing or {}).get("aliases", [])
+                if str(a).strip()
             }
             if payload.name.strip().lower() != resolved_name.strip().lower():
                 existing_aliases.add(payload.name.strip())

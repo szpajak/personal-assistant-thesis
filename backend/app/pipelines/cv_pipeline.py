@@ -137,11 +137,18 @@ class CVPipeline:
             {"job_id": job_offer_id},
         )
         required_skills = [
-            {"name": row.get("name"), "level": row.get("level"), "importance": row.get("importance")}
+            {
+                "name": row.get("name"),
+                "level": row.get("level"),
+                "importance": row.get("importance"),
+            }
             for row in rows
             if row.get("name")
         ]
-        return {"job_offer_data": job_node or {}, "job_required_skills": required_skills}
+        return {
+            "job_offer_data": job_node or {},
+            "job_required_skills": required_skills,
+        }
 
     async def fetch_static_profile(self, state: CVPipelineState) -> dict[str, Any]:
         """Fetch profile/chronology facts that are the same for every CV
@@ -172,7 +179,10 @@ class CVPipeline:
             {"person_id": user_id},
         )
         certificates = [
-            {**dict(row.get("cert") or {}), "validated_skills": row.get("validated_skills") or []}
+            {
+                **dict(row.get("cert") or {}),
+                "validated_skills": row.get("validated_skills") or [],
+            }
             for row in cert_rows
         ]
 
@@ -249,8 +259,11 @@ class CVPipeline:
         result = await chain.ainvoke(
             {
                 "job_offer": state["job_offer_data"],
-                "job_required_skills": _format_job_required_skills(state["job_required_skills"]),
-                "evidence": state["evidence_text"] or "No additional evidence available.",
+                "job_required_skills": _format_job_required_skills(
+                    state["job_required_skills"]
+                ),
+                "evidence": state["evidence_text"]
+                or "No additional evidence available.",
                 "selected_skills": ", ".join(budget.skills) or "None",
                 "employment": _format_employment(state["employment"]),
                 "selected_projects": _format_selected_projects(budget.projects),

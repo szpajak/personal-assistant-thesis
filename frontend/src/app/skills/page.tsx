@@ -44,14 +44,21 @@ export default function SkillsPage() {
   const { data: targetRoles } = useTargetRoles();
   const [targetRoleId, setTargetRoleId] = useState<string | null>(null);
 
-  const { data: analysis, isFetching: analysisLoading } = useSkillAnalysis(targetRoleId);
-  const { data: marketDemand, isLoading: demandLoading } = useMarketDemand(20, targetRoleId);
+  const { data: analysis, isFetching: analysisLoading } =
+    useSkillAnalysis(targetRoleId);
+  const { data: marketDemand, isLoading: demandLoading } = useMarketDemand(
+    20,
+    targetRoleId,
+  );
   const { data: projectsCache } = useCachedSuggestedProjects();
   const { data: roadmapCache } = useCachedLearningRoadmap();
 
   const selectedRole = useMemo(
-    () => (targetRoleId ? targetRoles?.find((r) => r.id === targetRoleId) ?? null : null),
-    [targetRoles, targetRoleId]
+    () =>
+      targetRoleId
+        ? (targetRoles?.find((r) => r.id === targetRoleId) ?? null)
+        : null,
+    [targetRoles, targetRoleId],
   );
 
   // Re-fetch gaps/demand once a role's market sample finishes (transitions
@@ -60,25 +67,32 @@ export default function SkillsPage() {
   useEffect(() => {
     const status = selectedRole?.sample_status ?? null;
     if (lastRoleStatus.current !== null && status !== lastRoleStatus.current) {
-      queryClient.invalidateQueries({ queryKey: ["skill-analysis", targetRoleId] });
+      queryClient.invalidateQueries({
+        queryKey: ["skill-analysis", targetRoleId],
+      });
       queryClient.invalidateQueries({ queryKey: ["market-demand"] });
     }
     lastRoleStatus.current = status;
   }, [selectedRole?.sample_status, targetRoleId, queryClient]);
 
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-  const [suggestedProjects, setSuggestedProjects] = useState<SuggestedProject[] | null>(null);
+  const [suggestedProjects, setSuggestedProjects] = useState<
+    SuggestedProject[] | null
+  >(null);
   const [roadmap, setRoadmap] = useState<LearningRoadmap | null>(null);
-  const [includedProjectTitles, setIncludedProjectTitles] = useState<string[]>([]);
+  const [includedProjectTitles, setIncludedProjectTitles] = useState<string[]>(
+    [],
+  );
   const [isRefreshingProjects, setIsRefreshingProjects] = useState(false);
   const [isGeneratingRoadmap, setIsGeneratingRoadmap] = useState(false);
 
   const ownedSkillNames = useMemo(
     () => new Set((skills || []).map((s) => s.name.toLowerCase())),
-    [skills]
+    [skills],
   );
 
-  const effectiveProjects = suggestedProjects ?? projectsCache?.suggested_projects ?? [];
+  const effectiveProjects =
+    suggestedProjects ?? projectsCache?.suggested_projects ?? [];
   const effectiveRoadmap = roadmap ?? roadmapCache?.roadmap ?? null;
 
   const addSkill = (skill: string) => {
@@ -89,14 +103,16 @@ export default function SkillsPage() {
 
   const removeSkill = (skill: string) => {
     setSelectedSkills((current) =>
-      current.filter((item) => item.toLowerCase() !== skill.toLowerCase())
+      current.filter((item) => item.toLowerCase() !== skill.toLowerCase()),
     );
     setIncludedProjectTitles((current) => current);
   };
 
   const toggleIncludedProject = (title: string) => {
     setIncludedProjectTitles((current) =>
-      current.includes(title) ? current.filter((t) => t !== title) : [...current, title]
+      current.includes(title)
+        ? current.filter((t) => t !== title)
+        : [...current, title],
     );
   };
 
@@ -114,7 +130,9 @@ export default function SkillsPage() {
       const projects = await regenerateSuggestedProjects(selectedSkills);
       setSuggestedProjects(projects);
       setIncludedProjectTitles([]);
-      await queryClient.invalidateQueries({ queryKey: ["suggested-projects-cache"] });
+      await queryClient.invalidateQueries({
+        queryKey: ["suggested-projects-cache"],
+      });
       toast({
         title: "Projects updated",
         description: `Generated ${projects.length} project brief${projects.length === 1 ? "" : "s"}.`,
@@ -122,7 +140,8 @@ export default function SkillsPage() {
     } catch (error) {
       toast({
         title: "Could not regenerate projects",
-        description: error instanceof Error ? error.message : "Please try again.",
+        description:
+          error instanceof Error ? error.message : "Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -135,15 +154,17 @@ export default function SkillsPage() {
     setIsGeneratingRoadmap(true);
     try {
       const includedProjects = effectiveProjects.filter((p) =>
-        includedProjectTitles.includes(p.title)
+        includedProjectTitles.includes(p.title),
       );
       const generated = await generateLearningRoadmap(
         selectedSkills,
         targetRoleId,
-        includedProjects
+        includedProjects,
       );
       setRoadmap(generated);
-      await queryClient.invalidateQueries({ queryKey: ["learning-roadmap-cache"] });
+      await queryClient.invalidateQueries({
+        queryKey: ["learning-roadmap-cache"],
+      });
       toast({
         title: "Roadmap generated",
         description: `${generated.phases.length} phase${generated.phases.length === 1 ? "" : "s"} · ${generated.overall_duration || "no estimate"}.`,
@@ -151,7 +172,8 @@ export default function SkillsPage() {
     } catch (error) {
       toast({
         title: "Could not generate roadmap",
-        description: error instanceof Error ? error.message : "Please try again.",
+        description:
+          error instanceof Error ? error.message : "Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -162,13 +184,19 @@ export default function SkillsPage() {
   return (
     <div className="space-y-8 pb-12">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Knowledge & Skills</h1>
+        <h1 className="text-2xl font-bold tracking-tight">
+          Knowledge & Skills
+        </h1>
         <p className="text-sm text-gray-500">
-          Benchmark your expertise against real market data and build a learning roadmap.
+          Benchmark your expertise against real market data and build a learning
+          roadmap.
         </p>
       </div>
 
-      <TargetRoleManager selectedRoleId={targetRoleId} onSelectRole={setTargetRoleId} />
+      <TargetRoleManager
+        selectedRoleId={targetRoleId}
+        onSelectRole={setTargetRoleId}
+      />
 
       <div className="grid gap-8 lg:grid-cols-2">
         {skillsLoading ? (

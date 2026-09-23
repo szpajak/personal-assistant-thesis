@@ -14,7 +14,13 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Upload, Award, Plus } from "lucide-react";
 
-const emptyForm = { title: "", issuer: "", issued_at: "", document_url: "", skills: "" };
+const emptyForm = {
+  title: "",
+  issuer: "",
+  issued_at: "",
+  document_url: "",
+  skills: "",
+};
 
 export default function CertificatesPage() {
   const { data: certificates, isLoading } = useCertificates();
@@ -64,7 +70,8 @@ export default function CertificatesPage() {
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Certificates</h1>
         <p className="text-sm text-gray-500">
-          Credentials that validate your skills — linked into your knowledge graph.
+          Credentials that validate your skills — linked into your knowledge
+          graph.
         </p>
       </div>
 
@@ -120,7 +127,9 @@ export default function CertificatesPage() {
                     id="cert-issued-at"
                     type="date"
                     value={form.issued_at}
-                    onChange={(e) => setForm({ ...form, issued_at: e.target.value })}
+                    onChange={(e) =>
+                      setForm({ ...form, issued_at: e.target.value })
+                    }
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -128,13 +137,17 @@ export default function CertificatesPage() {
                   <Input
                     id="cert-url"
                     value={form.document_url}
-                    onChange={(e) => setForm({ ...form, document_url: e.target.value })}
+                    onChange={(e) =>
+                      setForm({ ...form, document_url: e.target.value })
+                    }
                     placeholder="https://…"
                   />
                 </div>
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="cert-skills">Skills validated (comma-separated)</Label>
+                <Label htmlFor="cert-skills">
+                  Skills validated (comma-separated)
+                </Label>
                 <Input
                   id="cert-skills"
                   value={form.skills}
@@ -166,10 +179,14 @@ export default function CertificatesPage() {
                       <span className="font-medium">{cert.title}</span>
                     </div>
                     {cert.issued_at && (
-                      <span className="text-xs text-gray-500 shrink-0">{cert.issued_at}</span>
+                      <span className="text-xs text-gray-500 shrink-0">
+                        {cert.issued_at}
+                      </span>
                     )}
                   </div>
-                  {cert.issuer && <p className="text-sm text-gray-500">{cert.issuer}</p>}
+                  {cert.issuer && (
+                    <p className="text-sm text-gray-500">{cert.issuer}</p>
+                  )}
                   {cert.validated_skills.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 pt-1">
                       {cert.validated_skills.map((skill) => (

@@ -1,6 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiFetch, apiUpload } from "@/lib/apiFetch";
-import { Certificate, CertificateCreateInput, CertificateDraft } from "@/types/certificates";
+import {
+  Certificate,
+  CertificateCreateInput,
+  CertificateDraft,
+} from "@/types/certificates";
 
 export function useCertificates() {
   return useQuery({
@@ -26,6 +30,9 @@ export function useCreateCertificate() {
 export function useExtractCertificateDraft() {
   return useMutation({
     mutationFn: (file: File) =>
-      apiUpload<{ drafts: CertificateDraft[] }>("/api/v1/certificates/upload", file),
+      apiUpload<{ drafts: CertificateDraft[] }>(
+        "/api/v1/certificates/upload",
+        file,
+      ),
   });
 }

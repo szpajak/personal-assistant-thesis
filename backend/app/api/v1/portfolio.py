@@ -5,7 +5,16 @@ import shutil
 import tempfile
 from typing import Any
 
-from fastapi import APIRouter, Body, Depends, File, HTTPException, Query, Response, UploadFile
+from fastapi import (
+    APIRouter,
+    Body,
+    Depends,
+    File,
+    HTTPException,
+    Query,
+    Response,
+    UploadFile,
+)
 
 from ...dependencies import get_current_user
 from ...kg.embeddings import KGEmbeddings

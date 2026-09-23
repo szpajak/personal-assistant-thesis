@@ -86,7 +86,9 @@ async def test_scrape_site_uses_thread_pool_and_maps_rows() -> None:
     assert jobs[0].source == "indeed"
 
 
-def test_scrape_jobs_sync_paginates_in_batches_with_sleep(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_scrape_jobs_sync_paginates_in_batches_with_sleep(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     """Regression test: previously this called `from jobspy import scrape_jobs`,
     but no `jobspy` module exists (only `jobspy2`), so every real scrape
     raised ModuleNotFoundError and silently produced zero results. It must
@@ -97,8 +99,12 @@ def test_scrape_jobs_sync_paginates_in_batches_with_sleep(monkeypatch: pytest.Mo
     monkeypatch.setattr(settings, "job_scrape_sleep_seconds", 1)
     monkeypatch.setattr(settings, "job_scrape_max_retries", 3)
 
-    batch1 = pd.DataFrame([{"title": "A", "company": "X"}, {"title": "B", "company": "Y"}])
-    batch2 = pd.DataFrame([{"title": "C", "company": "Z"}, {"title": "D", "company": "W"}])
+    batch1 = pd.DataFrame(
+        [{"title": "A", "company": "X"}, {"title": "B", "company": "Y"}]
+    )
+    batch2 = pd.DataFrame(
+        [{"title": "C", "company": "Z"}, {"title": "D", "company": "W"}]
+    )
     batch3 = pd.DataFrame([{"title": "E", "company": "V"}])
     mock_scrape_jobs = MagicMock(side_effect=[batch1, batch2, batch3])
     filters = JobSearchFilters.from_settings()
@@ -126,7 +132,9 @@ def test_scrape_jobs_sync_retries_with_backoff_then_succeeds(
     monkeypatch.setattr(settings, "job_scrape_sleep_seconds", 1)
     monkeypatch.setattr(settings, "job_scrape_max_retries", 3)
 
-    good_batch = pd.DataFrame([{"title": "A", "company": "X"}, {"title": "B", "company": "Y"}])
+    good_batch = pd.DataFrame(
+        [{"title": "A", "company": "X"}, {"title": "B", "company": "Y"}]
+    )
     mock_scrape_jobs = MagicMock(side_effect=[RuntimeError("blocked"), good_batch])
     filters = JobSearchFilters.from_settings()
 
@@ -142,7 +150,9 @@ def test_scrape_jobs_sync_retries_with_backoff_then_succeeds(
     mock_sleep.assert_any_call(1)
 
 
-def test_scrape_jobs_sync_gives_up_after_max_retries(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_scrape_jobs_sync_gives_up_after_max_retries(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     monkeypatch.setattr(settings, "job_results_wanted", 5)
     monkeypatch.setattr(settings, "job_scrape_batch_size", 5)
     monkeypatch.setattr(settings, "job_scrape_sleep_seconds", 1)
@@ -161,7 +171,9 @@ def test_scrape_jobs_sync_gives_up_after_max_retries(monkeypatch: pytest.MonkeyP
     assert mock_scrape_jobs.call_count == 2
 
 
-def test_scrape_jobs_sync_forwards_custom_filters(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_scrape_jobs_sync_forwards_custom_filters(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     monkeypatch.setattr(settings, "job_results_wanted", 2)
     monkeypatch.setattr(settings, "job_scrape_batch_size", 2)
     monkeypatch.setattr(settings, "job_scrape_sleep_seconds", 0)
@@ -295,7 +307,9 @@ async def test_upsert_job_offer_skips_fresh_unchanged_job() -> None:
     embeddings = MagicMock()
     embeddings.embed_text = AsyncMock(return_value=[0.1, 0.2])
 
-    ingestion = KGIngestion(kg_repository=repo, embeddings=embeddings, scrape_ttl_days=7)
+    ingestion = KGIngestion(
+        kg_repository=repo, embeddings=embeddings, scrape_ttl_days=7
+    )
     action, job_id = await ingestion.upsert_job_offer(
         title="Engineer",
         company="Acme",
@@ -344,7 +358,9 @@ async def test_promote_job_converts_listing_to_offer() -> None:
         patch("app.kg.ingestion.asyncio.sleep", new=AsyncMock()),
     ):
         mock_chain = AsyncMock()
-        mock_chain.ainvoke.return_value = _llm_response('{"industry": "", "website": ""}')
+        mock_chain.ainvoke.return_value = _llm_response(
+            '{"industry": "", "website": ""}'
+        )
         mock_chain_factory.return_value = mock_chain
 
         # Simulate the analysis LLM being unavailable (even after retries) -
@@ -355,7 +371,9 @@ async def test_promote_job_converts_listing_to_offer() -> None:
         mock_analysis_chain.ainvoke.side_effect = RuntimeError("llm down")
         mock_analysis_factory.return_value = mock_analysis_chain
 
-        ingestion = KGIngestion(kg_repository=repo, embeddings=embeddings, scrape_ttl_days=7)
+        ingestion = KGIngestion(
+            kg_repository=repo, embeddings=embeddings, scrape_ttl_days=7
+        )
         props, newly = await ingestion.promote_job(
             job_id="job-1", listing=listing, person_id="user_1"
         )
@@ -386,7 +404,9 @@ async def test_promote_job_raises_when_neither_offer_nor_listing_exists() -> Non
     repo.get_node = AsyncMock(return_value=None)
     embeddings = MagicMock()
 
-    ingestion = KGIngestion(kg_repository=repo, embeddings=embeddings, scrape_ttl_days=7)
+    ingestion = KGIngestion(
+        kg_repository=repo, embeddings=embeddings, scrape_ttl_days=7
+    )
 
     with pytest.raises(ValueError):
         await ingestion.promote_job(job_id="missing", listing={})
@@ -405,12 +425,18 @@ async def test_upsert_job_offer_creates_new_job_with_company_link() -> None:
     embeddings = MagicMock()
     embeddings.embed_text = AsyncMock(return_value=[0.1, 0.2, 0.3])
 
-    with patch("app.kg.ingestion.create_company_enrichment_chain") as mock_chain_factory:
+    with patch(
+        "app.kg.ingestion.create_company_enrichment_chain"
+    ) as mock_chain_factory:
         mock_chain = AsyncMock()
-        mock_chain.ainvoke.return_value = _llm_response('{"industry": "", "website": ""}')
+        mock_chain.ainvoke.return_value = _llm_response(
+            '{"industry": "", "website": ""}'
+        )
         mock_chain_factory.return_value = mock_chain
 
-        ingestion = KGIngestion(kg_repository=repo, embeddings=embeddings, scrape_ttl_days=7)
+        ingestion = KGIngestion(
+            kg_repository=repo, embeddings=embeddings, scrape_ttl_days=7
+        )
         action, job_id = await ingestion.upsert_job_offer(
             title="Engineer",
             company="Acme Corp",

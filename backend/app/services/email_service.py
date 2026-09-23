@@ -182,9 +182,7 @@ class EmailService:
             )
             if not rows or not rows[0].get("id"):
                 return None
-            person_ids = [
-                str(pid) for pid in (rows[0].get("person_ids") or []) if pid
-            ]
+            person_ids = [str(pid) for pid in (rows[0].get("person_ids") or []) if pid]
             return {
                 "id": str(rows[0]["id"]),
                 "classification": rows[0].get("classification"),
@@ -195,9 +193,7 @@ class EmailService:
             return None
 
     @staticmethod
-    def _email_fully_processed(
-        existing: dict[str, Any], person_id: str | None
-    ) -> bool:
+    def _email_fully_processed(existing: dict[str, Any], person_id: str | None) -> bool:
         """True when the node is classified and owned by ``person_id``."""
         classification = str(existing.get("classification") or "").strip()
         if not classification:

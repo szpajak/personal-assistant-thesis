@@ -99,7 +99,14 @@ async def test_create_project_with_confirmed_draft_skips_enrichment(
         "media_urls": [],
         "seniority": "senior",
         "achievements": ["Shipped to prod"],
-        "skills": [{"name": "Rust", "canonical_name": "Rust", "category": "language", "confidence": 0.9}],
+        "skills": [
+            {
+                "name": "Rust",
+                "canonical_name": "Rust",
+                "category": "language",
+                "confidence": 0.9,
+            }
+        ],
         "skip_enrichment": True,
     }
 
@@ -113,7 +120,12 @@ async def test_create_project_with_confirmed_draft_skips_enrichment(
         "seniority": "senior",
         "achievements": ["Shipped to prod"],
         "skills": [
-            {"name": "Rust", "canonical_name": "Rust", "category": "language", "confidence": 0.9}
+            {
+                "name": "Rust",
+                "canonical_name": "Rust",
+                "category": "language",
+                "confidence": 0.9,
+            }
         ],
         "skip_enrichment": True,
     }
@@ -130,13 +142,19 @@ async def test_create_project_with_confirmed_draft_skips_enrichment(
 
 
 @pytest.mark.anyio
-async def test_upload_project_document_returns_drafts(async_client: AsyncClient) -> None:
+async def test_upload_project_document_returns_drafts(
+    async_client: AsyncClient,
+) -> None:
     mock_service = AsyncMock()
     mock_service.extract_project_drafts.return_value = [
         ProjectDraft(
             title="Uploaded Project",
             description="Extracted Desc",
-            skills=[SkillDraft(name="AI", canonical_name="AI", category="technical", confidence=0.8)],
+            skills=[
+                SkillDraft(
+                    name="AI", canonical_name="AI", category="technical", confidence=0.8
+                )
+            ],
             tech_stack=["AI"],
             start_date=date(2024, 2, 1),
             source="upload",
@@ -167,7 +185,9 @@ async def test_upload_project_document_returns_drafts(async_client: AsyncClient)
 
 
 @pytest.mark.anyio
-async def test_upload_project_document_multiple_drafts(async_client: AsyncClient) -> None:
+async def test_upload_project_document_multiple_drafts(
+    async_client: AsyncClient,
+) -> None:
     mock_service = AsyncMock()
     mock_service.extract_project_drafts.return_value = [
         ProjectDraft(title="Project A", description="First", source="upload"),
@@ -176,9 +196,7 @@ async def test_upload_project_document_multiple_drafts(async_client: AsyncClient
 
     app.dependency_overrides[get_portfolio_service] = lambda: mock_service
 
-    files = {
-        "file": ("cv.pdf", io.BytesIO(b"dummy cv content"), "application/pdf")
-    }
+    files = {"file": ("cv.pdf", io.BytesIO(b"dummy cv content"), "application/pdf")}
 
     response = await async_client.post("/api/v1/portfolio/upload", files=files)
 

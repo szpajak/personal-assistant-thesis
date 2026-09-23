@@ -8,8 +8,11 @@ import logging
 import sys
 from typing import Any
 
+from app.config import settings
+from app.kg.embeddings import KGEmbeddings
+from app.kg.graphrag import GraphRAG
+from app.kg.repository import KGRepository
 from eval import _bootstrap  # noqa: F401  — pin eval Neo4j before app imports
-
 from eval.constraints import evaluate_kg_quality
 from eval.cv_eval import evaluate_cv
 from eval.emails_eval import evaluate_emails
@@ -19,11 +22,6 @@ from eval.retrieve_eval import evaluate_retrieval
 from eval.scenarios import run_scenarios
 from eval.seed import seed_dataset_a
 from eval.skills_eval import evaluate_skill_gaps
-
-from app.config import settings
-from app.kg.embeddings import KGEmbeddings
-from app.kg.graphrag import GraphRAG
-from app.kg.repository import KGRepository
 
 logger = logging.getLogger("eval")
 
@@ -94,17 +92,13 @@ async def _run(phase: str, *, force_db: bool, skip_llm: bool) -> dict[str, Any]:
     if phase in {"retrieve", "all"}:
         payload["retrieval"] = await evaluate_retrieval(graph_rag, id_map)
     if phase in {"jobs", "all"}:
-        payload["jobs"] = await evaluate_jobs(
-            repo, graph_rag, id_map, use_llm=use_llm
-        )
+        payload["jobs"] = await evaluate_jobs(repo, graph_rag, id_map, use_llm=use_llm)
     if phase in {"skills", "all"}:
         payload["skills"] = await evaluate_skill_gaps(repo, graph_rag, id_map)
     if phase in {"emails", "all"}:
         payload["emails"] = await evaluate_emails(repo, id_map, use_llm=use_llm)
     if phase in {"cv", "all"}:
-        payload["cv"] = await evaluate_cv(
-            repo, graph_rag, id_map, use_llm=use_llm
-        )
+        payload["cv"] = await evaluate_cv(repo, graph_rag, id_map, use_llm=use_llm)
     return payload
 
 

@@ -7,7 +7,7 @@ export interface JobOffer {
   required_skills: string[];
   scraped_at: string;
   /** staging = scraped listing; career = saved into the personal KG */
-  tier?: 'staging' | 'career';
+  tier?: "staging" | "career";
   location?: string;
   salary_range?: string | null;
   job_type?: string | null;
@@ -17,15 +17,15 @@ export interface JobOffer {
   max_experience_years?: number | null;
 }
 
-export type ExperienceBracket = '0-2' | '2-5' | '5+';
-export type SeniorityFilter = 'junior' | 'mid' | 'senior';
-export type MatchSource = 'overlap' | 'llm' | 'none';
+export type ExperienceBracket = "0-2" | "2-5" | "5+";
+export type SeniorityFilter = "junior" | "mid" | "senior";
+export type MatchSource = "overlap" | "llm" | "none";
 
 export interface ScrapedJobFilters {
   search?: string;
   source?: string;
-  seniority?: SeniorityFilter | '';
-  experience_bracket?: ExperienceBracket | '';
+  seniority?: SeniorityFilter | "";
+  experience_bracket?: ExperienceBracket | "";
 }
 
 export interface JobMatch {

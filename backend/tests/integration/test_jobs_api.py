@@ -88,7 +88,9 @@ async def test_trigger_job_scrape(async_client: AsyncClient) -> None:
         data = response.json()
         assert data["task_id"] == "task-123"
         mock_send_task.assert_called_once()
-        assert mock_send_task.call_args.args[0] == "app.tasks.job_tasks.scrape_job_offers"
+        assert (
+            mock_send_task.call_args.args[0] == "app.tasks.job_tasks.scrape_job_offers"
+        )
         filters = mock_send_task.call_args.kwargs["kwargs"]["filters"]
         assert filters["search_term"] == "Python Developer"
         assert filters["country"] == "Poland"
@@ -96,7 +98,9 @@ async def test_trigger_job_scrape(async_client: AsyncClient) -> None:
 
 
 @pytest.mark.asyncio
-async def test_trigger_job_scrape_requires_search_term(async_client: AsyncClient) -> None:
+async def test_trigger_job_scrape_requires_search_term(
+    async_client: AsyncClient,
+) -> None:
     response = await async_client.post("/api/v1/jobs/scrape", json={})
     assert response.status_code == 422
 

@@ -16,9 +16,13 @@ export function PortfolioEmptyState({ onAddClick }: PortfolioEmptyStateProps) {
         </div>
         <h3 className="mt-4 text-lg font-semibold">No projects added</h3>
         <p className="mb-6 mt-2 text-sm text-muted-foreground">
-          You haven&apos;t added any projects to your portfolio yet. Add your first project to showcase your skills.
+          You haven&apos;t added any projects to your portfolio yet. Add your
+          first project to showcase your skills.
         </p>
-        <Button onClick={onAddClick} className="bg-gray-900 text-white hover:bg-gray-700">
+        <Button
+          onClick={onAddClick}
+          className="bg-gray-900 text-white hover:bg-gray-700"
+        >
           Add your first project
         </Button>
       </div>

@@ -1,12 +1,12 @@
 "use client";
 
-import { 
-  FolderKanban, 
-  BarChart2, 
-  Mail, 
+import {
+  FolderKanban,
+  BarChart2,
+  Mail,
   Briefcase,
   AlertCircle,
-  ArrowRight
+  ArrowRight,
 } from "lucide-react";
 import { useKGStats } from "@/hooks/useKG";
 import { useApplications } from "@/hooks/useApplications";
@@ -30,33 +30,33 @@ export default function DashboardPage() {
   const firstName = user?.full_name?.split(" ")[0] || "";
 
   const statCards = [
-    { 
-      name: "Active Projects", 
-      value: stats?.active_projects ?? 0, 
-      icon: FolderKanban, 
+    {
+      name: "Active Projects",
+      value: stats?.active_projects ?? 0,
+      icon: FolderKanban,
       color: "border-l-blue-500",
-      href: "/portfolio"
+      href: "/portfolio",
     },
-    { 
-      name: "Skills Tracked", 
-      value: stats?.skills_tracked ?? 0, 
-      icon: BarChart2, 
+    {
+      name: "Skills Tracked",
+      value: stats?.skills_tracked ?? 0,
+      icon: BarChart2,
       color: "border-l-green-500",
-      href: "/skills"
+      href: "/skills",
     },
-    { 
-      name: "Open Applications", 
-      value: stats?.open_applications ?? 0, 
-      icon: Mail, 
+    {
+      name: "Open Applications",
+      value: stats?.open_applications ?? 0,
+      icon: Mail,
       color: "border-l-amber-500",
-      href: "/applications"
+      href: "/applications",
     },
-    { 
-      name: "New Job Matches", 
-      value: stats?.job_matches ?? 0, 
-      icon: Briefcase, 
+    {
+      name: "New Job Matches",
+      value: stats?.job_matches ?? 0,
+      icon: Briefcase,
       color: "border-l-purple-500",
-      href: "/jobs"
+      href: "/jobs",
     },
   ];
 
@@ -66,13 +66,17 @@ export default function DashboardPage() {
         <h1 className="text-2xl font-bold tracking-tight">
           {firstName ? `Welcome back, ${firstName}!` : "Dashboard"}
         </h1>
-        <p className="text-sm text-gray-500">Overview of your professional knowledge graph.</p>
+        <p className="text-sm text-gray-500">
+          Overview of your professional knowledge graph.
+        </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {statCards.map((card) => (
           <Link key={card.name} href={card.href}>
-            <Card className={`border-l-4 ${card.color} hover:shadow-md transition-shadow`}>
+            <Card
+              className={`border-l-4 ${card.color} hover:shadow-md transition-shadow`}
+            >
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-gray-500 uppercase tracking-wider">
                   {card.name}
@@ -101,30 +105,50 @@ export default function DashboardPage() {
           <CardContent>
             {appsLoading ? (
               <div className="space-y-4">
-                {[1, 2, 3].map((i) => <Skeleton key={i} className="h-12 w-full" />)}
+                {[1, 2, 3].map((i) => (
+                  <Skeleton key={i} className="h-12 w-full" />
+                ))}
               </div>
             ) : applications && applications.length > 0 ? (
               <div className="space-y-4">
                 {[...applications]
                   .sort((a, b) => {
-                    const aTime = a.applied_at ? new Date(a.applied_at).getTime() : 0;
-                    const bTime = b.applied_at ? new Date(b.applied_at).getTime() : 0;
+                    const aTime = a.applied_at
+                      ? new Date(a.applied_at).getTime()
+                      : 0;
+                    const bTime = b.applied_at
+                      ? new Date(b.applied_at).getTime()
+                      : 0;
                     return bTime - aTime;
                   })
                   .slice(0, 5)
                   .map((app: Application) => {
-                    const title = app.job_offer?.title?.trim() || "Untitled role";
+                    const title =
+                      app.job_offer?.title?.trim() || "Untitled role";
                     const company = app.job_offer?.company?.trim();
                     return (
-                      <div key={app.id} className="flex items-center justify-between border-b pb-3 last:border-0 last:pb-0">
+                      <div
+                        key={app.id}
+                        className="flex items-center justify-between border-b pb-3 last:border-0 last:pb-0"
+                      >
                         <div className="min-w-0 pr-3">
-                          <p className="text-sm font-semibold truncate">{title}</p>
+                          <p className="text-sm font-semibold truncate">
+                            {title}
+                          </p>
                           <p className="text-xs text-gray-500 truncate">
                             {company ? `${company} · ` : ""}
-                            {app.applied_at ? new Date(app.applied_at).toLocaleDateString() : "N/A"}
+                            {app.applied_at
+                              ? new Date(app.applied_at).toLocaleDateString()
+                              : "N/A"}
                           </p>
                         </div>
-                        <Badge variant={app.status.toLowerCase() === "rejected" ? "destructive" : "secondary"}>
+                        <Badge
+                          variant={
+                            app.status.toLowerCase() === "rejected"
+                              ? "destructive"
+                              : "secondary"
+                          }
+                        >
                           {app.status}
                         </Badge>
                       </div>
@@ -152,18 +176,29 @@ export default function DashboardPage() {
           <CardContent>
             {analysisLoading ? (
               <div className="flex flex-wrap gap-2">
-                {[1, 2, 3, 4, 5].map((i) => <Skeleton key={i} className="h-6 w-20" />)}
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Skeleton key={i} className="h-6 w-20" />
+                ))}
               </div>
             ) : analysis?.skill_gaps && analysis.skill_gaps.length > 0 ? (
               <div className="space-y-4">
                 <div className="flex flex-wrap gap-2">
                   {analysis.skill_gaps.slice(0, 5).map((gap) => (
-                    <Badge key={gap.skill} variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
+                    <Badge
+                      key={gap.skill}
+                      variant="outline"
+                      className="bg-amber-50 text-amber-700 border-amber-200"
+                    >
                       {gap.skill}
                     </Badge>
                   ))}
                 </div>
-                <Button variant="ghost" size="sm" className="w-full justify-between" asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-between"
+                  asChild
+                >
                   <Link href="/skills">
                     View full analysis
                     <ArrowRight className="h-4 w-4 ml-2" />
@@ -173,7 +208,9 @@ export default function DashboardPage() {
             ) : (
               <div className="flex flex-col items-center justify-center py-6 text-center">
                 <AlertCircle className="h-8 w-8 text-gray-300 mb-2" />
-                <p className="text-sm text-gray-500">No skill gaps identified</p>
+                <p className="text-sm text-gray-500">
+                  No skill gaps identified
+                </p>
                 <Button variant="outline" size="sm" className="mt-4" asChild>
                   <Link href="/skills">Check Skills</Link>
                 </Button>

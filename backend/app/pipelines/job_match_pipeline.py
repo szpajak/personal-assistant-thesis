@@ -16,10 +16,9 @@ from ..kg.graphrag import GraphRAG
 from ..kg.repository import KGRepository
 from ..prompts.job_prompts import JOB_MATCHING_PROMPT
 from ..utils.llm_json import RobustJsonOutputParser
-from ..utils.skill_ids import canonicalize_skill_list
 from ..utils.skill_extract import seed_required_skills
+from ..utils.skill_ids import canonicalize_skill_list
 from ..utils.skill_match import compute_skill_match
-
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +62,9 @@ class JobMatchState(TypedDict):
     matches: list[dict[str, Any]]
 
 
-def _merge_job_skills(job: dict[str, Any], linked_skills: list[str] | None) -> list[str]:
+def _merge_job_skills(
+    job: dict[str, Any], linked_skills: list[str] | None
+) -> list[str]:
     """Combine the JobOffer.required_skills property with REQUIRES edge names."""
     from_property = job.get("required_skills") or []
     if isinstance(from_property, str):
@@ -94,7 +95,9 @@ def _truncate(text: str, limit: int) -> str:
     return text[:limit].rstrip() + "…"
 
 
-def _format_candidate_profile(brief: dict[str, Any], max_chars: int = _CONTEXT_MAX_CHARS) -> str:
+def _format_candidate_profile(
+    brief: dict[str, Any], max_chars: int = _CONTEXT_MAX_CHARS
+) -> str:
     """Render the person's own career subgraph as a compact briefing.
 
     Unlike the old GraphRAG ``experience_context`` (a job-independent hybrid
@@ -116,7 +119,9 @@ def _format_candidate_profile(brief: dict[str, Any], max_chars: int = _CONTEXT_M
             period = f"{emp.get('start_date') or '?'}\u2013{emp.get('end_date') or 'present'}"
             skills = ", ".join(str(s) for s in (emp.get("skills") or []) if s)
             desc = _truncate(str(emp.get("description") or ""), 600)
-            parts.append(f"- {emp.get('title') or ''} at {emp.get('company') or ''} ({period})")
+            parts.append(
+                f"- {emp.get('title') or ''} at {emp.get('company') or ''} ({period})"
+            )
             if skills:
                 parts.append(f"  skills: {skills}")
             if desc:
@@ -178,7 +183,9 @@ def _format_retrieval_hits(
     if not hits:
         return ""
 
-    parts = ["RELEVANT CANDIDATE EVIDENCE (retrieved from knowledge graph for this job):"]
+    parts = [
+        "RELEVANT CANDIDATE EVIDENCE (retrieved from knowledge graph for this job):"
+    ]
     for hit in hits:
         node = hit.get("node") or {}
         label = hit.get("label", "Unknown")
@@ -245,9 +252,7 @@ def _job_retrieval_query(job: dict[str, Any]) -> str:
     """
     title = str(job.get("title") or "").strip()
     skills = [
-        str(s).strip()
-        for s in (job.get("required_skills") or [])
-        if str(s).strip()
+        str(s).strip() for s in (job.get("required_skills") or []) if str(s).strip()
     ]
     snippet = str(job.get("description") or "")[:_RETRIEVAL_SNIPPET_CHARS].strip()
     parts = [title]
@@ -299,7 +304,9 @@ class JobMatchPipeline:
         try:
             return await self.kg_repository.list_skill_names()
         except Exception as exc:
-            logger.warning("Failed to load known skill names for heuristic extraction: %s", exc)
+            logger.warning(
+                "Failed to load known skill names for heuristic extraction: %s", exc
+            )
             return []
 
     async def fetch_user_skills(self, state: JobMatchState) -> dict[str, Any]:
@@ -479,7 +486,6 @@ class JobMatchPipeline:
         elif not use_llm:
             llm_targets = []
 
-        llm_ids = {str(item["job"].get("id")) for item in llm_targets}
         semaphore = asyncio.Semaphore(_MATCH_CONCURRENCY)
 
         async def _score_llm(item: dict[str, Any]) -> dict[str, Any]:
@@ -532,16 +538,19 @@ class JobMatchPipeline:
         top_k: int,
     ) -> list[dict[str, Any]]:
         """Rank by overlap, then local embedding similarity; keep top_k for LLM."""
-        skill_blob = ", ".join(
-            f"{s['name']} ({s.get('level') or 'intermediate'})" for s in user_skills
-        ) or "candidate skills"
+        skill_blob = (
+            ", ".join(
+                f"{s['name']} ({s.get('level') or 'intermediate'})" for s in user_skills
+            )
+            or "candidate skills"
+        )
         try:
             user_vec = await self.embeddings.embed_text(skill_blob)
         except Exception as exc:
             logger.warning("Embedding shortlist failed; using overlap only: %s", exc)
-            return sorted(
-                scored, key=lambda item: item["quick_score"], reverse=True
-            )[:top_k]
+            return sorted(scored, key=lambda item: item["quick_score"], reverse=True)[
+                :top_k
+            ]
 
         ranked: list[tuple[float, dict[str, Any]]] = []
         for item in scored:

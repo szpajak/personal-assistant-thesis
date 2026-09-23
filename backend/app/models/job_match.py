@@ -17,7 +17,9 @@ class JobMatch(Base):
     """Cached match between a person and a job (staging listing or career offer)."""
 
     __tablename__ = "job_matches"
-    __table_args__ = (UniqueConstraint("person_id", "job_id", name="uq_job_matches_person_job"),)
+    __table_args__ = (
+        UniqueConstraint("person_id", "job_id", name="uq_job_matches_person_job"),
+    )
 
     id = Column(String, primary_key=True)
     person_id = Column(String, nullable=False, index=True)

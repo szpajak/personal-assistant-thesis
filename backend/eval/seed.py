@@ -5,6 +5,10 @@ from __future__ import annotations
 from datetime import UTC, datetime
 from typing import Any
 
+from app.kg.embeddings import KGEmbeddings
+from app.kg.ingestion import KGIngestion
+from app.kg.repository import KGRepository
+from app.utils.skill_ids import canonical_skill_id, resolve_canonical_skill_name
 from eval.dataset_a import (
     CERTIFICATE,
     EDUCATION,
@@ -18,11 +22,6 @@ from eval.dataset_a import (
     TARGET_ROLE,
 )
 from setup_kg import setup_fulltext_indexes, setup_indexes, setup_schema
-
-from app.kg.embeddings import KGEmbeddings
-from app.kg.ingestion import KGIngestion
-from app.kg.repository import KGRepository
-from app.utils.skill_ids import canonical_skill_id, resolve_canonical_skill_name
 
 CONSTRAINTS = [
     "CREATE CONSTRAINT person_id IF NOT EXISTS FOR (p:Person) REQUIRE p.id IS UNIQUE",
@@ -163,9 +162,7 @@ async def seed_dataset_a(*, force: bool = False) -> dict[str, Any]:
             extract_skills=False,
         )
         await ingestion._link_required_skills(job_id, list(spec["skills"]))
-        await repo.upsert_relationship(
-            "Person", PERSON_A, "SAVED", "JobOffer", job_id
-        )
+        await repo.upsert_relationship("Person", PERSON_A, "SAVED", "JobOffer", job_id)
         jobs[key] = job_id
 
     applications: dict[str, str] = {}

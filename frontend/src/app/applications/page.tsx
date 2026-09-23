@@ -41,11 +41,15 @@ export default function ApplicationsPage() {
     <div className="flex flex-col h-[calc(100vh-4rem)] space-y-6">
       <div className="flex items-center justify-between flex-shrink-0">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Application Tracker</h1>
-          <p className="text-sm text-gray-500">Track your job applications and interview progress.</p>
+          <h1 className="text-2xl font-bold tracking-tight">
+            Application Tracker
+          </h1>
+          <p className="text-sm text-gray-500">
+            Track your job applications and interview progress.
+          </p>
         </div>
-        <Button 
-          onClick={() => syncMutation.mutate()} 
+        <Button
+          onClick={() => syncMutation.mutate()}
           disabled={syncMutation.isPending}
           className="bg-indigo-600 text-white hover:bg-indigo-500"
         >

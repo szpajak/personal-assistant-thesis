@@ -20,11 +20,22 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Search, Sparkles, Trash2, Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { JobOffer, JobMatch, ExperienceBracket, SeniorityFilter } from "@/types/jobs";
+import {
+  JobOffer,
+  JobMatch,
+  ExperienceBracket,
+  SeniorityFilter,
+} from "@/types/jobs";
 import { JobDetailSheet } from "@/components/jobs/JobDetailSheet";
 import { getDisplayScore } from "@/lib/jobMatch";
 import type { JobScrapeRequest } from "@/lib/api";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 type JobsTab = "match" | "scraped";
 
@@ -49,7 +60,9 @@ export default function JobsPage() {
 
   const [scrapedSearch, setScrapedSearch] = useState("");
   const [seniority, setSeniority] = useState<SeniorityFilter | "">("");
-  const [experienceBracket, setExperienceBracket] = useState<ExperienceBracket | "">("");
+  const [experienceBracket, setExperienceBracket] = useState<
+    ExperienceBracket | ""
+  >("");
 
   const scrapedFilters = useMemo(
     () => ({
@@ -57,10 +70,11 @@ export default function JobsPage() {
       seniority: seniority || undefined,
       experience_bracket: experienceBracket || undefined,
     }),
-    [scrapedSearch, seniority, experienceBracket]
+    [scrapedSearch, seniority, experienceBracket],
   );
 
-  const { data: scrapedJobs, isLoading: scrapedLoading } = useScrapedJobs(scrapedFilters);
+  const { data: scrapedJobs, isLoading: scrapedLoading } =
+    useScrapedJobs(scrapedFilters);
 
   const isLoading = jobsLoading || matchesLoading;
 
@@ -116,7 +130,7 @@ export default function JobsPage() {
       },
       {
         onSettled: () => setPendingJobId(null),
-      }
+      },
     );
   };
 
@@ -128,8 +142,7 @@ export default function JobsPage() {
   };
 
   const normalizedMatches: JobMatch[] = useMemo(() => {
-    const saved =
-      (matches || []).filter((m) => m.job_offer.tier === "career");
+    const saved = (matches || []).filter((m) => m.job_offer.tier === "career");
     if (saved.length > 0) return saved;
     return (allJobs || [])
       .filter((job: JobOffer) => job.tier === "career")
@@ -153,7 +166,7 @@ export default function JobsPage() {
     const matchesSkill =
       !selectedSkill ||
       m.job_offer.required_skills.some((s) =>
-        s.toLowerCase().includes(selectedSkill.toLowerCase())
+        s.toLowerCase().includes(selectedSkill.toLowerCase()),
       );
     const displayScore = getDisplayScore(m) * 100;
     return matchesSkill && displayScore >= minMatch;
@@ -293,10 +306,12 @@ export default function JobsPage() {
                   selected={selectedIds.has(match.job_offer.id)}
                   onToggleSelect={toggleSelect}
                   isSaving={
-                    promoteMutation.isPending && pendingJobId === match.job_offer.id
+                    promoteMutation.isPending &&
+                    pendingJobId === match.job_offer.id
                   }
                   isApplying={
-                    applyMutation.isPending && pendingJobId === match.job_offer.id
+                    applyMutation.isPending &&
+                    pendingJobId === match.job_offer.id
                   }
                   isMatching={
                     matchOne.isPending && pendingJobId === match.job_offer.id
@@ -307,10 +322,12 @@ export default function JobsPage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-20 text-center border rounded-xl bg-white">
               <Search className="h-12 w-12 text-gray-300 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900">No jobs found</h3>
+              <h3 className="text-lg font-medium text-gray-900">
+                No jobs found
+              </h3>
               <p className="text-sm text-gray-500 max-w-xs mt-2">
-                Save scraped offers to your career graph, then calculate AI match
-                on demand.
+                Save scraped offers to your career graph, then calculate AI
+                match on demand.
               </p>
               <Button
                 variant="outline"
@@ -351,7 +368,7 @@ export default function JobsPage() {
                     ? job.required_skills
                     : match?.job_offer.required_skills || [];
                 const matching = new Set(
-                  (match?.matching_skills || []).map((s) => s.toLowerCase())
+                  (match?.matching_skills || []).map((s) => s.toLowerCase()),
                 );
                 const displayPercent = match
                   ? Math.round(getDisplayScore(match) * 100)
@@ -364,110 +381,121 @@ export default function JobsPage() {
                       : "bg-red-100 text-red-800 border-red-200";
                 return (
                   <Card key={job.id} className="flex flex-col h-full">
-                  <CardHeader className="pb-2">
-                    <div className="flex flex-wrap gap-1 mb-1">
-                      {match && (
-                        <Badge className={`${matchColor} font-semibold`}>
-                          {displayPercent}% overlap
-                        </Badge>
-                      )}
-                      {job.seniority && (
-                        <Badge variant="secondary" className="capitalize">
-                          {job.seniority}
-                        </Badge>
-                      )}
-                      {job.source && (
-                        <Badge variant="outline">{job.source}</Badge>
-                      )}
-                    </div>
-                    <CardTitle className="text-lg line-clamp-1">{job.title}</CardTitle>
-                    <p className="text-sm text-muted-foreground">{job.company}</p>
-                  </CardHeader>
-                  <CardContent className="flex-1 pb-2">
-                    <p className="text-sm text-muted-foreground line-clamp-3 mb-3">
-                      {job.description}
-                    </p>
-                    {skills.length > 0 && (
-                      <div className="flex flex-wrap gap-2">
-                        {skills.slice(0, 5).map((skill) => (
-                          <Badge
-                            key={skill}
-                            variant="secondary"
-                            className={`text-[10px] px-2 py-0 ${
-                              matching.has(skill.toLowerCase())
-                                ? "bg-green-100 text-green-800 border-green-200"
-                                : "bg-slate-100 text-slate-600"
-                            }`}
-                          >
-                            {skill}
+                    <CardHeader className="pb-2">
+                      <div className="flex flex-wrap gap-1 mb-1">
+                        {match && (
+                          <Badge className={`${matchColor} font-semibold`}>
+                            {displayPercent}% overlap
                           </Badge>
-                        ))}
-                        {skills.length > 5 && (
-                          <span className="text-[10px] text-muted-foreground">
-                            +{skills.length - 5} more
-                          </span>
+                        )}
+                        {job.seniority && (
+                          <Badge variant="secondary" className="capitalize">
+                            {job.seniority}
+                          </Badge>
+                        )}
+                        {job.source && (
+                          <Badge variant="outline">{job.source}</Badge>
                         )}
                       </div>
-                    )}
-                  </CardContent>
-                  <CardFooter className="gap-2 flex-wrap">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1"
-                      onClick={() => handleCalculateMatch(job.id)}
-                      disabled={matchOne.isPending && pendingJobId === job.id}
-                    >
-                      {matchOne.isPending && pendingJobId === job.id ? (
-                        <Loader2 className="h-3 w-3 animate-spin" />
-                      ) : (
-                        <>
-                          <Sparkles className="h-3 w-3 mr-1" />
-                          Match
-                        </>
+                      <CardTitle className="text-lg line-clamp-1">
+                        {job.title}
+                      </CardTitle>
+                      <p className="text-sm text-muted-foreground">
+                        {job.company}
+                      </p>
+                    </CardHeader>
+                    <CardContent className="flex-1 pb-2">
+                      <p className="text-sm text-muted-foreground line-clamp-3 mb-3">
+                        {job.description}
+                      </p>
+                      {skills.length > 0 && (
+                        <div className="flex flex-wrap gap-2">
+                          {skills.slice(0, 5).map((skill) => (
+                            <Badge
+                              key={skill}
+                              variant="secondary"
+                              className={`text-[10px] px-2 py-0 ${
+                                matching.has(skill.toLowerCase())
+                                  ? "bg-green-100 text-green-800 border-green-200"
+                                  : "bg-slate-100 text-slate-600"
+                              }`}
+                            >
+                              {skill}
+                            </Badge>
+                          ))}
+                          {skills.length > 5 && (
+                            <span className="text-[10px] text-muted-foreground">
+                              +{skills.length - 5} more
+                            </span>
+                          )}
+                        </div>
                       )}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1"
-                      onClick={() => handleViewDetails(job.id)}
-                    >
-                      View
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1"
-                      onClick={() => handleSave(job.id)}
-                      disabled={promoteMutation.isPending && pendingJobId === job.id}
-                    >
-                      Save
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="text-red-600"
-                      onClick={() => handleDeleteScraped(job.id)}
-                      disabled={deleteScraped.isPending && pendingJobId === job.id}
-                    >
-                      {deleteScraped.isPending && pendingJobId === job.id ? (
-                        <Loader2 className="h-3 w-3 animate-spin" />
-                      ) : (
-                        <Trash2 className="h-3 w-3" />
-                      )}
-                    </Button>
-                  </CardFooter>
-                </Card>
+                    </CardContent>
+                    <CardFooter className="gap-2 flex-wrap">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1"
+                        onClick={() => handleCalculateMatch(job.id)}
+                        disabled={matchOne.isPending && pendingJobId === job.id}
+                      >
+                        {matchOne.isPending && pendingJobId === job.id ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          <>
+                            <Sparkles className="h-3 w-3 mr-1" />
+                            Match
+                          </>
+                        )}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1"
+                        onClick={() => handleViewDetails(job.id)}
+                      >
+                        View
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1"
+                        onClick={() => handleSave(job.id)}
+                        disabled={
+                          promoteMutation.isPending && pendingJobId === job.id
+                        }
+                      >
+                        Save
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-red-600"
+                        onClick={() => handleDeleteScraped(job.id)}
+                        disabled={
+                          deleteScraped.isPending && pendingJobId === job.id
+                        }
+                      >
+                        {deleteScraped.isPending && pendingJobId === job.id ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          <Trash2 className="h-3 w-3" />
+                        )}
+                      </Button>
+                    </CardFooter>
+                  </Card>
                 );
               })}
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-20 text-center border rounded-xl bg-white">
               <Search className="h-12 w-12 text-gray-300 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900">No scraped offers</h3>
+              <h3 className="text-lg font-medium text-gray-900">
+                No scraped offers
+              </h3>
               <p className="text-sm text-gray-500 max-w-xs mt-2">
-                Run a job board search above. Results persist here until you save or delete them.
+                Run a job board search above. Results persist here until you
+                save or delete them.
               </p>
             </div>
           )}
@@ -491,8 +519,7 @@ export default function JobsPage() {
             pendingJobId === selectedJobMatch.job_offer.id
           }
           isMatching={
-            matchOne.isPending &&
-            pendingJobId === selectedJobMatch.job_offer.id
+            matchOne.isPending && pendingJobId === selectedJobMatch.job_offer.id
           }
         />
       )}

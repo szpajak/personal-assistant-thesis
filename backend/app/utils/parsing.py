@@ -79,7 +79,9 @@ class DocumentParser:
             "metadata": {
                 "file_type": "docx",
                 "source_path": path,
-                "element_count": len([paragraph for paragraph in paragraphs if paragraph]),
+                "element_count": len(
+                    [paragraph for paragraph in paragraphs if paragraph]
+                ),
                 "parser": "python-docx",
             },
         }

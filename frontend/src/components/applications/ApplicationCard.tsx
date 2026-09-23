@@ -24,7 +24,10 @@ const statusColors: Record<string, string> = {
   Rejected: "bg-red-100 text-red-800 hover:bg-red-100",
 };
 
-export function ApplicationCard({ application, onClick }: ApplicationCardProps) {
+export function ApplicationCard({
+  application,
+  onClick,
+}: ApplicationCardProps) {
   const { job_offer, status, applied_at } = application;
 
   const formattedDate = applied_at
@@ -36,7 +39,7 @@ export function ApplicationCard({ application, onClick }: ApplicationCardProps) 
     : "N/A";
 
   return (
-    <Card 
+    <Card
       className="mb-3 hover:shadow-md transition-shadow cursor-pointer"
       onClick={onClick}
     >
@@ -54,7 +57,9 @@ export function ApplicationCard({ application, onClick }: ApplicationCardProps) 
         <div className="flex flex-col gap-1 text-xs text-muted-foreground">
           <div className="flex items-center gap-1">
             <Building2 className="h-3 w-3" />
-            <span className="truncate">{job_offer?.company || "Unknown Company"}</span>
+            <span className="truncate">
+              {job_offer?.company || "Unknown Company"}
+            </span>
           </div>
           <div className="flex items-center gap-1">
             <Calendar className="h-3 w-3" />

@@ -18,7 +18,9 @@ const COLUMNS = [
 ];
 
 export function KanbanBoard({ applications }: KanbanBoardProps) {
-  const [selectedApp, setSelectedApp] = useState<ApplicationWithJob | null>(null);
+  const [selectedApp, setSelectedApp] = useState<ApplicationWithJob | null>(
+    null,
+  );
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const getAppsByStatus = (status: string) => {
@@ -54,9 +56,9 @@ export function KanbanBoard({ applications }: KanbanBoardProps) {
                 <div className="flex flex-col gap-2">
                   {columnApps.length > 0 ? (
                     columnApps.map((app) => (
-                      <ApplicationCard 
-                        key={app.id} 
-                        application={app} 
+                      <ApplicationCard
+                        key={app.id}
+                        application={app}
                         onClick={() => handleCardClick(app)}
                       />
                     ))
@@ -72,7 +74,7 @@ export function KanbanBoard({ applications }: KanbanBoardProps) {
         })}
       </div>
 
-      <ApplicationDetailSheet 
+      <ApplicationDetailSheet
         application={selectedApp}
         open={isSheetOpen}
         onOpenChange={setIsSheetOpen}

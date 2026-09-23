@@ -64,7 +64,9 @@ async def _run_refresh(role_id: str) -> dict[str, object]:
             results_wanted=min(50, per_site),
         )
 
-        scraper = JobScraperService(job_listing_repository=listing_repo, kg_repository=repo)
+        scraper = JobScraperService(
+            job_listing_repository=listing_repo, kg_repository=repo
+        )
         try:
             await scraper.scrape_job_boards(request=request)
         except Exception as exc:
@@ -72,9 +74,13 @@ async def _run_refresh(role_id: str) -> dict[str, object]:
             await _mark_status(repo, role_id, "error")
             return {"status": "error", "reason": "scrape_failed"}
 
-        listings = await listing_repo.list_by_search_term(title, limit=_SAMPLE_TARGET_TOTAL)
+        listings = await listing_repo.list_by_search_term(
+            title, limit=_SAMPLE_TARGET_TOTAL
+        )
         if not listings:
-            logger.warning("No offers scraped for target role %s ('%s')", role_id, title)
+            logger.warning(
+                "No offers scraped for target role %s ('%s')", role_id, title
+            )
             await _mark_status(repo, role_id, "error")
             return {"status": "error", "reason": "no_results"}
 
@@ -89,7 +95,9 @@ async def _run_refresh(role_id: str) -> dict[str, object]:
                 )
                 job_ids.append(job_id)
             except Exception as exc:
-                logger.warning("Failed to ingest sample job %s: %s", listing_row.id, exc)
+                logger.warning(
+                    "Failed to ingest sample job %s: %s", listing_row.id, exc
+                )
 
         if not job_ids:
             await _mark_status(repo, role_id, "error")

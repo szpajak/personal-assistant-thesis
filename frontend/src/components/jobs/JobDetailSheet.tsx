@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -8,12 +8,12 @@ import {
   SheetHeader,
   SheetTitle,
   SheetFooter,
-} from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { JobMatch } from '@/types/jobs';
-import { getDisplayScore } from '@/lib/jobMatch';
-import { useGenerateCV } from '@/hooks/useCV';
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { JobMatch } from "@/types/jobs";
+import { getDisplayScore } from "@/lib/jobMatch";
+import { useGenerateCV } from "@/hooks/useCV";
 import {
   Loader2,
   Download,
@@ -21,10 +21,10 @@ import {
   ExternalLink,
   Sparkles,
   Bookmark,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { API_BASE_URL } from '@/lib/constants';
-import { MarkdownContent } from '@/components/ui/markdown-content';
+import { API_BASE_URL } from "@/lib/constants";
+import { MarkdownContent } from "@/components/ui/markdown-content";
 
 interface JobDetailSheetProps {
   jobMatch: JobMatch | null;
@@ -55,9 +55,9 @@ export const JobDetailSheet: React.FC<JobDetailSheetProps> = ({
 
   if (!jobMatch) return null;
   const job = jobMatch.job_offer;
-  const isCareer = job.tier === 'career';
+  const isCareer = job.tier === "career";
   const displayScorePercent = Math.round(getDisplayScore(jobMatch) * 100);
-  const hasLlm = jobMatch.source === 'llm';
+  const hasLlm = jobMatch.source === "llm";
 
   const handleGenerateCV = async (force = false) => {
     try {
@@ -68,14 +68,14 @@ export const JobDetailSheet: React.FC<JobDetailSheetProps> = ({
       setGeneratedCV(result.cv_content);
       setCvCached(Boolean(result.cached));
     } catch (error) {
-      console.error('Failed to generate CV:', error);
+      console.error("Failed to generate CV:", error);
     }
   };
 
   const handleDownloadPDF = () => {
-    const token = localStorage.getItem('auth_token');
+    const token = localStorage.getItem("auth_token");
     const url = `${API_BASE_URL}/api/v1/cv/download?job_id=${job.id}&token=${token}`;
-    window.open(url, '_blank');
+    window.open(url, "_blank");
   };
 
   return (
@@ -102,14 +102,16 @@ export const JobDetailSheet: React.FC<JobDetailSheetProps> = ({
                 variant="secondary"
                 className={
                   isCareer
-                    ? 'bg-indigo-50 text-indigo-700 border-indigo-100'
-                    : 'bg-slate-100 text-slate-600'
+                    ? "bg-indigo-50 text-indigo-700 border-indigo-100"
+                    : "bg-slate-100 text-slate-600"
                 }
               >
-                {isCareer ? 'In career graph' : 'Staging only'}
+                {isCareer ? "In career graph" : "Staging only"}
               </Badge>
               <Badge className="bg-green-100 text-green-800 border-green-200">
-                {hasLlm ? `${displayScorePercent}% AI Match` : `${displayScorePercent}% overlap`}
+                {hasLlm
+                  ? `${displayScorePercent}% AI Match`
+                  : `${displayScorePercent}% overlap`}
               </Badge>
               {jobMatch.is_stale && (
                 <Badge className="bg-amber-50 text-amber-800 border-amber-200">
@@ -122,7 +124,9 @@ export const JobDetailSheet: React.FC<JobDetailSheetProps> = ({
 
         <div className="mt-6 space-y-6">
           {jobMatch.justification && (
-            <p className="text-sm text-muted-foreground italic">{jobMatch.justification}</p>
+            <p className="text-sm text-muted-foreground italic">
+              {jobMatch.justification}
+            </p>
           )}
 
           <div>
@@ -141,8 +145,8 @@ export const JobDetailSheet: React.FC<JobDetailSheetProps> = ({
                     variant="secondary"
                     className={
                       isMatch
-                        ? 'bg-green-100 text-green-800 border-green-200'
-                        : 'bg-red-50 text-red-700 border-red-100'
+                        ? "bg-green-100 text-green-800 border-green-200"
+                        : "bg-red-50 text-red-700 border-red-100"
                     }
                   >
                     {skill}
@@ -150,13 +154,14 @@ export const JobDetailSheet: React.FC<JobDetailSheetProps> = ({
                 );
               })}
             </div>
-            {(jobMatch.matching_skills?.length || jobMatch.missing_skills?.length) ? (
+            {jobMatch.matching_skills?.length ||
+            jobMatch.missing_skills?.length ? (
               <p className="text-xs text-muted-foreground mt-2">
-                {jobMatch.matching_skills?.length || 0} of {job.required_skills.length}{' '}
-                required skills match your profile
+                {jobMatch.matching_skills?.length || 0} of{" "}
+                {job.required_skills.length} required skills match your profile
                 {jobMatch.missing_skills?.length
-                  ? ` · missing: ${jobMatch.missing_skills.join(', ')}`
-                  : ''}
+                  ? ` · missing: ${jobMatch.missing_skills.join(", ")}`
+                  : ""}
               </p>
             ) : null}
           </div>
@@ -204,7 +209,7 @@ export const JobDetailSheet: React.FC<JobDetailSheetProps> = ({
                       Generating...
                     </>
                   ) : (
-                    'Generate Personalized CV'
+                    "Generate Personalized CV"
                   )}
                 </Button>
               </div>
@@ -230,7 +235,11 @@ export const JobDetailSheet: React.FC<JobDetailSheetProps> = ({
         </div>
 
         <SheetFooter className="mt-8 gap-3 sm:flex-row flex-col">
-          <Button variant="outline" onClick={() => onOpenChange(false)} className="w-full">
+          <Button
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            className="w-full"
+          >
             Close
           </Button>
           {onCalculateMatch && (

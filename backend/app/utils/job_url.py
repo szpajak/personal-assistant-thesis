@@ -49,6 +49,4 @@ def normalize_job_url(url: str) -> str:
     if path != "/" and path.endswith("/"):
         path = path.rstrip("/")
 
-    return urlunparse(
-        (parsed.scheme.lower(), host, path, parsed.params, query, "")
-    )
+    return urlunparse((parsed.scheme.lower(), host, path, parsed.params, query, ""))

@@ -98,7 +98,9 @@ class JobScraperService:
         result = JobScrapeRunResult()
         filters = self.filters_from_request(request)
         include_remoteok = (
-            request.include_remoteok if request is not None else settings.job_scrape_remoteok
+            request.include_remoteok
+            if request is not None
+            else settings.job_scrape_remoteok
         )
 
         if include_remoteok:
@@ -150,7 +152,9 @@ class JobScraperService:
                         extract_skills=not job.get("tags"),
                     )
                     self._record_action(result, action, job_id)
-                    ingested.append(normalize_job_url(job.get("url", "")) or job.get("url", ""))
+                    ingested.append(
+                        normalize_job_url(job.get("url", "")) or job.get("url", "")
+                    )
                 except Exception as exc:
                     logger.error("Failed to ingest RemoteOK job: %s", exc)
 
@@ -251,9 +255,7 @@ class JobScraperService:
         try:
             self._known_skill_names_cache = await self.kg_repository.list_skill_names()
         except Exception as exc:
-            logger.warning(
-                "Failed to load known skill names during scrape: %s", exc
-            )
+            logger.warning("Failed to load known skill names during scrape: %s", exc)
             self._known_skill_names_cache = []
         return self._known_skill_names_cache
 

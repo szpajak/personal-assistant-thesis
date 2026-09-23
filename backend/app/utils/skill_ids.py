@@ -166,7 +166,12 @@ SOFT_SKILL_BLOCKLIST: frozenset[str] = frozenset(
 # comparing a candidate's level against a job's typical ``REQUIRES.level``
 # for gap analysis (skill_analysis_pipeline.py). Unrecognized/missing values
 # rank 0 (lowest).
-SKILL_LEVEL_RANK: dict[str, int] = {"beginner": 1, "intermediate": 2, "advanced": 3, "expert": 4}
+SKILL_LEVEL_RANK: dict[str, int] = {
+    "beginner": 1,
+    "intermediate": 2,
+    "advanced": 3,
+    "expert": 4,
+}
 
 
 def skill_level_rank(level: str | None) -> int:

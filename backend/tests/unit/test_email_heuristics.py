@@ -52,31 +52,49 @@ def test_promotional_offer_stays_unclassified() -> None:
 
 
 def test_keyword_stages_from_subject_and_body() -> None:
-    assert infer_application_stage(
-        "Interview invitation — GraphRAG Python Engineer",
-        "We would like to invite you to interview at Acme AI.",
-    ) == "interview_invite"
-    assert infer_application_stage(
-        "Application received",
-        "Thanks for applying to Acme AI. We have received your application.",
-    ) == "applied_ack"
-    assert infer_application_stage(
-        "Your application to National Bank",
-        "We regret to inform you that we will not be moving forward.",
-    ) == "rejection"
-    assert infer_application_stage(
-        "Update",
-        "Thank you for applying. Unfortunately we will not be inviting you "
-        "to interview.",
-    ) == "rejection"
-    assert infer_application_stage(
-        "Offer letter from Acme AI",
-        "We are pleased to extend a job offer.",
-    ) == "offer"
-    assert infer_application_stage(
-        "Coding challenge — Acme AI",
-        "Please complete this take-home assessment.",
-    ) == "assessment"
+    assert (
+        infer_application_stage(
+            "Interview invitation — GraphRAG Python Engineer",
+            "We would like to invite you to interview at Acme AI.",
+        )
+        == "interview_invite"
+    )
+    assert (
+        infer_application_stage(
+            "Application received",
+            "Thanks for applying to Acme AI. We have received your application.",
+        )
+        == "applied_ack"
+    )
+    assert (
+        infer_application_stage(
+            "Your application to National Bank",
+            "We regret to inform you that we will not be moving forward.",
+        )
+        == "rejection"
+    )
+    assert (
+        infer_application_stage(
+            "Update",
+            "Thank you for applying. Unfortunately we will not be inviting you "
+            "to interview.",
+        )
+        == "rejection"
+    )
+    assert (
+        infer_application_stage(
+            "Offer letter from Acme AI",
+            "We are pleased to extend a job offer.",
+        )
+        == "offer"
+    )
+    assert (
+        infer_application_stage(
+            "Coding challenge — Acme AI",
+            "Please complete this take-home assessment.",
+        )
+        == "assessment"
+    )
 
 
 def test_keyword_stage_fills_only_a_missing_model_stage() -> None:

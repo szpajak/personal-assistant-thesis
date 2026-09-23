@@ -49,7 +49,8 @@ function AuthGate({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!userQuery.isError || isAuthPage) return;
-    const status = userQuery.error instanceof ApiError ? userQuery.error.status : undefined;
+    const status =
+      userQuery.error instanceof ApiError ? userQuery.error.status : undefined;
     if (status !== 401 && status !== 403) return;
     clearSession();
     setHasToken(false);
@@ -62,7 +63,13 @@ function AuthGate({ children }: { children: React.ReactNode }) {
     (userQuery.error.status === 401 || userQuery.error.status === 403);
 
   // Avoid flashing the protected shell before auth status is known.
-  if (!isAuthPage && (hasToken === null || hasToken === false || userQuery.isLoading || isUnauthorized)) {
+  if (
+    !isAuthPage &&
+    (hasToken === null ||
+      hasToken === false ||
+      userQuery.isLoading ||
+      isUnauthorized)
+  ) {
     return (
       <div className="flex h-screen items-center justify-center bg-gray-50 text-sm text-gray-500">
         {isUnauthorized ? "Redirecting to login..." : "Checking session..."}
@@ -78,7 +85,13 @@ function AuthGate({ children }: { children: React.ReactNode }) {
           <Sidebar />
         </aside>
       )}
-      <main className={isAuthPage ? "flex-1 overflow-y-auto" : "flex-1 overflow-y-auto px-4 py-6 md:px-8 md:py-8"}>
+      <main
+        className={
+          isAuthPage
+            ? "flex-1 overflow-y-auto"
+            : "flex-1 overflow-y-auto px-4 py-6 md:px-8 md:py-8"
+        }
+      >
         <div className={isAuthPage ? "h-full" : "mx-auto max-w-6xl"}>
           {children}
         </div>
@@ -88,14 +101,17 @@ function AuthGate({ children }: { children: React.ReactNode }) {
 }
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 60 * 1000,
-        refetchOnWindowFocus: false,
-      },
-    },
-  }));
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60 * 1000,
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  );
 
   return (
     <QueryClientProvider client={queryClient}>

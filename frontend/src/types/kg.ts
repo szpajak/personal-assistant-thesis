@@ -1,19 +1,19 @@
 export type NodeFamily =
-  | 'identity'
-  | 'evidence'
-  | 'competency'
-  | 'market'
-  | 'process';
+  | "identity"
+  | "evidence"
+  | "competency"
+  | "market"
+  | "process";
 
-export type PredicateFamily = 'evidence' | 'market' | 'career' | 'process';
+export type PredicateFamily = "evidence" | "market" | "career" | "process";
 
-export type GraphView = 'map' | 'focus' | 'matrix';
+export type GraphView = "map" | "focus" | "matrix";
 
-export type FilterMode = 'dismiss' | 'dim';
+export type FilterMode = "dismiss" | "dim";
 
-export type SkillOwnershipFilter = 'all' | 'owned' | 'gap';
+export type SkillOwnershipFilter = "all" | "owned" | "gap";
 
-export type CompanyRole = 'employer' | 'poster' | 'both' | 'other';
+export type CompanyRole = "employer" | "poster" | "both" | "other";
 
 export interface KGNodePayload {
   id: string;

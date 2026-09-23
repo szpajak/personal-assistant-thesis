@@ -102,7 +102,9 @@ def build_cv_budget(
         all_projects=all_projects,
         required_skill_names_lower=required_skill_names_lower,
     )
-    selected_projects = [projects_by_id[pid] for pid in selected_ids if pid in projects_by_id]
+    selected_projects = [
+        projects_by_id[pid] for pid in selected_ids if pid in projects_by_id
+    ]
 
     selected_skills = _select_skills(
         retrieval_hits=retrieval_hits,
@@ -135,7 +137,9 @@ def _select_project_ids(
     additional (non-hit) project if it is the ONLY project that covers a
     required skill no already-selected project covers.
     """
-    ranked_ids = [pid for pid in _hit_ids(retrieval_hits, "Project") if pid in projects_by_id]
+    ranked_ids = [
+        pid for pid in _hit_ids(retrieval_hits, "Project") if pid in projects_by_id
+    ]
     selected_ids = ranked_ids[:MAX_PROJECTS]
 
     if not selected_ids and all_projects:
@@ -150,7 +154,11 @@ def _select_project_ids(
         ]
 
     def _project_skill_names(proj: dict[str, Any]) -> set[str]:
-        return {str(s).strip().lower() for s in (proj.get("tech_stack") or []) if str(s).strip()}
+        return {
+            str(s).strip().lower()
+            for s in (proj.get("tech_stack") or [])
+            if str(s).strip()
+        }
 
     covered = set()
     for pid in selected_ids:
@@ -239,9 +247,13 @@ def _select_certificates(
     for cert in all_certificates:
         cert_id = str(cert.get("id") or "")
         validated = {
-            str(s).strip().lower() for s in (cert.get("validated_skills") or []) if str(s).strip()
+            str(s).strip().lower()
+            for s in (cert.get("validated_skills") or [])
+            if str(s).strip()
         }
-        relevant = (cert_id and cert_id in hit_ids) or bool(validated & required_skill_names_lower)
+        relevant = (cert_id and cert_id in hit_ids) or bool(
+            validated & required_skill_names_lower
+        )
         if relevant:
             selected.append(cert)
         if len(selected) >= MAX_CERTIFICATES:

@@ -1,8 +1,12 @@
-import dagre from 'dagre';
-import { Edge, MarkerType, Node, Position } from 'reactflow';
+import dagre from "dagre";
+import { Edge, MarkerType, Node, Position } from "reactflow";
 
-import type { EnrichedEdge, EnrichedNode, NodeFamily } from '@/types/kg';
-import { evidenceSectionOf, SUBSTRATE_REGIONS, substrateRegionFor } from './graphModel';
+import type { EnrichedEdge, EnrichedNode, NodeFamily } from "@/types/kg";
+import {
+  evidenceSectionOf,
+  SUBSTRATE_REGIONS,
+  substrateRegionFor,
+} from "./graphModel";
 
 export const NODE_WIDTH = 260;
 export const NODE_HEIGHT = 72;
@@ -13,17 +17,17 @@ const REGION_PAD_TOP = 48;
 const NODE_GAP_Y = 14;
 const CATEGORY_GAP = 28;
 
-export type LayoutDirection = 'TB' | 'LR';
-export type LayoutMode = 'substrate' | 'radial';
+export type LayoutDirection = "TB" | "LR";
+export type LayoutMode = "substrate" | "radial";
 
 function asString(value: unknown): string {
-  return typeof value === 'string' && value.trim() ? value : '';
+  return typeof value === "string" && value.trim() ? value : "";
 }
 
 export function getLayoutedElements(
   nodes: Node[],
   edges: Edge[],
-  direction: LayoutDirection = 'TB',
+  direction: LayoutDirection = "TB",
 ): { nodes: Node[]; edges: Edge[] } {
   if (nodes.length === 0) {
     return { nodes, edges };
@@ -33,7 +37,7 @@ export function getLayoutedElements(
   graph.setDefaultEdgeLabel(() => ({}));
   graph.setGraph({ rankdir: direction, nodesep: 60, ranksep: 80 });
 
-  const isHorizontal = direction === 'LR';
+  const isHorizontal = direction === "LR";
 
   nodes.forEach((node) => {
     graph.setNode(node.id, { width: NODE_WIDTH, height: NODE_HEIGHT });
@@ -64,7 +68,7 @@ export function getLayoutedElements(
 
 function sortNodes(nodes: EnrichedNode[]): EnrichedNode[] {
   return [...nodes].sort((a, b) => {
-    if (a.type === 'Skill' && b.type === 'Skill') {
+    if (a.type === "Skill" && b.type === "Skill") {
       if (b.skillScore !== a.skillScore) return b.skillScore - a.skillScore;
     }
     return displayLabel(a).localeCompare(displayLabel(b));
@@ -92,7 +96,7 @@ export function getSubstrateLayout(
   }
 
   const visibleRegions = SUBSTRATE_REGIONS.filter((region) => {
-    if (region.id === 'orgs') return (byRegion.get('orgs') ?? []).length > 0;
+    if (region.id === "orgs") return (byRegion.get("orgs") ?? []).length > 0;
     return true;
   });
 
@@ -100,20 +104,24 @@ export function getSubstrateLayout(
     const members = sortNodes(byRegion.get(region.id) ?? []);
     const byCategory = new Map<string, EnrichedNode[]>();
 
-    if (region.id === 'skills') {
+    if (region.id === "skills") {
       for (const node of members) {
-        const category = asString(node.data.properties.category) || 'Other';
+        const category = asString(node.data.properties.category) || "Other";
         const list = byCategory.get(category) ?? [];
         list.push(node);
         byCategory.set(category, list);
       }
-    } else if (region.id === 'evidence') {
-      const work = members.filter((node) => evidenceSectionOf(node) === 'Roles & work');
-      const employers = members.filter((node) => evidenceSectionOf(node) === 'Employers');
-      if (work.length) byCategory.set('Roles & work', work);
-      if (employers.length) byCategory.set('Employers', employers);
+    } else if (region.id === "evidence") {
+      const work = members.filter(
+        (node) => evidenceSectionOf(node) === "Roles & work",
+      );
+      const employers = members.filter(
+        (node) => evidenceSectionOf(node) === "Employers",
+      );
+      if (work.length) byCategory.set("Roles & work", work);
+      if (employers.length) byCategory.set("Employers", employers);
     } else {
-      byCategory.set('', members);
+      byCategory.set("", members);
     }
 
     let y = REGION_PAD_TOP;
@@ -123,9 +131,9 @@ export function getSubstrateLayout(
       if (category) {
         entityNodes.push({
           id: `section-${region.id}-${category}`,
-          type: 'kgSection',
+          type: "kgSection",
           parentNode: `region-${region.id}`,
-          extent: 'parent',
+          extent: "parent",
           data: { label: category },
           position: { x: REGION_PAD_X, y },
           selectable: false,
@@ -137,9 +145,9 @@ export function getSubstrateLayout(
       for (const node of group) {
         entityNodes.push({
           id: node.id,
-          type: 'kgEntity',
+          type: "kgEntity",
           parentNode: `region-${region.id}`,
-          extent: 'parent',
+          extent: "parent",
           data: toEntityData(node),
           position: { x: REGION_PAD_X, y },
           sourcePosition: Position.Right,
@@ -155,7 +163,7 @@ export function getSubstrateLayout(
     const height = Math.max(y + 16, 160);
     regionNodes.push({
       id: `region-${region.id}`,
-      type: 'kgRegion',
+      type: "kgRegion",
       data: { label: region.title, regionId: region.id },
       position: { x: regionIndex * (REGION_WIDTH + REGION_GAP), y: 0 },
       selectable: false,
@@ -165,11 +173,11 @@ export function getSubstrateLayout(
     });
   });
 
-  const stray = byRegion.get('stray') ?? [];
+  const stray = byRegion.get("stray") ?? [];
   stray.forEach((node, index) => {
     entityNodes.push({
       id: node.id,
-      type: 'kgEntity',
+      type: "kgEntity",
       data: toEntityData(node),
       position: {
         x: visibleRegions.length * (REGION_WIDTH + REGION_GAP),
@@ -180,7 +188,10 @@ export function getSubstrateLayout(
     });
   });
 
-  return { nodes: [...regionNodes, ...entityNodes], edges: toFlowEdges(edges, 'smoothstep') };
+  return {
+    nodes: [...regionNodes, ...entityNodes],
+    edges: toFlowEdges(edges, "smoothstep"),
+  };
 }
 
 const FAMILY_SECTOR: Record<NodeFamily, { start: number; end: number }> = {
@@ -216,7 +227,7 @@ export function getRadialLayout(
   const laid: Node[] = [
     {
       id: focus.id,
-      type: 'kgEntity',
+      type: "kgEntity",
       data: { ...toEntityData(focus), focused: true },
       position: { x: -NODE_WIDTH / 2, y: -NODE_HEIGHT / 2 },
       sourcePosition: Position.Right,
@@ -225,7 +236,7 @@ export function getRadialLayout(
   ];
 
   for (const [key, group] of byHopFamily) {
-    const [hopRaw, family] = key.split(':') as [string, NodeFamily];
+    const [hopRaw, family] = key.split(":") as [string, NodeFamily];
     const hop = Number(hopRaw);
     const radius = hop === 1 ? 320 : 560;
     const sector = FAMILY_SECTOR[family] ?? FAMILY_SECTOR.competency;
@@ -236,7 +247,7 @@ export function getRadialLayout(
       const angle = sector.start + t * (sector.end - sector.start);
       laid.push({
         id: node.id,
-        type: 'kgEntity',
+        type: "kgEntity",
         data: toEntityData(node),
         position: {
           x: Math.cos(angle) * radius - NODE_WIDTH / 2,
@@ -248,7 +259,7 @@ export function getRadialLayout(
     });
   }
 
-  return { nodes: laid, edges: toFlowEdges(edges, 'default') };
+  return { nodes: laid, edges: toFlowEdges(edges, "default") };
 }
 
 function hopIndex(
@@ -296,25 +307,28 @@ function toEntityData(node: EnrichedNode) {
   };
 }
 
-function toFlowEdges(edges: EnrichedEdge[], type: 'smoothstep' | 'default'): Edge[] {
+function toFlowEdges(
+  edges: EnrichedEdge[],
+  type: "smoothstep" | "default",
+): Edge[] {
   return edges.map((edge) => {
-    const inferred = edge.sourceKind === 'inferred';
+    const inferred = edge.sourceKind === "inferred";
     const confidence = edge.confidence;
     const width = confidence != null ? 1 + confidence * 2 : 1.5;
     const familyColor =
-      edge.predicateFamily === 'evidence'
-        ? '#0072B2'
-        : edge.predicateFamily === 'market'
-          ? '#D55E00'
-          : edge.predicateFamily === 'process'
-            ? '#CC79A7'
-            : '#56B4E9';
+      edge.predicateFamily === "evidence"
+        ? "#0072B2"
+        : edge.predicateFamily === "market"
+          ? "#D55E00"
+          : edge.predicateFamily === "process"
+            ? "#CC79A7"
+            : "#56B4E9";
 
     return {
       id: edge.id,
       source: edge.source,
       target: edge.target,
-      label: edge.label.replaceAll('_', ' '),
+      label: edge.label.replaceAll("_", " "),
       type,
       animated: false,
       markerEnd: {
@@ -323,12 +337,11 @@ function toFlowEdges(edges: EnrichedEdge[], type: 'smoothstep' | 'default'): Edg
       style: {
         stroke: familyColor,
         strokeWidth: width,
-        strokeDasharray: inferred ? '6 4' : undefined,
+        strokeDasharray: inferred ? "6 4" : undefined,
         opacity: inferred ? 0.75 : 1,
       },
-      labelStyle: { fontSize: 9, fill: '#64748b' },
-      labelBgStyle: { fill: '#f8fafc', fillOpacity: 0.85 },
+      labelStyle: { fontSize: 9, fill: "#64748b" },
+      labelBgStyle: { fill: "#f8fafc", fillOpacity: 0.85 },
     };
   });
 }
-

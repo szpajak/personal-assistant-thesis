@@ -214,7 +214,8 @@ class JobService:
             logger.error("Failed to list scraped listings for overlap scores: %s", exc)
             staging_offers = []
         cached_rows = {
-            row.job_id: row for row in await self.job_match_repository.list_for_person(person_id)
+            row.job_id: row
+            for row in await self.job_match_repository.list_for_person(person_id)
         }
 
         matches: list[JobMatchResponse] = []
@@ -352,7 +353,9 @@ class JobService:
             shortlist_top_k=shortlist,
         )
 
-    async def _resolve_job(self, job_id: str) -> tuple[dict[str, Any] | None, str | None]:
+    async def _resolve_job(
+        self, job_id: str
+    ) -> tuple[dict[str, Any] | None, str | None]:
         job_data, tier = await self.kg_repository.get_job_or_listing(job_id)
         if job_data:
             return job_data, tier or "career"
@@ -371,7 +374,9 @@ class JobService:
         try:
             return await self.kg_repository.list_skill_names()
         except Exception as exc:
-            logger.warning("Failed to load known skill names for heuristic extraction: %s", exc)
+            logger.warning(
+                "Failed to load known skill names for heuristic extraction: %s", exc
+            )
             return []
 
     def _overlap_match(
@@ -381,7 +386,9 @@ class JobService:
         cached: Any,
         fingerprint: str,
     ) -> JobMatchResponse:
-        overlap = compute_skill_match(user_skill_names, list(offer.required_skills or []))
+        overlap = compute_skill_match(
+            user_skill_names, list(offer.required_skills or [])
+        )
         if cached:
             return JobMatchResponse(
                 job_offer=offer,
@@ -394,7 +401,9 @@ class JobService:
                 matched_at=cached.matched_at.replace(tzinfo=UTC)
                 if cached.matched_at and cached.matched_at.tzinfo is None
                 else cached.matched_at,
-                source=cached.source if cached.source in {"overlap", "llm"} else "overlap",  # type: ignore[arg-type]
+                source=cached.source
+                if cached.source in {"overlap", "llm"}
+                else "overlap",  # type: ignore[arg-type]
             )
         return JobMatchResponse(
             job_offer=offer,

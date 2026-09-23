@@ -2,7 +2,18 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
-from .v1 import applications, auth, certificates, cv, email, jobs, kg, portfolio, profile, skills
+from .v1 import (
+    applications,
+    auth,
+    certificates,
+    cv,
+    email,
+    jobs,
+    kg,
+    portfolio,
+    profile,
+    skills,
+)
 
 api_router = APIRouter(prefix="/v1")
 api_router.include_router(

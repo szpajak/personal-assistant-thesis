@@ -5,7 +5,11 @@ from __future__ import annotations
 import re
 from typing import Iterable
 
-from .skill_ids import SKILL_ALIASES, canonicalize_skill_list, resolve_canonical_skill_name
+from .skill_ids import (
+    SKILL_ALIASES,
+    canonicalize_skill_list,
+    resolve_canonical_skill_name,
+)
 
 
 def seed_required_skills(

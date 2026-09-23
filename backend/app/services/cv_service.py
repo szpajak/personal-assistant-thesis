@@ -100,7 +100,9 @@ def _format_experience_section(experience: list[Any]) -> str:
 
 
 def _format_education_section(rows: list[dict[str, Any]]) -> str:
-    rows = sorted(rows or [], key=lambda r: str(r.get("start_date") or ""), reverse=True)
+    rows = sorted(
+        rows or [], key=lambda r: str(r.get("start_date") or ""), reverse=True
+    )
     blocks = []
     for row in rows:
         degree = str(row.get("degree") or "").strip()
@@ -146,7 +148,9 @@ def _format_projects_section(
         bullets = bullets_by_title.get(title.lower())
         if bullets is None and idx < len(generated_list):
             bullets = [
-                str(b).strip() for b in generated_list[idx].get("bullets") or [] if str(b).strip()
+                str(b).strip()
+                for b in generated_list[idx].get("bullets") or []
+                if str(b).strip()
             ]
         if not bullets:
             continue
@@ -215,7 +219,9 @@ def format_cv_markdown(
     if education_block:
         sections.append(f"## Education\n\n{education_block}")
 
-    projects_block = _format_projects_section(project_rows, generated.get("projects") or [])
+    projects_block = _format_projects_section(
+        project_rows, generated.get("projects") or []
+    )
     if projects_block:
         sections.append(f"## Projects\n\n{projects_block}")
 
@@ -276,10 +282,7 @@ class CVService:
             await self._promote_job(job_id=job_id, person_id=person_id)
             fingerprint = await compute_cv_fingerprint(self.kg_repository, person_id)
 
-            if (
-                not force
-                and self.generation_cache_repository is not None
-            ):
+            if not force and self.generation_cache_repository is not None:
                 cached = await self.generation_cache_repository.get_valid(
                     person_id=person_id,
                     kind="cv",

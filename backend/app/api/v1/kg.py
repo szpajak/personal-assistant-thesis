@@ -144,7 +144,9 @@ async def get_project_themes(
     do you do?"-style queries once there are a handful of projects.
     """
     person_id = f"user_{current_user.id}"
-    graph_rag = GraphRAG(kg_repository=repo, embeddings=KGEmbeddings(kg_repository=repo))
+    graph_rag = GraphRAG(
+        kg_repository=repo, embeddings=KGEmbeddings(kg_repository=repo)
+    )
     themes = await graph_rag.summarize_project_themes(person_id)
     return {"themes": themes}
 
@@ -231,9 +233,7 @@ async def get_graph(
 
         owned_skills = await repo.get_person_skills(person_id)
         owned_ids = {
-            str(s["id"])
-            for s in owned_skills
-            if isinstance(s, dict) and s.get("id")
+            str(s["id"]) for s in owned_skills if isinstance(s, dict) and s.get("id")
         }
         _attach_skill_metrics(nodes, edges, owned_skill_ids=owned_ids)
 

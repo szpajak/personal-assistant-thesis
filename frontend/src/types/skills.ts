@@ -29,8 +29,8 @@ export interface SuggestedProjectsCache {
 export interface SkillGap {
   skill: string;
   gap_reason: string;
-  priority: 'high' | 'medium' | 'low';
-  kind: 'missing' | 'underleveled';
+  priority: "high" | "medium" | "low";
+  kind: "missing" | "underleveled";
   current_level?: string | null;
   expected_level?: string | null;
   demand: number;

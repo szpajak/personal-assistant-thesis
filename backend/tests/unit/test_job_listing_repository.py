@@ -37,7 +37,11 @@ async def test_upsert_by_url_inserts_new_listing(repo: JobListingRepository) -> 
         company="Acme",
         description="Build APIs with Python",
         required_skills=["Python", "FastAPI"],
-        metadata={"url": "https://example.com/jobs/1", "source": "indeed", "location": "Remote"},
+        metadata={
+            "url": "https://example.com/jobs/1",
+            "source": "indeed",
+            "location": "Remote",
+        },
         seniority="mid",
         min_experience_years=2,
         max_experience_years=5,
@@ -53,7 +57,9 @@ async def test_upsert_by_url_inserts_new_listing(repo: JobListingRepository) -> 
 
 
 @pytest.mark.asyncio
-async def test_upsert_by_url_skips_fresh_unchanged_listing(repo: JobListingRepository) -> None:
+async def test_upsert_by_url_skips_fresh_unchanged_listing(
+    repo: JobListingRepository,
+) -> None:
     metadata = {"url": "https://example.com/jobs/2", "source": "indeed"}
     await repo.upsert_by_url(
         title="Engineer",
@@ -75,7 +81,9 @@ async def test_upsert_by_url_skips_fresh_unchanged_listing(repo: JobListingRepos
 
 
 @pytest.mark.asyncio
-async def test_upsert_by_url_updates_when_description_changes(repo: JobListingRepository) -> None:
+async def test_upsert_by_url_updates_when_description_changes(
+    repo: JobListingRepository,
+) -> None:
     metadata = {"url": "https://example.com/jobs/3", "source": "indeed"}
     _, listing_id = await repo.upsert_by_url(
         title="Engineer",
@@ -102,7 +110,9 @@ async def test_upsert_by_url_updates_when_description_changes(repo: JobListingRe
 
 
 @pytest.mark.asyncio
-async def test_list_listings_filters_by_search_and_seniority(repo: JobListingRepository) -> None:
+async def test_list_listings_filters_by_search_and_seniority(
+    repo: JobListingRepository,
+) -> None:
     await repo.upsert_by_url(
         title="Junior Python Developer",
         company="Acme",
@@ -130,7 +140,9 @@ async def test_list_listings_filters_by_search_and_seniority(repo: JobListingRep
 
 
 @pytest.mark.asyncio
-async def test_list_listings_filters_by_experience_bracket(repo: JobListingRepository) -> None:
+async def test_list_listings_filters_by_experience_bracket(
+    repo: JobListingRepository,
+) -> None:
     await repo.upsert_by_url(
         title="Entry role",
         company="Acme",
@@ -174,7 +186,9 @@ async def test_delete_by_id_removes_row(repo: JobListingRepository) -> None:
 
 
 @pytest.mark.asyncio
-async def test_expire_stale_marks_old_unseen_listings(repo: JobListingRepository) -> None:
+async def test_expire_stale_marks_old_unseen_listings(
+    repo: JobListingRepository,
+) -> None:
     _, stale_id = await repo.upsert_by_url(
         title="Old role",
         company="Acme",

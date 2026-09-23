@@ -22,7 +22,10 @@ from ..schemas.portfolio import (
     SkillDraft,
     coerce_seniority,
 )
-from ..utils.llm_json import extract_json_array_from_llm_output, extract_json_from_llm_output
+from ..utils.llm_json import (
+    extract_json_array_from_llm_output,
+    extract_json_from_llm_output,
+)
 from ..utils.parsing import DocumentParser, truncate_document_text
 
 logger = logging.getLogger(__name__)
@@ -106,7 +109,9 @@ class PortfolioService:
             # Ensure the person node exists in KG (lazy creation)
             await self.kg_repository.upsert_node("Person", {"id": person_id})
 
-            skills_payload: list[dict[str, Any]] = [s.model_dump() for s in project.skills]
+            skills_payload: list[dict[str, Any]] = [
+                s.model_dump() for s in project.skills
+            ]
             seniority = project.seniority
 
             if not project.skip_enrichment:
@@ -114,7 +119,8 @@ class PortfolioService:
                 # may only supply tech_stack, with no per-skill level. Seed those
                 # with the "intermediate" default rather than skipping enrichment.
                 seed_skills = skills_payload or [
-                    {"name": tech, "level": "intermediate"} for tech in project.tech_stack
+                    {"name": tech, "level": "intermediate"}
+                    for tech in project.tech_stack
                 ]
                 enriched_skills, enriched_seniority = await self._enrich_project(
                     title=project.title,
@@ -169,7 +175,8 @@ class PortfolioService:
             logger.info(f"Created project {project_id} for person {person_id}")
 
             final_tech_stack = project.tech_stack or [
-                str(s.get("canonical_name") or s.get("name", "")) for s in skills_payload
+                str(s.get("canonical_name") or s.get("name", ""))
+                for s in skills_payload
             ]
 
             return ProjectRead(
@@ -210,7 +217,9 @@ class PortfolioService:
         category, original levels preserved) rather than losing them.
         """
         user_levels = {
-            str(skill.get("name", "")).strip().lower(): skill.get("level", "intermediate")
+            str(skill.get("name", "")).strip().lower(): skill.get(
+                "level", "intermediate"
+            )
             for skill in skills
             if str(skill.get("name", "")).strip()
         }
@@ -273,7 +282,9 @@ class PortfolioService:
             seniority = coerce_seniority(result.get("seniority"))
             return merged, seniority
         except Exception as exc:
-            logger.warning("Project enrichment failed, using given skills as-is: %s", exc)
+            logger.warning(
+                "Project enrichment failed, using given skills as-is: %s", exc
+            )
             fallback = [
                 draft.model_dump()
                 for draft in (
@@ -425,7 +436,9 @@ class PortfolioService:
 
             description = str(suggestion.get("description") or "").strip()
             key_steps = [
-                str(s).strip() for s in (suggestion.get("key_steps") or []) if str(s).strip()
+                str(s).strip()
+                for s in (suggestion.get("key_steps") or [])
+                if str(s).strip()
             ]
             deliverables = [
                 str(d).strip()
@@ -435,7 +448,8 @@ class PortfolioService:
             extras: list[str] = []
             if key_steps:
                 extras.append(
-                    "Key steps:\n" + "\n".join(f"{i}. {step}" for i, step in enumerate(key_steps, 1))
+                    "Key steps:\n"
+                    + "\n".join(f"{i}. {step}" for i, step in enumerate(key_steps, 1))
                 )
             if deliverables:
                 extras.append(
@@ -443,7 +457,9 @@ class PortfolioService:
                 )
             if extras:
                 description = (
-                    f"{description}\n\n" + "\n\n".join(extras) if description else "\n\n".join(extras)
+                    f"{description}\n\n" + "\n\n".join(extras)
+                    if description
+                    else "\n\n".join(extras)
                 )
 
             project = ProjectCreate(

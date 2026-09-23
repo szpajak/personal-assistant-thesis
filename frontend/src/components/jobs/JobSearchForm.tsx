@@ -67,12 +67,17 @@ export const JobSearchForm: React.FC<JobSearchFormProps> = ({
   const [jobType, setJobType] = useState<string>("any");
   const [hoursOld, setHoursOld] = useState<string>("any");
   const [isRemote, setIsRemote] = useState(false);
-  const [selectedSites, setSelectedSites] = useState<string[]>(["linkedin", "indeed"]);
+  const [selectedSites, setSelectedSites] = useState<string[]>([
+    "linkedin",
+    "indeed",
+  ]);
   const [resultsWanted, setResultsWanted] = useState("25");
 
   const toggleSite = (siteId: string) => {
     setSelectedSites((prev) =>
-      prev.includes(siteId) ? prev.filter((s) => s !== siteId) : [...prev, siteId]
+      prev.includes(siteId)
+        ? prev.filter((s) => s !== siteId)
+        : [...prev, siteId],
     );
   };
 
@@ -105,7 +110,10 @@ export const JobSearchForm: React.FC<JobSearchFormProps> = ({
     >
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-grow space-y-2">
-          <Label htmlFor="job-search-term" className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          <Label
+            htmlFor="job-search-term"
+            className="text-xs font-medium uppercase tracking-wider text-muted-foreground"
+          >
             Job title / keywords
           </Label>
           <div className="relative">
@@ -122,7 +130,10 @@ export const JobSearchForm: React.FC<JobSearchFormProps> = ({
         </div>
 
         <div className="w-full md:w-56 space-y-2">
-          <Label htmlFor="job-location" className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          <Label
+            htmlFor="job-location"
+            className="text-xs font-medium uppercase tracking-wider text-muted-foreground"
+          >
             Location
           </Label>
           <Input
@@ -246,12 +257,14 @@ export const JobSearchForm: React.FC<JobSearchFormProps> = ({
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <p className="text-xs text-muted-foreground">
-          Note: Indeed/LinkedIn may ignore some filter combinations (e.g. posted-within
-          together with job type or remote).
+          Note: Indeed/LinkedIn may ignore some filter combinations (e.g.
+          posted-within together with job type or remote).
         </p>
         <Button
           type="submit"
-          disabled={isSearching || !searchTerm.trim() || selectedSites.length === 0}
+          disabled={
+            isSearching || !searchTerm.trim() || selectedSites.length === 0
+          }
           className="bg-indigo-600 text-white hover:bg-indigo-500 shrink-0"
         >
           {isSearching ? (

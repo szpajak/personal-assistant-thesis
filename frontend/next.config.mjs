@@ -9,7 +9,7 @@ const nextConfig = {
   eslint: {
     // Only run linting on local development, skip during Docker build if needed
     // However, it's better to fix the issues. For now, let's keep it enabled but robust.
-  }
-}
+  },
+};
 
-export default nextConfig
+export default nextConfig;

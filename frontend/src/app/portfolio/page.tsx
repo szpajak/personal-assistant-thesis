@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  useDeleteProject,
-  usePortfolioProjects,
-} from "@/hooks/usePortfolio";
+import { useDeleteProject, usePortfolioProjects } from "@/hooks/usePortfolio";
 import { ProjectCard } from "@/components/portfolio/ProjectCard";
 import { PortfolioEmptyState } from "@/components/portfolio/PortfolioEmptyState";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -47,7 +44,10 @@ export default function PortfolioPage() {
             Manage your professional projects and achievements.
           </p>
         </div>
-        <Button onClick={openCreate} className="bg-gray-900 text-white hover:bg-gray-700">
+        <Button
+          onClick={openCreate}
+          className="bg-gray-900 text-white hover:bg-gray-700"
+        >
           <Plus className="mr-2 h-4 w-4" />
           Add Project
         </Button>
@@ -85,7 +85,9 @@ export default function PortfolioPage() {
                   onSettled: () => setPendingDeleteId(null),
                 });
               }}
-              isDeleting={deleteProject.isPending && pendingDeleteId === project.id}
+              isDeleting={
+                deleteProject.isPending && pendingDeleteId === project.id
+              }
             />
           ))}
         </div>

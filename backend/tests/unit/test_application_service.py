@@ -125,9 +125,7 @@ async def test_list_applications_coerces_neo4j_datetime() -> None:
             "app": {
                 "id": "app_1",
                 "status": "Applied",
-                "applied_at": DateTime(
-                    2026, 4, 15, 12, 0, 0, 749000000, timezone.utc
-                ),
+                "applied_at": DateTime(2026, 4, 15, 12, 0, 0, 749000000, timezone.utc),
             },
             "job": _job_props(),
         }

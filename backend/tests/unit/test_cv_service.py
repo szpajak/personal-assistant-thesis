@@ -28,11 +28,16 @@ FULL_GENERATED = {
             "title": "Senior Software Engineer",
             "company": "TechCorp Inc.",
             "period": "June 2021 - Present",
-            "bullets": ["**Architected and led development** of a microservices platform"],
+            "bullets": [
+                "**Architected and led development** of a microservices platform"
+            ],
         }
     ],
     "projects": [
-        {"title": "DevMetrics Dashboard", "bullets": ["**Built** an analytics platform"]},
+        {
+            "title": "DevMetrics Dashboard",
+            "bullets": ["**Built** an analytics platform"],
+        },
     ],
 }
 
@@ -47,7 +52,11 @@ EDUCATION_ROWS = [
 ]
 
 CERTIFICATE_ROWS = [
-    {"title": "AWS Certified Solutions Architect - Associate", "issuer": "AWS", "issued_at": 2023}
+    {
+        "title": "AWS Certified Solutions Architect - Associate",
+        "issuer": "AWS",
+        "issued_at": 2023,
+    }
 ]
 
 PROJECT_ROWS = [
@@ -105,7 +114,11 @@ def test_format_cv_markdown_all_fields_present() -> None:
 def test_format_cv_markdown_omits_empty_sections() -> None:
     text = format_cv_markdown(
         profile={"name": "Jamie Doe", "email": "jamie@example.com"},
-        generated={"headline": "", "summary": "A short summary.", "skill_categories": {}},
+        generated={
+            "headline": "",
+            "summary": "A short summary.",
+            "skill_categories": {},
+        },
         education_rows=[],
         certificate_rows=[],
         project_rows=[],

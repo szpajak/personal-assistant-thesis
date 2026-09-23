@@ -50,14 +50,23 @@ def test_compute_skill_match_empty_job_skills() -> None:
 
 def test_fingerprint_from_skills_is_stable() -> None:
     a = fingerprint_from_skills(
-        [{"name": "Python", "level": "advanced"}, {"name": "FastAPI", "level": "intermediate"}]
+        [
+            {"name": "Python", "level": "advanced"},
+            {"name": "FastAPI", "level": "intermediate"},
+        ]
     )
     b = fingerprint_from_skills(
-        [{"name": "FastAPI", "level": "intermediate"}, {"name": "Python", "level": "advanced"}]
+        [
+            {"name": "FastAPI", "level": "intermediate"},
+            {"name": "Python", "level": "advanced"},
+        ]
     )
     assert a == b
     c = fingerprint_from_skills(
-        [{"name": "Python", "level": "beginner"}, {"name": "FastAPI", "level": "intermediate"}]
+        [
+            {"name": "Python", "level": "beginner"},
+            {"name": "FastAPI", "level": "intermediate"},
+        ]
     )
     assert a != c
 
@@ -94,9 +103,7 @@ def test_seed_required_skills_keeps_stored_and_extracts_when_empty() -> None:
 
 def test_extract_skills_from_text_finds_canonical_names_without_kg() -> None:
     """Scrape has no KG skill list; canonical names + aliases must still fire."""
-    found = extract_skills_from_text(
-        "We need Python, Docker, and Kubernetes."
-    )
+    found = extract_skills_from_text("We need Python, Docker, and Kubernetes.")
     assert "Python" in found
     assert "Docker" in found
     assert "Kubernetes" in found
@@ -242,7 +249,9 @@ async def test_job_match_pipeline_uses_per_job_graphrag_evidence_when_hits_found
     Project/Skill/Certificate (never JobOffer)."""
     user_id = "user_123"
 
-    kg_repository.get_person_skills = AsyncMock(return_value=[{"name": "Python", "level": "advanced"}])  # type: ignore[method-assign]
+    kg_repository.get_person_skills = AsyncMock(
+        return_value=[{"name": "Python", "level": "advanced"}]
+    )  # type: ignore[method-assign]
     kg_repository.get_person_career_brief = AsyncMock(return_value={})  # type: ignore[method-assign]
     kg_repository.query = AsyncMock(  # type: ignore[method-assign]
         return_value=[
@@ -264,7 +273,11 @@ async def test_job_match_pipeline_uses_per_job_graphrag_evidence_when_hits_found
         return_value=[
             {
                 "label": "Project",
-                "node": {"id": "p1", "title": "Billing API", "description": "FastAPI billing service."},
+                "node": {
+                    "id": "p1",
+                    "title": "Billing API",
+                    "description": "FastAPI billing service.",
+                },
                 "weighted_score": 0.9,
                 "related": [],
             }
@@ -396,7 +409,12 @@ def test_format_candidate_profile_includes_roles_and_projects() -> None:
             }
         ],
         "certificates": [
-            {"title": "CKA", "issuer": "CNCF", "issued_at": "2023-01-01", "skills": ["Kubernetes"]}
+            {
+                "title": "CKA",
+                "issuer": "CNCF",
+                "issued_at": "2023-01-01",
+                "skills": ["Kubernetes"],
+            }
         ],
         "education": [
             {

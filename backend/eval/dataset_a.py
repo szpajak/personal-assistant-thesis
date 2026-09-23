@@ -10,7 +10,6 @@ from __future__ import annotations
 
 from typing import Any, TypedDict
 
-
 PERSON_A = "eval_person_a"
 PERSON_B = "eval_person_b"
 
@@ -57,7 +56,9 @@ class SkillDraft(TypedDict):
     confidence: float
 
 
-def _skill(name: str, canonical: str, level: str, category: str = "technical") -> SkillDraft:
+def _skill(
+    name: str, canonical: str, level: str, category: str = "technical"
+) -> SkillDraft:
     return {
         "name": name,
         "canonical_name": canonical,
@@ -394,7 +395,11 @@ JOBS: dict[str, dict[str, Any]] = {
         "skills": [
             {"name": "Python", "level": "advanced", "importance": "required"},
             {"name": "PyTorch", "level": "advanced", "importance": "required"},
-            {"name": "Natural Language Processing", "level": "advanced", "importance": "required"},
+            {
+                "name": "Natural Language Processing",
+                "level": "advanced",
+                "importance": "required",
+            },
         ],
         "relevance": 1,
         "apply": False,
@@ -486,7 +491,11 @@ JOBS: dict[str, dict[str, Any]] = {
             {"name": "Python", "level": "advanced", "importance": "required"},
             {"name": "FastAPI", "level": "intermediate", "importance": "required"},
             {"name": "PyTorch", "level": "advanced", "importance": "required"},
-            {"name": "Natural Language Processing", "level": "advanced", "importance": "required"},
+            {
+                "name": "Natural Language Processing",
+                "level": "advanced",
+                "importance": "required",
+            },
             {"name": "RAG", "level": "intermediate", "importance": "preferred"},
         ],
         "relevance": 1,
@@ -541,7 +550,11 @@ JOBS: dict[str, dict[str, Any]] = {
         "skills": [
             {"name": "Python", "level": "advanced", "importance": "required"},
             {"name": "AWS", "level": "intermediate", "importance": "required"},
-            {"name": "Machine Learning", "level": "intermediate", "importance": "required"},
+            {
+                "name": "Machine Learning",
+                "level": "intermediate",
+                "importance": "required",
+            },
         ],
         "relevance": 1,
         "apply": False,
@@ -595,7 +608,11 @@ JOBS: dict[str, dict[str, Any]] = {
             {"name": "Go", "level": "advanced", "importance": "required"},
             {"name": "TypeScript", "level": "intermediate", "importance": "required"},
             {"name": "JavaScript", "level": "intermediate", "importance": "required"},
-            {"name": "Google Cloud Platform", "level": "intermediate", "importance": "required"},
+            {
+                "name": "Google Cloud Platform",
+                "level": "intermediate",
+                "importance": "required",
+            },
         ],
         "relevance": 0,
         "apply": False,

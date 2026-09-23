@@ -209,7 +209,9 @@ async def create_target_role(
     return role
 
 
-@router.post("/target-roles/{role_id}/refresh", response_model=TargetRoleRefreshResponse)
+@router.post(
+    "/target-roles/{role_id}/refresh", response_model=TargetRoleRefreshResponse
+)
 async def refresh_target_role(
     role_id: str,
     current_user: User = Depends(get_current_user),
@@ -224,7 +226,9 @@ async def refresh_target_role(
         "app.tasks.role_tasks.refresh_target_role_sample",
         kwargs={"role_id": role_id},
     )
-    return TargetRoleRefreshResponse(id=role_id, sample_status="scraping", task_id=task.id)
+    return TargetRoleRefreshResponse(
+        id=role_id, sample_status="scraping", task_id=task.id
+    )
 
 
 @router.patch("/target-roles/{role_id}", response_model=TargetRoleRead)
