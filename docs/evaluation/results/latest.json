@@ -1,0 +1,2627 @@
+{
+  "generated_at": "2026-09-06T20:07:47.841575+00:00",
+  "phase": "all",
+  "llm_used": true,
+  "environment": {
+    "neo4j_uri": "bolt://neo4j:7687",
+    "embedding_model": "all-MiniLM-L6-v2",
+    "chat_model": "deepseek-v4-flash"
+  },
+  "id_map": {
+    "person_id": "eval_person_a",
+    "projects": {
+      "graphrag": "42b34ce5-0d51-4b11-8621-5be57bc20320",
+      "scraper": "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+      "dashboard": "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+      "k8s": "db95b11c-1cd3-466f-a496-da811db3cea7",
+      "spark": "3c982670-49cb-495c-acd3-35d53ec29668",
+      "rag_bot": "364f63c2-26d7-4e62-9705-b8587b36a838",
+      "rest_api": "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+      "tutorial": "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+      "flutter": "51410b5e-b5fd-410c-ac67-55b634ce1974",
+      "rust_plan": "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+      "person_b": "3d495ad2-9132-4909-8fae-dcc0b3089d3a"
+    },
+    "jobs": {
+      "graphrag_role": "ec464222-16ae-459f-838d-f5cafc33bef6",
+      "fastapi_backend": "db92d3ac-25c1-4cd7-8ae2-14f489d4d5b0",
+      "k8s_platform": "411115bd-7802-4f24-a068-3d803863ca73",
+      "data_eng": "116a827c-4dbc-43dd-9306-f9bbab886bc8",
+      "frontend": "ce9a800e-5db1-4771-a0d8-34be390cad32",
+      "java_bank": "37f4a213-ae09-4557-a9b4-a0e1e046d2f9",
+      "php": "c1489f56-d404-4415-b972-04c61c3a40e6",
+      "go_sre": "9ca29564-9d92-4bac-9de5-6c4eb99dda92",
+      "nlp": "5e9bb847-cdec-44a7-9370-8f5a7f20fbd3",
+      "junior_py": "57988877-660d-44b9-a447-8f0b40ee386a",
+      "real_python_ai_backend": "301e5d4d-e18f-415e-9391-7812adcb4430",
+      "real_senior_ai": "5622f93c-1248-42b1-9d80-ca81f6749e75",
+      "real_ey_aiml": "0998bed6-6b5d-42a9-ba0e-34a8537bd712",
+      "real_tidio_ml": "00742c7e-5679-46cb-9313-d72a85d2cfbc",
+      "real_cognism_mlops": "cea7ffd7-99e9-4430-b3cf-fe56932683a3",
+      "real_accenture_intern": "ea96fafa-833f-4507-b978-2da972c01820",
+      "real_arche_ai_py": "8b258cf3-4be0-4f05-aa1b-27fe3cb6eee9",
+      "real_jc_agentic": "04b88ece-b5e0-4d40-9556-e03e2209d07f",
+      "real_gitlab_ruby": "784b418d-cacc-4935-a230-4e4bf4b9a8db",
+      "real_google_dataform": "56d162a0-2cc2-4d40-ad78-7bad5fe9193a",
+      "redis_cache_api": "7128aa93-5952-49dc-b599-f15db66b9c32",
+      "celery_worker": "75ec320d-f802-4a4c-bea6-1b48bb932e1c"
+    },
+    "applications": {
+      "graphrag_role": "eval_app_graphrag_role",
+      "java_bank": "eval_app_java_bank",
+      "fastapi_backend": "eval_app_fastapi_backend",
+      "real_python_ai_backend": "eval_app_real_python_ai_backend"
+    },
+    "certificate": "64f993ca-18de-42ef-b58c-3ab6469a56c0",
+    "skills": {
+      "Python": "skill_python",
+      "FastAPI": "skill_fastapi",
+      "PostgreSQL": "skill_postgresql",
+      "LangChain": "skill_langchain",
+      "Neo4j": "skill_neo4j",
+      "BeautifulSoup": "skill_beautifulsoup",
+      "Tailwind CSS": "skill_tailwind_css",
+      "TypeScript": "skill_typescript",
+      "React": "skill_react",
+      "Docker": "skill_docker",
+      "Kubernetes": "skill_kubernetes",
+      "Apache Spark": "skill_apache_spark",
+      "HTML": "skill_html",
+      "AWS": "skill_aws"
+    }
+  },
+  "kg": {
+    "schema_completeness_labels": 0.9090909090909091,
+    "schema_completeness_relationships": 0.8235294117647058,
+    "label_counts": {
+      "Skill": 37,
+      "Project": 11,
+      "Certificate": 1,
+      "JobOffer": 22,
+      "Company": 23,
+      "Application": 4,
+      "TargetRole": 1,
+      "Person": 2,
+      "Education": 1,
+      "Employment": 1
+    },
+    "relationship_types": [
+      "AIMS_FOR",
+      "APPLIED_TO",
+      "AT_COMPANY",
+      "FOR_OFFER",
+      "HAS_CERTIFICATE",
+      "HAS_SKILL",
+      "POSTED_BY",
+      "PRODUCED",
+      "REQUIRES",
+      "SAMPLED",
+      "SAVED",
+      "STUDIED_AT",
+      "USED_IN_ROLE",
+      "USES",
+      "VALIDATES",
+      "WORKED_AT"
+    ],
+    "population_projects_person_a": 1.0,
+    "finished_projects_specified": 8,
+    "has_skill": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "held": [
+        "AWS",
+        "Apache Spark",
+        "BeautifulSoup",
+        "Docker",
+        "FastAPI",
+        "HTML",
+        "Kubernetes",
+        "LangChain",
+        "Neo4j",
+        "PostgreSQL",
+        "Python",
+        "React",
+        "Tailwind CSS",
+        "TypeScript"
+      ],
+      "leaked_forbidden": [],
+      "python_level": "expert",
+      "python_not_downgraded": true
+    },
+    "entity_resolution": {
+      "clusters": {
+        "React": [
+          "skill_react"
+        ],
+        "Kubernetes": [
+          "skill_kubernetes"
+        ],
+        "PostgreSQL": [
+          "skill_postgresql"
+        ]
+      },
+      "collapsed": {
+        "React": true,
+        "Kubernetes": true,
+        "PostgreSQL": true
+      },
+      "must_stay_apart": [
+        {
+          "pair": [
+            "Java",
+            "JavaScript"
+          ],
+          "distinct": true
+        },
+        {
+          "pair": [
+            "React",
+            "Rust"
+          ],
+          "distinct": true
+        },
+        {
+          "pair": [
+            "Go",
+            "Python"
+          ],
+          "distinct": true
+        }
+      ],
+      "pairwise_correct": true,
+      "observed_skill_ids": {
+        "React": "skill_react",
+        "Kubernetes": "skill_kubernetes",
+        "PostgreSQL": "skill_postgresql"
+      }
+    },
+    "consistency": {
+      "clean_seed": {
+        "orphan_skills": 0,
+        "unowned_projects": 0,
+        "missing_uses": 0,
+        "duplicate_skill_ids": 0,
+        "person_a_flutter_has_skill": 0
+      },
+      "after_dirt": {
+        "orphan_skills": 1,
+        "unowned_projects": 1,
+        "missing_uses": 1,
+        "duplicate_skill_ids": 0,
+        "person_a_flutter_has_skill": 0
+      },
+      "after_cleanup": {
+        "orphan_skills": 0,
+        "unowned_projects": 0,
+        "missing_uses": 0,
+        "duplicate_skill_ids": 0,
+        "person_a_flutter_has_skill": 0
+      },
+      "dirt_detected": true
+    },
+    "person_b_present": true
+  },
+  "scenarios": {
+    "n": 12,
+    "passed": 12,
+    "failed": 0,
+    "task_completion_rate": 1.0,
+    "rows": [
+      {
+        "id": "UC-01 produced edges",
+        "pass": true,
+        "detail": "person A PRODUCED 10 projects"
+      },
+      {
+        "id": "UC-01 status preserved",
+        "pass": true,
+        "detail": "flutter=in_progress rust=planned"
+      },
+      {
+        "id": "UC-01 HAS_SKILL only finished",
+        "pass": true,
+        "detail": "forbidden skills on person: []"
+      },
+      {
+        "id": "UC-01 skill level monotonic",
+        "pass": true,
+        "detail": "Python level=expert (tutorial was beginner)"
+      },
+      {
+        "id": "UC-01 alias collapse React.js",
+        "pass": true,
+        "detail": "React skill nodes=1"
+      },
+      {
+        "id": "UC-02 jobs in graph",
+        "pass": true,
+        "detail": "JobOffer count=22"
+      },
+      {
+        "id": "UC-02 REQUIRES edges",
+        "pass": true,
+        "detail": "REQUIRES count=82"
+      },
+      {
+        "id": "UC-02/UC-05 applications linked",
+        "pass": true,
+        "detail": "applications=4"
+      },
+      {
+        "id": "UC-03/UC-07 chronology",
+        "pass": true,
+        "detail": "employment=1 education=1 certs=1"
+      },
+      {
+        "id": "UC-06 person scope",
+        "pass": true,
+        "detail": "person A does not PRODUCE person B's project"
+      },
+      {
+        "id": "UC-06 person B exists",
+        "pass": true,
+        "detail": "person B id=eval_person_b"
+      },
+      {
+        "id": "UC-01 ingest extra project",
+        "pass": true,
+        "detail": "extra=fb46a87d-19bc-48e0-ab29-dcbcbb4d5366 python_level=expert"
+      }
+    ],
+    "jobs_seeded": {
+      "graphrag_role": "ec464222-16ae-459f-838d-f5cafc33bef6",
+      "fastapi_backend": "db92d3ac-25c1-4cd7-8ae2-14f489d4d5b0",
+      "k8s_platform": "411115bd-7802-4f24-a068-3d803863ca73",
+      "data_eng": "116a827c-4dbc-43dd-9306-f9bbab886bc8",
+      "frontend": "ce9a800e-5db1-4771-a0d8-34be390cad32",
+      "java_bank": "37f4a213-ae09-4557-a9b4-a0e1e046d2f9",
+      "php": "c1489f56-d404-4415-b972-04c61c3a40e6",
+      "go_sre": "9ca29564-9d92-4bac-9de5-6c4eb99dda92",
+      "nlp": "5e9bb847-cdec-44a7-9370-8f5a7f20fbd3",
+      "junior_py": "57988877-660d-44b9-a447-8f0b40ee386a",
+      "real_python_ai_backend": "301e5d4d-e18f-415e-9391-7812adcb4430",
+      "real_senior_ai": "5622f93c-1248-42b1-9d80-ca81f6749e75",
+      "real_ey_aiml": "0998bed6-6b5d-42a9-ba0e-34a8537bd712",
+      "real_tidio_ml": "00742c7e-5679-46cb-9313-d72a85d2cfbc",
+      "real_cognism_mlops": "cea7ffd7-99e9-4430-b3cf-fe56932683a3",
+      "real_accenture_intern": "ea96fafa-833f-4507-b978-2da972c01820",
+      "real_arche_ai_py": "8b258cf3-4be0-4f05-aa1b-27fe3cb6eee9",
+      "real_jc_agentic": "04b88ece-b5e0-4d40-9556-e03e2209d07f",
+      "real_gitlab_ruby": "784b418d-cacc-4935-a230-4e4bf4b9a8db",
+      "real_google_dataform": "56d162a0-2cc2-4d40-ad78-7bad5fe9193a",
+      "redis_cache_api": "7128aa93-5952-49dc-b599-f15db66b9c32",
+      "celery_worker": "75ec320d-f802-4a4c-bea6-1b48bb932e1c"
+    }
+  },
+  "retrieval": {
+    "top_k": 8,
+    "arms": {
+      "V0": {
+        "ndcg@8_mean": 0.5309900058828042,
+        "ndcg@8_std": 0.25122038376323963,
+        "recall@8_mean": 0.4272727272727273,
+        "precision@8_mean": 0.13636363636363635,
+        "mrr_mean": 0.9090909090909091,
+        "leak_rate": 0.0,
+        "hop_precision_mean": 0.0,
+        "n": 22
+      },
+      "V1": {
+        "ndcg@8_mean": 0.5309900058828042,
+        "ndcg@8_std": 0.25122038376323963,
+        "recall@8_mean": 0.4272727272727273,
+        "precision@8_mean": 0.13636363636363635,
+        "mrr_mean": 0.9090909090909091,
+        "leak_rate": 0.0,
+        "hop_precision_mean": 0.10051753801753803,
+        "n": 22
+      },
+      "H0": {
+        "ndcg@8_mean": 0.8398803185372095,
+        "ndcg@8_std": 0.22929004665826636,
+        "recall@8_mean": 0.8507575757575757,
+        "precision@8_mean": 0.2897727272727273,
+        "mrr_mean": 0.8977272727272727,
+        "leak_rate": 0.0,
+        "hop_precision_mean": 0.0,
+        "n": 22
+      },
+      "H1": {
+        "ndcg@8_mean": 0.8398803185372095,
+        "ndcg@8_std": 0.22929004665826636,
+        "recall@8_mean": 0.8507575757575757,
+        "precision@8_mean": 0.2897727272727273,
+        "mrr_mean": 0.8977272727272727,
+        "leak_rate": 0.0,
+        "hop_precision_mean": 0.14137470062443178,
+        "n": 22
+      }
+    },
+    "contrasts": {
+      "V1_minus_V0_ndcg": 0.0,
+      "H1_minus_H0_ndcg": 0.0,
+      "H0_minus_V0_ndcg": 0.30889031265440525,
+      "wilcoxon_p_V0_V1": NaN,
+      "wilcoxon_p_H0_H1": NaN
+    },
+    "per_query": {
+      "V0": [
+        {
+          "query_id": "q_graphrag",
+          "retrieved": [
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39"
+          ],
+          "ndcg": 0.46256367670435833,
+          "recall": 0.3333333333333333,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_k8s",
+          "retrieved": [
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "364f63c2-26d7-4e62-9705-b8587b36a838"
+          ],
+          "ndcg": 0.5562983930884396,
+          "recall": 0.3333333333333333,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_react",
+          "retrieved": [
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 0.4396592698888862,
+          "recall": 0.25,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_spark",
+          "retrieved": [
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467"
+          ],
+          "ndcg": 0.4692787260227565,
+          "recall": 0.3333333333333333,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_aws",
+          "retrieved": [
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39"
+          ],
+          "ndcg": 0.0,
+          "recall": 0.0,
+          "precision": 0.0,
+          "mrr": 0.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_fastapi",
+          "retrieved": [
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974"
+          ],
+          "ndcg": 0.48851029987654027,
+          "recall": 0.5,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_scrape",
+          "retrieved": [
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e"
+          ],
+          "ndcg": 0.5562983930884396,
+          "recall": 0.3333333333333333,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_job_graphrag",
+          "retrieved": [
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974"
+          ],
+          "ndcg": 0.5524155465547719,
+          "recall": 0.4,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_flutter",
+          "retrieved": [
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "3c982670-49cb-495c-acd3-35d53ec29668"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_python_course",
+          "retrieved": [
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e"
+          ],
+          "ndcg": 0.7262287617954056,
+          "recall": 0.3333333333333333,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_langchain_qa",
+          "retrieved": [
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e"
+          ],
+          "ndcg": 0.6732934624429354,
+          "recall": 0.6666666666666666,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_docker",
+          "retrieved": [
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e"
+          ],
+          "ndcg": 0.27541155237618664,
+          "recall": 0.5,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_payments",
+          "retrieved": [
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974"
+          ],
+          "ndcg": 0.8262346571285599,
+          "recall": 0.5,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_typescript",
+          "retrieved": [
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467"
+          ],
+          "ndcg": 0.5562983930884396,
+          "recall": 0.3333333333333333,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_job_spark",
+          "retrieved": [
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 0.515157140670655,
+          "recall": 0.25,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_leak",
+          "retrieved": [
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e"
+          ],
+          "ndcg": 0.0,
+          "recall": 0.0,
+          "precision": 0.0,
+          "mrr": 0.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_neo4j_only",
+          "retrieved": [
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974"
+          ],
+          "ndcg": 0.6131471927654584,
+          "recall": 0.5,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_tailwind",
+          "retrieved": [
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "364f63c2-26d7-4e62-9705-b8587b36a838"
+          ],
+          "ndcg": 0.27541155237618664,
+          "recall": 0.5,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_job_frontend",
+          "retrieved": [
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "3c982670-49cb-495c-acd3-35d53ec29668"
+          ],
+          "ndcg": 0.4692787260227565,
+          "recall": 0.3333333333333333,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_planned_rust",
+          "retrieved": [
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "3c982670-49cb-495c-acd3-35d53ec29668"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_html",
+          "retrieved": [
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 0.6131471927654584,
+          "recall": 0.5,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_bs4",
+          "retrieved": [
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 0.6131471927654584,
+          "recall": 0.5,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        }
+      ],
+      "V1": [
+        {
+          "query_id": "q_graphrag",
+          "retrieved": [
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39"
+          ],
+          "ndcg": 0.46256367670435833,
+          "recall": 0.3333333333333333,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 28,
+          "hop_precision": 0.32142857142857145
+        },
+        {
+          "query_id": "q_k8s",
+          "retrieved": [
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "364f63c2-26d7-4e62-9705-b8587b36a838"
+          ],
+          "ndcg": 0.5562983930884396,
+          "recall": 0.3333333333333333,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 27,
+          "hop_precision": 0.07407407407407407
+        },
+        {
+          "query_id": "q_react",
+          "retrieved": [
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 0.4396592698888862,
+          "recall": 0.25,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 27,
+          "hop_precision": 0.1111111111111111
+        },
+        {
+          "query_id": "q_spark",
+          "retrieved": [
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467"
+          ],
+          "ndcg": 0.4692787260227565,
+          "recall": 0.3333333333333333,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 27,
+          "hop_precision": 0.1111111111111111
+        },
+        {
+          "query_id": "q_aws",
+          "retrieved": [
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39"
+          ],
+          "ndcg": 0.0,
+          "recall": 0.0,
+          "precision": 0.0,
+          "mrr": 0.0,
+          "leak_person_b": false,
+          "hop_count": 28,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_fastapi",
+          "retrieved": [
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974"
+          ],
+          "ndcg": 0.48851029987654027,
+          "recall": 0.5,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 28,
+          "hop_precision": 0.14285714285714285
+        },
+        {
+          "query_id": "q_scrape",
+          "retrieved": [
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e"
+          ],
+          "ndcg": 0.5562983930884396,
+          "recall": 0.3333333333333333,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 27,
+          "hop_precision": 0.2222222222222222
+        },
+        {
+          "query_id": "q_job_graphrag",
+          "retrieved": [
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974"
+          ],
+          "ndcg": 0.5524155465547719,
+          "recall": 0.4,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 28,
+          "hop_precision": 0.2857142857142857
+        },
+        {
+          "query_id": "q_flutter",
+          "retrieved": [
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "3c982670-49cb-495c-acd3-35d53ec29668"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 28,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_python_course",
+          "retrieved": [
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e"
+          ],
+          "ndcg": 0.7262287617954056,
+          "recall": 0.3333333333333333,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 27,
+          "hop_precision": 0.18518518518518517
+        },
+        {
+          "query_id": "q_langchain_qa",
+          "retrieved": [
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e"
+          ],
+          "ndcg": 0.6732934624429354,
+          "recall": 0.6666666666666666,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 27,
+          "hop_precision": 0.07407407407407407
+        },
+        {
+          "query_id": "q_docker",
+          "retrieved": [
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e"
+          ],
+          "ndcg": 0.27541155237618664,
+          "recall": 0.5,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 24,
+          "hop_precision": 0.041666666666666664
+        },
+        {
+          "query_id": "q_payments",
+          "retrieved": [
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974"
+          ],
+          "ndcg": 0.8262346571285599,
+          "recall": 0.5,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 26,
+          "hop_precision": 0.07692307692307693
+        },
+        {
+          "query_id": "q_typescript",
+          "retrieved": [
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467"
+          ],
+          "ndcg": 0.5562983930884396,
+          "recall": 0.3333333333333333,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 24,
+          "hop_precision": 0.08333333333333333
+        },
+        {
+          "query_id": "q_job_spark",
+          "retrieved": [
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 0.515157140670655,
+          "recall": 0.25,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 27,
+          "hop_precision": 0.25925925925925924
+        },
+        {
+          "query_id": "q_leak",
+          "retrieved": [
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e"
+          ],
+          "ndcg": 0.0,
+          "recall": 0.0,
+          "precision": 0.0,
+          "mrr": 0.0,
+          "leak_person_b": false,
+          "hop_count": 25,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_neo4j_only",
+          "retrieved": [
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974"
+          ],
+          "ndcg": 0.6131471927654584,
+          "recall": 0.5,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 27,
+          "hop_precision": 0.037037037037037035
+        },
+        {
+          "query_id": "q_tailwind",
+          "retrieved": [
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "364f63c2-26d7-4e62-9705-b8587b36a838"
+          ],
+          "ndcg": 0.27541155237618664,
+          "recall": 0.5,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 26,
+          "hop_precision": 0.038461538461538464
+        },
+        {
+          "query_id": "q_job_frontend",
+          "retrieved": [
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "3c982670-49cb-495c-acd3-35d53ec29668"
+          ],
+          "ndcg": 0.4692787260227565,
+          "recall": 0.3333333333333333,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 28,
+          "hop_precision": 0.07142857142857142
+        },
+        {
+          "query_id": "q_planned_rust",
+          "retrieved": [
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "3c982670-49cb-495c-acd3-35d53ec29668"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 27,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_html",
+          "retrieved": [
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 0.6131471927654584,
+          "recall": 0.5,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 26,
+          "hop_precision": 0.038461538461538464
+        },
+        {
+          "query_id": "q_bs4",
+          "retrieved": [
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 0.6131471927654584,
+          "recall": 0.5,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 27,
+          "hop_precision": 0.037037037037037035
+        }
+      ],
+      "H0": [
+        {
+          "query_id": "q_graphrag",
+          "retrieved": [
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "skill_langchain",
+            "skill_neo4j",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "db95b11c-1cd3-466f-a496-da811db3cea7"
+          ],
+          "ndcg": 0.8488650652120633,
+          "recall": 0.6666666666666666,
+          "precision": 0.5,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_k8s",
+          "retrieved": [
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "skill_kubernetes",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39"
+          ],
+          "ndcg": 0.9072836011519267,
+          "recall": 0.6666666666666666,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_react",
+          "retrieved": [
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "skill_typescript",
+            "skill_react",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "364f63c2-26d7-4e62-9705-b8587b36a838"
+          ],
+          "ndcg": 0.9368830196397312,
+          "recall": 0.75,
+          "precision": 0.375,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_spark",
+          "retrieved": [
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "skill_apache_spark",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 0.7653606369886218,
+          "recall": 0.6666666666666666,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_aws",
+          "retrieved": [
+            "skill_aws",
+            "64f993ca-18de-42ef-b58c-3ab6469a56c0",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "3c982670-49cb-495c-acd3-35d53ec29668"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_fastapi",
+          "retrieved": [
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "skill_postgresql",
+            "skill_fastapi",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e"
+          ],
+          "ndcg": 0.8488398459141359,
+          "recall": 0.75,
+          "precision": 0.375,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_scrape",
+          "retrieved": [
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "skill_beautifulsoup",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 0.8344475896326595,
+          "recall": 0.6666666666666666,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_job_graphrag",
+          "retrieved": [
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "skill_python",
+            "skill_neo4j"
+          ],
+          "ndcg": 0.7696429525632766,
+          "recall": 0.8,
+          "precision": 0.5,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_flutter",
+          "retrieved": [
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "skill_dart",
+            "skill_flutter",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_python_course",
+          "retrieved": [
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "skill_html",
+            "skill_python",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320"
+          ],
+          "ndcg": 0.9515234565959557,
+          "recall": 1.0,
+          "precision": 0.375,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_langchain_qa",
+          "retrieved": [
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "skill_langchain",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.375,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_docker",
+          "retrieved": [
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "skill_docker",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467"
+          ],
+          "ndcg": 0.6885288809404666,
+          "recall": 1.0,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_payments",
+          "retrieved": [
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "skill_fastapi",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_typescript",
+          "retrieved": [
+            "skill_typescript",
+            "skill_react",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 0.9514426589871553,
+          "recall": 1.0,
+          "precision": 0.375,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_job_spark",
+          "retrieved": [
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "skill_apache_spark",
+            "skill_postgresql"
+          ],
+          "ndcg": 0.7410475155298589,
+          "recall": 0.75,
+          "precision": 0.375,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_leak",
+          "retrieved": [
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e"
+          ],
+          "ndcg": 0.0,
+          "recall": 0.0,
+          "precision": 0.0,
+          "mrr": 0.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_neo4j_only",
+          "retrieved": [
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "skill_neo4j",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_tailwind",
+          "retrieved": [
+            "skill_tailwind_css",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_job_frontend",
+          "retrieved": [
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "skill_react",
+            "skill_typescript",
+            "skill_tailwind_css",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467"
+          ],
+          "ndcg": 0.5400753810454858,
+          "recall": 1.0,
+          "precision": 0.375,
+          "mrr": 0.25,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_planned_rust",
+          "retrieved": [
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "skill_rust",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_html",
+          "retrieved": [
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "skill_html",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_bs4",
+          "retrieved": [
+            "skill_html",
+            "skill_beautifulsoup",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320"
+          ],
+          "ndcg": 0.6934264036172708,
+          "recall": 1.0,
+          "precision": 0.25,
+          "mrr": 0.5,
+          "leak_person_b": false,
+          "hop_count": 0,
+          "hop_precision": 0.0
+        }
+      ],
+      "H1": [
+        {
+          "query_id": "q_graphrag",
+          "retrieved": [
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "skill_langchain",
+            "skill_neo4j",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "db95b11c-1cd3-466f-a496-da811db3cea7"
+          ],
+          "ndcg": 0.8488650652120633,
+          "recall": 0.6666666666666666,
+          "precision": 0.5,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 34,
+          "hop_precision": 0.29411764705882354
+        },
+        {
+          "query_id": "q_k8s",
+          "retrieved": [
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "skill_kubernetes",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39"
+          ],
+          "ndcg": 0.9072836011519267,
+          "recall": 0.6666666666666666,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 32,
+          "hop_precision": 0.09375
+        },
+        {
+          "query_id": "q_react",
+          "retrieved": [
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "skill_typescript",
+            "skill_react",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "364f63c2-26d7-4e62-9705-b8587b36a838"
+          ],
+          "ndcg": 0.9368830196397312,
+          "recall": 0.75,
+          "precision": 0.375,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 29,
+          "hop_precision": 0.1724137931034483
+        },
+        {
+          "query_id": "q_spark",
+          "retrieved": [
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "skill_apache_spark",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 0.7653606369886218,
+          "recall": 0.6666666666666666,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 27,
+          "hop_precision": 0.14814814814814814
+        },
+        {
+          "query_id": "q_aws",
+          "retrieved": [
+            "skill_aws",
+            "64f993ca-18de-42ef-b58c-3ab6469a56c0",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "3c982670-49cb-495c-acd3-35d53ec29668"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 27,
+          "hop_precision": 0.07407407407407407
+        },
+        {
+          "query_id": "q_fastapi",
+          "retrieved": [
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "skill_postgresql",
+            "skill_fastapi",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e"
+          ],
+          "ndcg": 0.8488398459141359,
+          "recall": 0.75,
+          "precision": 0.375,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 36,
+          "hop_precision": 0.16666666666666666
+        },
+        {
+          "query_id": "q_scrape",
+          "retrieved": [
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "skill_beautifulsoup",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 0.8344475896326595,
+          "recall": 0.6666666666666666,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 26,
+          "hop_precision": 0.2692307692307692
+        },
+        {
+          "query_id": "q_job_graphrag",
+          "retrieved": [
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "skill_python",
+            "skill_neo4j"
+          ],
+          "ndcg": 0.7696429525632766,
+          "recall": 0.8,
+          "precision": 0.5,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 32,
+          "hop_precision": 0.3125
+        },
+        {
+          "query_id": "q_flutter",
+          "retrieved": [
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "skill_dart",
+            "skill_flutter",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 23,
+          "hop_precision": 0.08695652173913043
+        },
+        {
+          "query_id": "q_python_course",
+          "retrieved": [
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "skill_html",
+            "skill_python",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320"
+          ],
+          "ndcg": 0.9515234565959557,
+          "recall": 1.0,
+          "precision": 0.375,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 31,
+          "hop_precision": 0.22580645161290322
+        },
+        {
+          "query_id": "q_langchain_qa",
+          "retrieved": [
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "skill_langchain",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.375,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 32,
+          "hop_precision": 0.125
+        },
+        {
+          "query_id": "q_docker",
+          "retrieved": [
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "skill_docker",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467"
+          ],
+          "ndcg": 0.6885288809404666,
+          "recall": 1.0,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 28,
+          "hop_precision": 0.07142857142857142
+        },
+        {
+          "query_id": "q_payments",
+          "retrieved": [
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "skill_fastapi",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 31,
+          "hop_precision": 0.0967741935483871
+        },
+        {
+          "query_id": "q_typescript",
+          "retrieved": [
+            "skill_typescript",
+            "skill_react",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d"
+          ],
+          "ndcg": 0.9514426589871553,
+          "recall": 1.0,
+          "precision": 0.375,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 25,
+          "hop_precision": 0.16
+        },
+        {
+          "query_id": "q_job_spark",
+          "retrieved": [
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "skill_apache_spark",
+            "skill_postgresql"
+          ],
+          "ndcg": 0.7410475155298589,
+          "recall": 0.75,
+          "precision": 0.375,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 32,
+          "hop_precision": 0.28125
+        },
+        {
+          "query_id": "q_leak",
+          "retrieved": [
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e"
+          ],
+          "ndcg": 0.0,
+          "recall": 0.0,
+          "precision": 0.0,
+          "mrr": 0.0,
+          "leak_person_b": false,
+          "hop_count": 25,
+          "hop_precision": 0.0
+        },
+        {
+          "query_id": "q_neo4j_only",
+          "retrieved": [
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "skill_neo4j",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 28,
+          "hop_precision": 0.07142857142857142
+        },
+        {
+          "query_id": "q_tailwind",
+          "retrieved": [
+            "skill_tailwind_css",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "f5a7f867-2bd2-4040-a6ed-42e6cdfc350e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 25,
+          "hop_precision": 0.08
+        },
+        {
+          "query_id": "q_job_frontend",
+          "retrieved": [
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974",
+            "skill_react",
+            "skill_typescript",
+            "skill_tailwind_css",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467"
+          ],
+          "ndcg": 0.5400753810454858,
+          "recall": 1.0,
+          "precision": 0.375,
+          "mrr": 0.25,
+          "leak_person_b": false,
+          "hop_count": 27,
+          "hop_precision": 0.18518518518518517
+        },
+        {
+          "query_id": "q_planned_rust",
+          "retrieved": [
+            "6182b731-fe51-4ddd-9d0f-b77c7770fe3d",
+            "skill_rust",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.125,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 24,
+          "hop_precision": 0.041666666666666664
+        },
+        {
+          "query_id": "q_html",
+          "retrieved": [
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "skill_html",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320",
+            "db95b11c-1cd3-466f-a496-da811db3cea7",
+            "51410b5e-b5fd-410c-ac67-55b634ce1974"
+          ],
+          "ndcg": 1.0,
+          "recall": 1.0,
+          "precision": 0.25,
+          "mrr": 1.0,
+          "leak_person_b": false,
+          "hop_count": 26,
+          "hop_precision": 0.07692307692307693
+        },
+        {
+          "query_id": "q_bs4",
+          "retrieved": [
+            "skill_html",
+            "skill_beautifulsoup",
+            "b2439930-0447-44ea-9aa2-a3854f5c4a39",
+            "364f63c2-26d7-4e62-9705-b8587b36a838",
+            "ee574c86-ecc4-4802-8b67-a0d3413b7467",
+            "3c982670-49cb-495c-acd3-35d53ec29668",
+            "456bfff6-d3fb-4158-806f-86ab1e68b74e",
+            "42b34ce5-0d51-4b11-8621-5be57bc20320"
+          ],
+          "ndcg": 0.6934264036172708,
+          "recall": 1.0,
+          "precision": 0.25,
+          "mrr": 0.5,
+          "leak_person_b": false,
+          "hop_count": 26,
+          "hop_precision": 0.07692307692307693
+        }
+      ]
+    }
+  },
+  "jobs": {
+    "n_jobs": 22,
+    "overlap": {
+      "ndcg@10": 0.8082637482547682,
+      "spearman_rho": 0.5555245238960443,
+      "mean_score_grade2": 79.66666666666667,
+      "mean_score_grade0": 21.6,
+      "ranking": [
+        {
+          "job_key": "graphrag_role",
+          "job_id": "ec464222-16ae-459f-838d-f5cafc33bef6",
+          "score": 100.0,
+          "gold": 2,
+          "title": "GraphRAG Python Engineer"
+        },
+        {
+          "job_key": "fastapi_backend",
+          "job_id": "db92d3ac-25c1-4cd7-8ae2-14f489d4d5b0",
+          "score": 100.0,
+          "gold": 2,
+          "title": "Mid Backend Engineer FastAPI"
+        },
+        {
+          "job_key": "k8s_platform",
+          "job_id": "411115bd-7802-4f24-a068-3d803863ca73",
+          "score": 100.0,
+          "gold": 1,
+          "title": "Platform Engineer Kubernetes"
+        },
+        {
+          "job_key": "data_eng",
+          "job_id": "116a827c-4dbc-43dd-9306-f9bbab886bc8",
+          "score": 100.0,
+          "gold": 1,
+          "title": "Data Engineer Spark"
+        },
+        {
+          "job_key": "junior_py",
+          "job_id": "57988877-660d-44b9-a447-8f0b40ee386a",
+          "score": 100.0,
+          "gold": 1,
+          "title": "Junior Python Developer"
+        },
+        {
+          "job_key": "real_accenture_intern",
+          "job_id": "ea96fafa-833f-4507-b978-2da972c01820",
+          "score": 100.0,
+          "gold": 1,
+          "title": "AI/MLOps Internship Program"
+        },
+        {
+          "job_key": "real_jc_agentic",
+          "job_id": "04b88ece-b5e0-4d40-9556-e03e2209d07f",
+          "score": 100.0,
+          "gold": 1,
+          "title": "Senior Data Scientist (Agentic AI Platform)"
+        },
+        {
+          "job_key": "real_ey_aiml",
+          "job_id": "0998bed6-6b5d-42a9-ba0e-34a8537bd712",
+          "score": 83.0,
+          "gold": 2,
+          "title": "AI/ML Engineer"
+        },
+        {
+          "job_key": "real_cognism_mlops",
+          "job_id": "cea7ffd7-99e9-4430-b3cf-fe56932683a3",
+          "score": 80.0,
+          "gold": 1,
+          "title": "MLOps Engineer"
+        },
+        {
+          "job_key": "redis_cache_api",
+          "job_id": "7128aa93-5952-49dc-b599-f15db66b9c32",
+          "score": 75.0,
+          "gold": 2,
+          "title": "Backend Engineer Redis Caching"
+        },
+        {
+          "job_key": "frontend",
+          "job_id": "ce9a800e-5db1-4771-a0d8-34be390cad32",
+          "score": 67.0,
+          "gold": 1,
+          "title": "Frontend Engineer React"
+        },
+        {
+          "job_key": "real_arche_ai_py",
+          "job_id": "8b258cf3-4be0-4f05-aa1b-27fe3cb6eee9",
+          "score": 67.0,
+          "gold": 1,
+          "title": "Senior AI & Python Engineer"
+        },
+        {
+          "job_key": "real_python_ai_backend",
+          "job_id": "301e5d4d-e18f-415e-9391-7812adcb4430",
+          "score": 60.0,
+          "gold": 2,
+          "title": "Backend Engineer - Python AI"
+        },
+        {
+          "job_key": "real_senior_ai",
+          "job_id": "5622f93c-1248-42b1-9d80-ca81f6749e75",
+          "score": 60.0,
+          "gold": 2,
+          "title": "Senior AI Engineer"
+        },
+        {
+          "job_key": "real_gitlab_ruby",
+          "job_id": "784b418d-cacc-4935-a230-4e4bf4b9a8db",
+          "score": 50.0,
+          "gold": 0,
+          "title": "Senior Backend Engineer (Ruby)"
+        },
+        {
+          "job_key": "real_tidio_ml",
+          "job_id": "00742c7e-5679-46cb-9313-d72a85d2cfbc",
+          "score": 40.0,
+          "gold": 1,
+          "title": "Senior Machine Learning Engineer (NLP/LLMs)"
+        },
+        {
+          "job_key": "go_sre",
+          "job_id": "9ca29564-9d92-4bac-9de5-6c4eb99dda92",
+          "score": 33.0,
+          "gold": 0,
+          "title": "SRE Go and Kubernetes"
+        },
+        {
+          "job_key": "nlp",
+          "job_id": "5e9bb847-cdec-44a7-9370-8f5a7f20fbd3",
+          "score": 33.0,
+          "gold": 1,
+          "title": "NLP Research Scientist"
+        },
+        {
+          "job_key": "celery_worker",
+          "job_id": "75ec320d-f802-4a4c-bea6-1b48bb932e1c",
+          "score": 33.0,
+          "gold": 1,
+          "title": "Python Worker Engineer Celery"
+        },
+        {
+          "job_key": "real_google_dataform",
+          "job_id": "56d162a0-2cc2-4d40-ad78-7bad5fe9193a",
+          "score": 25.0,
+          "gold": 0,
+          "title": "Software Engineer III, Backend, Dataform"
+        },
+        {
+          "job_key": "java_bank",
+          "job_id": "37f4a213-ae09-4557-a9b4-a0e1e046d2f9",
+          "score": 0.0,
+          "gold": 0,
+          "title": "Java Spring Backend"
+        },
+        {
+          "job_key": "php",
+          "job_id": "c1489f56-d404-4415-b972-04c61c3a40e6",
+          "score": 0.0,
+          "gold": 0,
+          "title": "WordPress PHP Developer"
+        }
+      ]
+    },
+    "llm_ran": true,
+    "llm": {
+      "ndcg@10": 0.8114680214832026,
+      "spearman_rho": 0.6366706477907884
+    }
+  },
+  "skills": {
+    "target_role_id": "target_role_python_backend_engineer",
+    "target_role_title": "Python Backend Engineer",
+    "target_role_ready": true,
+    "sample_status": "ready",
+    "sample_job_count": 10,
+    "sample_job_keys": [
+      "graphrag_role",
+      "fastapi_backend",
+      "real_python_ai_backend",
+      "real_senior_ai",
+      "real_ey_aiml",
+      "redis_cache_api",
+      "k8s_platform",
+      "junior_py",
+      "real_cognism_mlops",
+      "real_tidio_ml"
+    ],
+    "raw_keys": [
+      "core_strengths",
+      "sample_job_count",
+      "sample_status",
+      "skill_gaps",
+      "target_role_ready",
+      "target_role_title"
+    ],
+    "predicted": {
+      "RAG": "missing",
+      "Terraform": "missing",
+      "LangGraph": "missing",
+      "Natural Language Processing": "missing",
+      "PyTorch": "missing",
+      "Redis": "missing",
+      "Kubernetes": "underleveled"
+    },
+    "missing": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "underleveled": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "must_include_ok": true,
+    "must_exclude_violations": [],
+    "gap_count": 7,
+    "analysis_excerpt": {
+      "skill_gaps": [
+        {
+          "skill": "RAG",
+          "gap_reason": "Missing skill required by 3 tracked offer(s).",
+          "priority": "high",
+          "kind": "missing",
+          "current_level": null,
+          "expected_level": "intermediate",
+          "demand": 3
+        },
+        {
+          "skill": "Terraform",
+          "gap_reason": "Missing skill required by 2 tracked offer(s).",
+          "priority": "high",
+          "kind": "missing",
+          "current_level": null,
+          "expected_level": "intermediate",
+          "demand": 2
+        },
+        {
+          "skill": "LangGraph",
+          "gap_reason": "Missing skill required by 2 tracked offer(s).",
+          "priority": "medium",
+          "kind": "missing",
+          "current_level": null,
+          "expected_level": "intermediate",
+          "demand": 2
+        },
+        {
+          "skill": "Natural Language Processing",
+          "gap_reason": "Missing skill required by 1 tracked offer(s).",
+          "priority": "medium",
+          "kind": "missing",
+          "current_level": null,
+          "expected_level": "advanced",
+          "demand": 1
+        },
+        {
+          "skill": "PyTorch",
+          "gap_reason": "Missing skill required by 1 tracked offer(s).",
+          "priority": "medium",
+          "kind": "missing",
+          "current_level": null,
+          "expected_level": "advanced",
+          "demand": 1
+        },
+        {
+          "skill": "Redis",
+          "gap_reason": "Missing skill required by 1 tracked offer(s).",
+          "priority": "medium",
+          "kind": "missing",
+          "current_level": null,
+          "expected_level": "intermediate",
+          "demand": 1
+        },
+        {
+          "skill": "Kubernetes",
+          "gap_reason": "Current level intermediate is below the typically expected advanced (3 tracked offer(s)).",
+          "priority": "medium",
+          "kind": "underleveled",
+          "current_level": "intermediate",
+          "expected_level": "advanced",
+          "demand": 3
+        }
+      ],
+      "core_strengths": [
+        "Python",
+        "FastAPI",
+        "Docker",
+        "Kubernetes",
+        "LangChain",
+        "PostgreSQL",
+        "Neo4j"
+      ]
+    }
+  },
+  "emails": {
+    "heuristics": {
+      "classification": {
+        "labels": [
+          "other"
+        ],
+        "per_label": {
+          "other": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 8.0
+          }
+        },
+        "accuracy": 1.0,
+        "macro_f1": 1.0,
+        "n": 8
+      },
+      "career_mail_not_short_circuited": 10
+    },
+    "llm": {
+      "classification": {
+        "labels": [
+          "career_related"
+        ],
+        "per_label": {
+          "career_related": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 10.0
+          }
+        },
+        "accuracy": 1.0,
+        "macro_f1": 1.0,
+        "n": 10
+      },
+      "application_stage": {
+        "labels": [
+          "applied_ack",
+          "assessment",
+          "interview_invite",
+          "none",
+          "offer",
+          "rejection"
+        ],
+        "per_label": {
+          "applied_ack": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 2.0
+          },
+          "assessment": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 2.0
+          },
+          "interview_invite": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 2.0
+          },
+          "none": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 1.0
+          },
+          "offer": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 1.0
+          },
+          "rejection": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 2.0
+          }
+        },
+        "accuracy": 1.0,
+        "macro_f1": 1.0,
+        "n": 10
+      }
+    },
+    "status_updates": {
+      "acme": "Interview",
+      "bank": "Rejected",
+      "beta": "Interview",
+      "rivi": "Rejected",
+      "unmatched_offer_left_apps": true,
+      "pass": true
+    }
+  },
+  "cv": {
+    "n_jobs": 4,
+    "curator_ok": true,
+    "grounding_ok": true,
+    "llm_ran": true,
+    "known_project_titles": [
+      "Beginner Python Course Site",
+      "Flutter Habit Tracker",
+      "Hiring Dashboard",
+      "Job Board Scraper",
+      "Kubernetes Toy Deploy",
+      "LangChain RAG Chatbot",
+      "Payments REST API",
+      "Personal GraphRAG Career Assistant",
+      "Rust Rewrite Spike",
+      "Spark ETL Warehouse"
+    ],
+    "per_job": [
+      {
+        "job_key": "graphrag_role",
+        "job_id": "ec464222-16ae-459f-838d-f5cafc33bef6",
+        "hit_labels": [
+          "Project",
+          "Skill"
+        ],
+        "no_joboffer_hits": true,
+        "no_person_b_project": true,
+        "hit_count": 8,
+        "llm_ran": true,
+        "budget_project_count": 4,
+        "generated_project_titles": [
+          "Beginner Python Course Site",
+          "LangChain RAG Chatbot",
+          "Payments REST API",
+          "Personal GraphRAG Career Assistant"
+        ],
+        "invented_projects": [],
+        "invented_skills": [],
+        "person_b_mentioned": false,
+        "headline": "Backend Engineer",
+        "grounding_ok": true
+      },
+      {
+        "job_key": "fastapi_backend",
+        "job_id": "db92d3ac-25c1-4cd7-8ae2-14f489d4d5b0",
+        "hit_labels": [
+          "Project",
+          "Skill"
+        ],
+        "no_joboffer_hits": true,
+        "no_person_b_project": true,
+        "hit_count": 8,
+        "llm_ran": true,
+        "budget_project_count": 4,
+        "generated_project_titles": [
+          "Beginner Python Course Site",
+          "Hiring Dashboard",
+          "Payments REST API",
+          "Personal GraphRAG Career Assistant"
+        ],
+        "invented_projects": [],
+        "invented_skills": [],
+        "person_b_mentioned": false,
+        "headline": "Backend Engineer FastAPI",
+        "grounding_ok": true
+      },
+      {
+        "job_key": "real_python_ai_backend",
+        "job_id": "301e5d4d-e18f-415e-9391-7812adcb4430",
+        "hit_labels": [
+          "Project",
+          "Skill"
+        ],
+        "no_joboffer_hits": true,
+        "no_person_b_project": true,
+        "hit_count": 8,
+        "llm_ran": true,
+        "budget_project_count": 4,
+        "generated_project_titles": [
+          "Beginner Python Course Site",
+          "Hiring Dashboard",
+          "LangChain RAG Chatbot",
+          "Personal GraphRAG Career Assistant"
+        ],
+        "invented_projects": [],
+        "invented_skills": [],
+        "person_b_mentioned": false,
+        "headline": "Backend Engineer - Python AI",
+        "grounding_ok": true
+      },
+      {
+        "job_key": "java_bank",
+        "job_id": "37f4a213-ae09-4557-a9b4-a0e1e046d2f9",
+        "hit_labels": [
+          "Project"
+        ],
+        "no_joboffer_hits": true,
+        "no_person_b_project": true,
+        "hit_count": 8,
+        "llm_ran": true,
+        "budget_project_count": 4,
+        "generated_project_titles": [
+          "Hiring Dashboard",
+          "Job Board Scraper",
+          "Payments REST API",
+          "Personal GraphRAG Career Assistant"
+        ],
+        "invented_projects": [],
+        "invented_skills": [],
+        "person_b_mentioned": false,
+        "headline": "Backend Engineer",
+        "grounding_ok": true
+      }
+    ]
+  }
+}
