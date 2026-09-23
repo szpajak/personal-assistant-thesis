@@ -1,0 +1,74 @@
+[tool.poetry]
+name = "career-assistant-backend"
+version = "0.1.0"
+description = "Backend for a career assistant with multimodal knowledge graph"
+authors = ["Your Name <you@example.com>"]
+packages = [{ include = "app" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.109.0"
+uvicorn = {extras = ["standard"], version = "^0.23.0"}
+SQLAlchemy = {version = "^2.0.33", extras = ["asyncio"]}
+alembic = "^1.11.1"
+"psycopg[binary]" = "^3.2.0"
+asyncpg = "^0.29.0"
+python-dotenv = "^1.0.0"
+pydantic = {version = "^2.10.0", extras = ["email"]}
+pydantic-settings = "^2.3.0"
+email-validator = "^2.1.0"
+neo4j = "^5.11.0"
+celery = "^5.4.0"
+redis = "^5.3.0"
+httpx = "^0.28.0"
+beautifulsoup4 = "^4.13.0"
+openai = "^1.0.0"
+tiktoken = "^0.7.0"
+langchain = "^0.3.28"
+# langchain-deepseek >=1.0.0 requires langchain-core >=1.0.0, which conflicts
+# with langchain/langchain-community's <1.0.0 pin below (0.3.x line). Pin to
+# the last 0.1.x release (langchain-core <1.0.0) until the whole langchain
+# stack here is upgraded to the 1.x line together.
+langchain-deepseek = "^0.1.4"
+langchain-huggingface = "^0.1.0"
+sentence-transformers = "^3.0.0"
+langchain-community = "^0.3.18"
+langgraph = "^0.2.74"
+python-jose = {version = "^3.3.0", extras = ["cryptography"]}
+bcrypt = "^4.0.1"
+unstructured = {version = "^0.15.0", extras = ["pdf", "docx", "pptx"]}
+imapclient = "^2.3.0"
+fpdf2 = "^2.7.8"
+jobspy2 = "^0.0.8"
+pandas = "^2.0.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^8.4.0"
+pytest-asyncio = "^0.22.0"
+httpx = "^0.28.0"
+ruff = "^0.0.261"
+mypy = "^1.10.0"
+pre-commit = "^4.5.0"
+pytest-cov = "^5.3.0"
+aiosqlite = "^0.20.0"
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+select = ["E", "F", "W", "C90", "I"]
+exclude = [".git", "__pycache__", "build", "dist", "frontend/node_modules"]
+
+[tool.mypy]
+python_version = 3.12
+strict = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "--strict-markers"
+testpaths = ["backend/tests"]
+asyncio_mode = "auto"
+
+[build-system]
+requires = ["poetry-core>=1.7.0"]
+build-backend = "poetry.core.masonry.api"

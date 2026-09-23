@@ -1,0 +1,61 @@
+name: Publish Portfolio Site
+
+# Regenerates the static public portfolio (backend/scripts/generate_portfolio_site.py)
+# from the live KG export API and publishes it to GitHub Pages. Runs on a
+# daily schedule (picks up newly ingested projects/certificates), on manual
+# dispatch, and whenever the generator script itself changes.
+on:
+  schedule:
+    - cron: "0 6 * * *" # daily at 06:00 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "backend/scripts/generate_portfolio_site.py"
+      - ".github/workflows/portfolio-pages.yml"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install generator dependencies
+        run: pip install httpx
+
+      - name: Generate static portfolio site
+        env:
+          PORTFOLIO_API_BASE_URL: ${{ secrets.PORTFOLIO_API_BASE_URL }}
+          PORTFOLIO_PERSON_ID: ${{ vars.PORTFOLIO_PERSON_ID || 'u1' }}
+        run: |
+          python backend/scripts/generate_portfolio_site.py \
+            --api-base-url "$PORTFOLIO_API_BASE_URL" \
+            --person-id "$PORTFOLIO_PERSON_ID" \
+            --output-dir site
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

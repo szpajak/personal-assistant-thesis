@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: career_assistant_test
+    ports:
+      - "5433:5432"
+
+  neo4j:
+    image: neo4j:5.14
+    environment:
+      NEO4J_AUTH: neo4j/password
+    ports:
+      - "7688:7687"
+    volumes:
+      - ./infra/neo4j/init.cypher:/docker-entrypoint-initdb.d/init.cypher:ro
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
